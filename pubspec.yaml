@@ -31,6 +31,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^2.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -75,17 +77,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: Fira Code
+      fonts:
+        - asset: fonts/FiraCode-Light.ttf
+          weight: 300
+        - asset: fonts/FiraCode-Regular.ttf
+          weight: 400
+        - asset: fonts/FiraCode-Medium.ttf
+          weight: 500
+        - asset: fonts/FiraCode-SemiBold.ttf
+          weight: 600
+        - asset: fonts/FiraCode-Bold.ttf
+          weight: 700
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
