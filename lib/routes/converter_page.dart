@@ -1,13 +1,16 @@
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/styles/colors.dart';
+import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
 import 'package:flutter/material.dart';
 
 class ConverterPage extends StatelessWidget {
-  const ConverterPage({Key? key}) : super(key: key);
+  const ConverterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final int n = ConversionType.hexadecimal.defaultN;
+
     return Scaffold(
       backgroundColor: ColorTheme.background1,
       appBar: AppBar(
@@ -31,8 +34,23 @@ class ConverterPage extends StatelessWidget {
         children: [
           ConversionTitleWidget(
             targetType: ConversionType.hexadecimal,
-            n: ConversionType.hexadecimal.defaultN,
-          )
+            n: n,
+          ),
+          ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: const [
+              ConversionEntryWidget(
+                input: "invalid number",
+                targetType: ConversionType.hexadecimal,
+              ),
+              ConversionEntryWidget(
+                input: "0d-10",
+                targetType: ConversionType.hexadecimal,
+                label: "Negative test",
+              ),
+            ],
+          ),
         ],
       ),
     );
