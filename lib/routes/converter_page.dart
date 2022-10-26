@@ -4,6 +4,8 @@ import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
 import 'package:flutter/material.dart';
 
+// TODO handle scrolling
+
 class ConverterPage extends StatelessWidget {
   const ConverterPage({super.key});
 
@@ -36,17 +38,73 @@ class ConverterPage extends StatelessWidget {
             targetType: ConversionType.hexadecimal,
             n: n,
           ),
-          ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: const [
+          Column(
+            // scrollDirection: Axis.vertical,
+            // shrinkWrap: true,
+            children: [
               ConversionEntryWidget(
                 input: "invalid number",
+                targetSize: n,
                 targetType: ConversionType.hexadecimal,
               ),
               ConversionEntryWidget(
-                input: "0d-10",
+                input: "0s-10",
                 targetType: ConversionType.hexadecimal,
+                targetSize: n,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0s-1",
+                targetType: ConversionType.hexadecimal,
+                targetSize: n,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0s37",
+                targetType: ConversionType.hexadecimal,
+                targetSize: n,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0s-37",
+                targetType: ConversionType.hexadecimal,
+                targetSize: n,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0d37",
+                targetType: ConversionType.hexadecimal,
+                targetSize: n,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0s9999999999",
+                targetType: ConversionType.hexadecimal,
+                targetSize: n,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0s01",
+                targetType: ConversionType.hexadecimal,
+                targetSize: n,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0s9",
+                targetType: ConversionType.signedDecimal,
+                targetSize: 2,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0d9",
+                targetType: ConversionType.signedDecimal,
+                targetSize: 2,
+                label: "Negative test",
+              ),
+              ConversionEntryWidget(
+                input: "0s-7",
+                targetType: ConversionType.unsignedDecimal,
+                targetSize: 1,
                 label: "Negative test",
               ),
             ],

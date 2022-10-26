@@ -4,6 +4,18 @@ import 'package:app_0byte/models/conversion_types.dart';
 
 double _log2(num x) => log(x) / log(2);
 
+String leftTrimmed(String val, ConversionType type) {
+  // Left trim 0s for decimal and ascii
+  if (type == ConversionType.signedDecimal ||
+      type == ConversionType.unsignedDecimal ||
+      type == ConversionType.ascii) {
+    return val.replaceFirst(RegExp("^${type.alphabet[0]}+"), "");
+  }
+  return val;
+}
+
+// TODO extract/factorize 2s complement
+
 String converted({
   required String data,
   required ConversionType inputType,
@@ -21,8 +33,14 @@ String converted({
   }
 
   // Absolute input decimal to binary
-  List<bool> number_bin =
-      List.filled(_log2(abs).ceil() + (negativeInput ? 1 : 0), false);
+  List<bool> number_bin = List.filled(
+      (absData.length * _log2(inputType.base)).ceil() +
+          (inputType == ConversionType.signedDecimal &&
+                  targetType == ConversionType.signedDecimal
+              ? 1
+              : 0),
+      false,
+      growable: true);
 
   for (int i = 0; i < number_bin.length; ++i) {
     number_bin[number_bin.length - i - 1] = abs % 2 != 0;
@@ -44,13 +62,22 @@ String converted({
     }
   }
 
+  // Extend sign
+  if (inputType == ConversionType.signedDecimal && negativeInput) {
+    int n_add =
+        (targetSize * _log2(targetType.base)).ceil() - number_bin.length;
+    if (n_add > 0) {
+      number_bin.insertAll(0, List.filled(n_add, number_bin[0]));
+    }
+  }
+
   // Base conversion
-  bool negativeOutput = false;
+  bool negativeOutput =
+      targetType == ConversionType.signedDecimal && number_bin[0];
   String converted = "";
 
   // Signed output & negative binary representation => reverse 2's complement
-  if (targetType == ConversionType.signedDecimal && number_bin[0]) {
-    negativeOutput = true;
+  if (negativeOutput) {
     for (int i = 0; i < number_bin.length; ++i) {
       number_bin[i] = !number_bin[i];
     }
@@ -77,17 +104,7 @@ String converted({
     number = number ~/ targetType.base;
   }
 
-  // Left trim 0s for decimal and ascii
-  if (targetType == ConversionType.signedDecimal ||
-      targetType == ConversionType.unsignedDecimal ||
-      targetType == ConversionType.ascii) {
-    converted =
-        converted.replaceFirst(RegExp("^${targetType.alphabet[0]}+"), "");
-  }
+  converted = leftTrimmed(converted, targetType);
 
-  return targetType.prefix +
-      (negativeOutput && targetType == ConversionType.signedDecimal
-          ? "-"
-          : "") +
-      converted;
+  return targetType.prefix + (negativeOutput ? "-" : "") + converted;
 }

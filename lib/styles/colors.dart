@@ -8,4 +8,5 @@ abstract class ColorTheme {
   static const Color text2 = Color(0xFFC7CACC);
   static const Color accent = Color(0xFF16DB65);
   static const Color danger = Color(0xFFF21A35);
+  static const Color warning = Color(0xffff7900);
 }
