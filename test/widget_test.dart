@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:app_0byte/main.dart';
 
-// TODO TEST conversion (write as test signal)
+// TODO TEST conversion (write as test)
 // TODO random number identity conversion testing for every type
 
 void main() {

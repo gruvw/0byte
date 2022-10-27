@@ -1,5 +1,3 @@
-// TODO support base 64 and Latin-1 (ISO 8859-1 or 8-bits ascii)
-
 enum ConversionType {
   hexadecimal("HEX", "0123456789ABCDEF", 8, "0x"),
   binary("BIN", "01", 32, "0b"),

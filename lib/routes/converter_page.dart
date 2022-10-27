@@ -4,8 +4,6 @@ import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
 import 'package:flutter/material.dart';
 
-// TODO handle scrolling
-
 class ConverterPage extends StatelessWidget {
   const ConverterPage({super.key});
 

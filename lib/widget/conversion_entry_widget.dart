@@ -4,10 +4,6 @@ import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:flutter/material.dart';
 
-// TODO color/grey out prefix
-// TODO indicate overflow
-// TODO copyable values
-
 class ConversionEntryWidget extends StatelessWidget {
   static const _displayTitleStyle = TextStyle(
     fontFamily: FontTheme.fontFamily2,
@@ -39,8 +35,6 @@ class ConversionEntryWidget extends StatelessWidget {
           )
         : null;
 
-    // TODO add alphabet verification (hex in maj)
-    // TODO add no sign if not SignedDecimal input
     // TODO validation in separate file
 
     if (input.length < 3 ||
