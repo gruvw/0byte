@@ -8,6 +8,8 @@ No support for bookmarking, no data persistence, basic data validation
 [ ] Add entry
 [ ] Edit entry (number or rename)
 [ ] Delete entry
+[ ] Change conversion target
+[ ] Change target size
 [ ] Handle scrolling
 [ ] Color data prefix
 [ ] Testing of conversion
@@ -15,6 +17,7 @@ No support for bookmarking, no data persistence, basic data validation
 ## Beta release `0.0.1-b`
 
 [ ] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input)
+[ ] Handle entries UI overflow
 [ ] Reorder entries
 [ ] Create Logo + integration
 [ ] Splash screen
@@ -38,6 +41,15 @@ Persistence support
 
 [ ] Support base 64 conversions
 [ ] Support Latin-1/ISO 8859-1
+
+## Major release `0.0.3`
+
+[ ] Application website with download links
+[ ] Test android
+[ ] Test Linux
+[ ] Test Windows
+[ ] Test WEB
+[ ] (Test IOS, MAC ?)
 
 ## Ideas
 

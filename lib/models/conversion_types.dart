@@ -13,9 +13,10 @@ enum ConversionType {
   final String alphabet;
   final int base;
   final String prefix;
-  final int defaultN;
+  final int defaultTargetSize;
 
-  const ConversionType(this.label, this.alphabet, this.defaultN, this.prefix)
+  const ConversionType(
+      this.label, this.alphabet, this.defaultTargetSize, this.prefix)
       : base = alphabet.length;
 }
 
