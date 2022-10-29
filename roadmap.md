@@ -8,16 +8,16 @@ No support for bookmarking, no data persistence, basic data validation
 [ ] Add entry
 [ ] Edit entry (number or rename)
 [ ] Delete entry
-[ ] Change conversion target
-[ ] Change target size
-[ ] Handle scrolling
+[X] Change conversion target
+[X] Change target size
+[X] Handle scrolling
 [ ] Color data prefix
 [ ] Testing of conversion
 
 ## Beta release `0.0.1-b`
 
 [ ] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input)
-[ ] Handle entries UI overflow
+[ ] Handle entries UI overflow (middle)
 [ ] Reorder entries
 [ ] Create Logo + integration
 [ ] Splash screen

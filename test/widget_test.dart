@@ -117,4 +117,10 @@ void main() {
     targetSize: 8,
     targetType: ConversionType.hexadecimal,
   )); // 0x540BE3FF
+  print(converted(
+    data: "0001",
+    inputType: ConversionType.signedDecimal,
+    targetSize: 8,
+    targetType: ConversionType.signedDecimal,
+  )); // 0s1
 }

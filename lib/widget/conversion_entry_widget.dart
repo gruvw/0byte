@@ -62,9 +62,13 @@ class ConversionEntryWidget extends ConsumerWidget {
       inputType: inputType,
       targetType: targetType,
     );
+    String resultData = result.substring(2);
     String symmetric = converted(
-      data: result.substring(2),
-      targetSize: inputVal.replaceFirst("-", "").length,
+      data: splitSign(resultData).item1 +
+          targetType.alphabet[0] *
+              (targetSize - splitSign(resultData).item2.length) +
+          splitSign(resultData).item2,
+      targetSize: splitSign(inputVal).item2.length,
       inputType: targetType,
       targetType: inputType,
     );

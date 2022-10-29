@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:app_0byte/models/conversion_types.dart';
+import 'package:tuple/tuple.dart';
+
+const String sign = "-";
 
 double _log2(num x) => log(x) / log(2);
 
@@ -9,9 +12,15 @@ String leftTrimmed(String val, ConversionType type) {
   if (type == ConversionType.signedDecimal ||
       type == ConversionType.unsignedDecimal ||
       type == ConversionType.ascii) {
-    return val.replaceFirst(RegExp("^${type.alphabet[0]}+"), "");
+    String newVal =
+        val.replaceFirst(RegExp("(?<=^$sign?)${type.alphabet[0]}+"), "");
+    return newVal.isNotEmpty ? newVal : type.alphabet[0];
   }
   return val;
+}
+
+Tuple2<String, String> splitSign(String data) {
+  return Tuple2(data.startsWith(sign) ? sign : "", data.replaceFirst(sign, ""));
 }
 
 // TODO extract/factorize 2s complement
@@ -22,7 +31,7 @@ String converted({
   required int targetSize,
   required ConversionType targetType,
 }) {
-  bool negativeInput = data.startsWith("-");
+  bool negativeInput = data.startsWith(sign);
   String absData = negativeInput ? data.substring(1) : data;
 
   // Absolute input to decimal
@@ -54,7 +63,7 @@ String converted({
     }
     bool carry = true;
     int i = number_bin.length - 1;
-    while (carry || i > 0) {
+    while (carry && i > 0) {
       bool tmp = number_bin[i];
       number_bin[i] = tmp ^ carry;
       carry = tmp & carry;
@@ -63,7 +72,7 @@ String converted({
   }
 
   // Extend sign
-  if (inputType == ConversionType.signedDecimal && negativeInput) {
+  if (negativeInput) {
     int n_add =
         (targetSize * _log2(targetType.base)).ceil() - number_bin.length;
     if (n_add > 0) {
@@ -83,7 +92,7 @@ String converted({
     }
     bool carry = true;
     int i = number_bin.length - 1;
-    while (carry || i > 0) {
+    while (carry && i > 0) {
       bool tmp = number_bin[i];
       number_bin[i] = tmp ^ carry;
       carry = tmp & carry;
@@ -106,5 +115,5 @@ String converted({
 
   converted = leftTrimmed(converted, targetType);
 
-  return targetType.prefix + (negativeOutput ? "-" : "") + converted;
+  return targetType.prefix + (negativeOutput ? sign : "") + converted;
 }

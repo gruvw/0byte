@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/styles/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ConversionTitleWidget extends StatelessWidget {
   static const _targetTextStyle = TextStyle(
@@ -55,6 +56,7 @@ class ConversionTitleWidget extends StatelessWidget {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                             dropdownColor: ColorTheme.background2,
+                            focusColor: ColorTheme.background3,
                             elevation: 0,
                             icon: const Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
