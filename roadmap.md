@@ -12,7 +12,7 @@ No support for bookmarking, no data persistence, basic data validation
 [X] Change target size
 [X] Handle scrolling
 [ ] Color data prefix
-[ ] Testing of conversion
+[X] Testing of conversion
 
 ## Beta release `0.0.1-b`
 

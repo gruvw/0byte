@@ -1,29 +1,7 @@
 import 'dart:math';
 
 import 'package:app_0byte/models/conversion_types.dart';
-import 'package:tuple/tuple.dart';
-
-const String sign = "-";
-
-double _log2(num x) => log(x) / log(2);
-
-String leftTrimmed(String val, ConversionType type) {
-  // Left trim 0s for decimal and ascii
-  if (type == ConversionType.signedDecimal ||
-      type == ConversionType.unsignedDecimal ||
-      type == ConversionType.ascii) {
-    String newVal =
-        val.replaceFirst(RegExp("(?<=^$sign?)${type.alphabet[0]}+"), "");
-    return newVal.isNotEmpty ? newVal : type.alphabet[0];
-  }
-  return val;
-}
-
-Tuple2<String, String> splitSign(String data) {
-  return Tuple2(data.startsWith(sign) ? sign : "", data.replaceFirst(sign, ""));
-}
-
-// TODO extract/factorize 2s complement
+import 'package:app_0byte/utils/input_parsing.dart';
 
 String converted({
   required String data,
@@ -31,7 +9,8 @@ String converted({
   required int targetSize,
   required ConversionType targetType,
 }) {
-  bool negativeInput = data.startsWith(sign);
+  bool negativeInput =
+      data.startsWith(sign) && inputType == ConversionType.signedDecimal;
   String absData = negativeInput ? data.substring(1) : data;
 
   // Absolute input to decimal
@@ -42,7 +21,7 @@ String converted({
   }
 
   // Absolute input decimal to binary
-  List<bool> number_bin = List.filled(
+  List<bool> binary = List.filled(
       (absData.length * _log2(inputType.base)).ceil() +
           (inputType == ConversionType.signedDecimal &&
                   targetType == ConversionType.signedDecimal
@@ -51,59 +30,33 @@ String converted({
       false,
       growable: true);
 
-  for (int i = 0; i < number_bin.length; ++i) {
-    number_bin[number_bin.length - i - 1] = abs % 2 != 0;
+  for (int i = 0; i < binary.length; ++i) {
+    binary[binary.length - i - 1] = abs % 2 != 0;
     abs = abs ~/ 2;
   }
 
   // Negative input => transform binary using 2's complement
-  if (negativeInput) {
-    for (int i = 0; i < number_bin.length; ++i) {
-      number_bin[i] = !number_bin[i];
-    }
-    bool carry = true;
-    int i = number_bin.length - 1;
-    while (carry && i > 0) {
-      bool tmp = number_bin[i];
-      number_bin[i] = tmp ^ carry;
-      carry = tmp & carry;
-      i--;
-    }
-  }
+  if (negativeInput) _twoComplement(binary);
 
   // Extend sign
   if (negativeInput) {
-    int n_add =
-        (targetSize * _log2(targetType.base)).ceil() - number_bin.length;
+    int n_add = (targetSize * _log2(targetType.base)).ceil() - binary.length;
     if (n_add > 0) {
-      number_bin.insertAll(0, List.filled(n_add, number_bin[0]));
+      binary.insertAll(0, List.filled(n_add, binary[0]));
     }
   }
 
   // Base conversion
-  bool negativeOutput =
-      targetType == ConversionType.signedDecimal && number_bin[0];
+  bool negativeOutput = targetType == ConversionType.signedDecimal && binary[0];
   String converted = "";
 
   // Signed output & negative binary representation => reverse 2's complement
-  if (negativeOutput) {
-    for (int i = 0; i < number_bin.length; ++i) {
-      number_bin[i] = !number_bin[i];
-    }
-    bool carry = true;
-    int i = number_bin.length - 1;
-    while (carry && i > 0) {
-      bool tmp = number_bin[i];
-      number_bin[i] = tmp ^ carry;
-      carry = tmp & carry;
-      i--;
-    }
-  }
+  if (negativeOutput) _twoComplement(binary);
 
   // Unsigned binary output => decimal
   num number = 0;
-  for (int i = 0; i < number_bin.length; ++i) {
-    number += number_bin[number_bin.length - i - 1] ? pow(2, i) : 0;
+  for (int i = 0; i < binary.length; ++i) {
+    number += binary[binary.length - i - 1] ? pow(2, i) : 0;
   }
 
   // Decimal => final base
@@ -116,4 +69,21 @@ String converted({
   converted = leftTrimmed(converted, targetType);
 
   return targetType.prefix + (negativeOutput ? sign : "") + converted;
+}
+
+double _log2(num x) => log(x) / log(2);
+
+void _twoComplement(List<bool> binary) {
+  for (int i = 0; i < binary.length; ++i) {
+    binary[i] = !binary[i];
+  }
+
+  bool carry = true;
+  int i = binary.length - 1;
+  while (carry && i > 0) {
+    bool tmp = binary[i];
+    binary[i] = tmp ^ carry;
+    carry = tmp & carry;
+    i--;
+  }
 }

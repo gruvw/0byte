@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/utils/input_parsing.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/utils/conversion.dart';
+import 'package:tuple/tuple.dart';
 
 class ConversionEntryWidget extends ConsumerWidget {
   static const _displayTitleStyle = TextStyle(
@@ -37,10 +39,9 @@ class ConversionEntryWidget extends ConsumerWidget {
           )
         : null;
 
-    // TODO validation in separate file
+    Tuple2<ConversionType, String>? parsedInput = parseInput(input);
 
-    if (input.length < 3 ||
-        !typeFromPrefix.containsKey(input.substring(0, 2))) {
+    if (parsedInput == null) {
       return ListTile(
         subtitle: subtitle,
         title: Text(
@@ -52,23 +53,19 @@ class ConversionEntryWidget extends ConsumerWidget {
       );
     }
 
-    String inputPrefix = input.substring(0, 2);
-    ConversionType inputType = typeFromPrefix[inputPrefix]!;
-    String inputVal = input.substring(2);
+    ConversionType inputType = parsedInput.item1;
+    String inputData = parsedInput.item2;
 
     String result = converted(
-      data: inputVal,
+      data: inputData,
       targetSize: targetSize,
       inputType: inputType,
       targetType: targetType,
     );
-    String resultData = result.substring(2);
+    String resultData = parseInput(result)!.item2;
     String symmetric = converted(
-      data: splitSign(resultData).item1 +
-          targetType.alphabet[0] *
-              (targetSize - splitSign(resultData).item2.length) +
-          splitSign(resultData).item2,
-      targetSize: splitSign(inputVal).item2.length,
+      data: resultData,
+      targetSize: splitSign(inputData).item2.length,
       inputType: targetType,
       targetType: inputType,
     );
@@ -95,7 +92,8 @@ class ConversionEntryWidget extends ConsumerWidget {
                   result,
                   style: _displayTitleStyle,
                 ),
-                if (symmetric != inputPrefix + leftTrimmed(inputVal, inputType))
+                if (symmetric !=
+                    inputType.prefix + leftTrimmed(inputData, inputType))
                   const Divider(
                     color: ColorTheme.warning,
                     thickness: 4,
