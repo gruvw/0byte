@@ -1,6 +1,6 @@
 {
-    "name": "app_0byte",
-    "short_name": "app_0byte",
+    "name": "0byte",
+    "short_name": "0byte",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
