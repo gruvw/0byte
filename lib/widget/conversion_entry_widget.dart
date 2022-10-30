@@ -10,13 +10,6 @@ import 'package:app_0byte/utils/conversion.dart';
 import 'package:tuple/tuple.dart';
 
 class ConversionEntryWidget extends ConsumerWidget {
-  static const _displayTitleStyle = TextStyle(
-    fontFamily: FontTheme.fontFamily2,
-    fontSize: FontTheme.fontSize2,
-    color: ColorTheme.text1,
-    fontWeight: FontWeight.w500,
-  );
-
   final String input;
   final String? label;
 
@@ -44,12 +37,7 @@ class ConversionEntryWidget extends ConsumerWidget {
     if (parsedInput == null) {
       return ListTile(
         subtitle: subtitle,
-        title: Text(
-          input,
-          style: _displayTitleStyle.apply(
-            color: ColorTheme.danger,
-          ),
-        ),
+        title: _Number(input),
       );
     }
 
@@ -78,20 +66,14 @@ class ConversionEntryWidget extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                input,
-                style: _displayTitleStyle,
-              ),
-              if (subtitle != null) subtitle
+              _Number(input),
+              if (subtitle != null) subtitle,
             ],
           ),
           IntrinsicWidth(
             child: Column(
               children: [
-                Text(
-                  result,
-                  style: _displayTitleStyle,
-                ),
+                _Number(result),
                 if (symmetric !=
                     inputType.prefix + leftTrimmed(inputData, inputType))
                   const Divider(
@@ -104,6 +86,51 @@ class ConversionEntryWidget extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _Number extends StatelessWidget {
+  static const _displayTitleStyle = TextStyle(
+    fontFamily: FontTheme.fontFamily2,
+    fontSize: FontTheme.fontSize2,
+    color: ColorTheme.text1,
+    fontWeight: FontWeight.w500,
+  );
+
+  final String number;
+
+  const _Number(this.number);
+
+  @override
+  Widget build(BuildContext context) {
+    Tuple2<ConversionType, String>? parsedNumber = parseInput(number);
+
+    if (parsedNumber == null) {
+      return Text(
+        number,
+        style: _displayTitleStyle.apply(
+          color: ColorTheme.danger,
+        ),
+      );
+    }
+
+    ConversionType numberType = parsedNumber.item1;
+    String numberData = parsedNumber.item2;
+
+    return Row(
+      children: [
+        Text(
+          numberType.prefix,
+          style: _displayTitleStyle.apply(
+            color: ColorTheme.textPrefix,
+          ),
+        ),
+        Text(
+          numberData,
+          style: _displayTitleStyle,
+        ),
+      ],
     );
   }
 }

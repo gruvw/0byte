@@ -87,6 +87,10 @@ class ConverterPage extends StatelessWidget {
                     input: "0s-7",
                     label: "Negative test",
                   ),
+                  ConversionEntryWidget(
+                    input: "0b111100001010",
+                    label: "Negative test",
+                  ),
                 ],
               ),
             ),

@@ -11,17 +11,17 @@ No support for bookmarking, no data persistence, basic data validation
 [X] Change conversion target
 [X] Change target size
 [X] Handle scrolling
-[ ] Color data prefix
+[X] Color data prefix
 [X] Testing of conversion
 
 ## Beta release `0.0.1-b`
 
-[ ] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input)
+[ ] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii)
 [ ] Handle entries UI overflow (middle)
 [ ] Reorder entries
 [ ] Create Logo + integration
 [ ] Splash screen
-[ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation)
+[ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process)
 [ ] Copy values on long click
 
 ## Alpha release `0.0.2-a.1`
