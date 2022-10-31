@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/styles/colors.dart';
+import 'package:app_0byte/styles/fonts.dart';
 
 class ConversionTitleWidget extends StatelessWidget {
   static const _titleStyle = TextStyle(fontSize: 23);
@@ -37,6 +38,7 @@ class _ConversionTypeSelector extends ConsumerWidget {
   static const _targetTextStyle = TextStyle(
     color: ColorTheme.accent,
     fontWeight: FontWeight.w600,
+    fontFamily: FontTheme.fontFamily2,
     fontSize: 23,
   );
 
@@ -63,14 +65,14 @@ class _ConversionTypeSelector extends ConsumerWidget {
             ],
           ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: DropdownButtonHideUnderline(
             child: DropdownButton(
               dropdownColor: ColorTheme.background2,
               focusColor: ColorTheme.background3,
               elevation: 0,
               icon: const Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 3),
                 child: Icon(
                   Icons.expand_more,
                   size: 32,
@@ -88,10 +90,7 @@ class _ConversionTypeSelector extends ConsumerWidget {
                 for (final conversionType in ConversionType.values)
                   DropdownMenuItem(
                     value: conversionType,
-                    child: Text(
-                      conversionType.label,
-                      style: _targetTextStyle,
-                    ),
+                    child: Text(conversionType.label),
                   ),
                 DropdownMenuItem(
                   enabled: false,

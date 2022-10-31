@@ -1,9 +1,11 @@
+import 'package:app_0byte/providers/providers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ConverterPage extends StatelessWidget {
   const ConverterPage({super.key});
@@ -32,71 +34,45 @@ class ConverterPage extends StatelessWidget {
       ),
       body: Column(
         mainAxisSize: MainAxisSize.max,
-        children: [
-          const ConversionTitleWidget(),
+        children: const [
+          ConversionTitleWidget(),
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                // scrollDirection: Axis.vertical,
-                // shrinkWrap: true,
-                children: [
-                  ConversionEntryWidget(
-                    input: "invalid number",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s-10",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s-1",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s37",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s-37",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0d37",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s9999999999",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s01",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s-0001",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s9",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0d9",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0s-7",
-                    label: "Negative test",
-                  ),
-                  ConversionEntryWidget(
-                    input: "0b111100001010",
-                    label: "Negative test",
-                  ),
-                ],
-              ),
+              child: _NumberEntries(),
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _NumberEntries extends ConsumerWidget {
+  const _NumberEntries();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final entries = ref.watch(entriesProvider);
+
+    if (entries.isEmpty) {
+      return TextButton(
+          onPressed: (() =>
+              database.createNumberEntry(number: "0b11111", label: "value")),
+          child: Text("click me to add entry"));
+    }
+
+    return Column(
+      children: [
+        for (final entry in entries)
+          ConversionEntryWidget(
+            input: entry.number,
+            label: entry.label,
+          ),
+        TextButton(
+            onPressed: (() => database.createNumberEntry(
+                number: "0b010101", label: "another value")),
+            child: Text("click me to add another entry")),
+      ],
     );
   }
 }

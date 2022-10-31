@@ -37,7 +37,7 @@ class ConversionEntryWidget extends ConsumerWidget {
     if (parsedInput == null) {
       return ListTile(
         subtitle: subtitle,
-        title: _Number(input),
+        title: _NumberWidget(input),
       );
     }
 
@@ -66,14 +66,14 @@ class ConversionEntryWidget extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _Number(input),
+              _NumberWidget(input),
               if (subtitle != null) subtitle,
             ],
           ),
           IntrinsicWidth(
             child: Column(
               children: [
-                _Number(result),
+                _NumberWidget(result),
                 if (symmetric !=
                     inputType.prefix + leftTrimmed(inputData, inputType))
                   const Divider(
@@ -90,7 +90,7 @@ class ConversionEntryWidget extends ConsumerWidget {
   }
 }
 
-class _Number extends StatelessWidget {
+class _NumberWidget extends StatelessWidget {
   static const _displayTitleStyle = TextStyle(
     fontFamily: FontTheme.fontFamily2,
     fontSize: FontTheme.fontSize2,
@@ -100,7 +100,7 @@ class _Number extends StatelessWidget {
 
   final String number;
 
-  const _Number(this.number);
+  const _NumberWidget(this.number);
 
   @override
   Widget build(BuildContext context) {
