@@ -5,24 +5,31 @@ import 'package:app_0byte/models/flutter_store/flutter_number_entry.dart';
 import 'package:app_0byte/models/number_entry.dart';
 
 class FlutterDatabase extends Database {
-  final List<FlutterNumberEntry> _entries = [];
+  final List<FlutterUserEntry> _entries = [];
 
+  // ASK: should I factorize notifier logic to Database ?
   final StreamController<EntryEvent> entryEventsController =
       StreamController<EntryEvent>.broadcast();
 
   @override
-  NumberEntry createNumberEntry({
-    required String number,
+  UserEntry createUserEntry({
+    required String input,
     required String label,
   }) {
-    FlutterNumberEntry entry = FlutterNumberEntry(number: number, label: label);
+    FlutterUserEntry entry = FlutterUserEntry(input: input, label: label);
     _entries.add(entry);
     entryEventsController.add(EntryEvent());
     return entry;
   }
 
   @override
-  List<NumberEntry> getEntries() {
+  void deleteUserEntry(UserEntry entry) {
+    _entries.remove(entry);
+    entryEventsController.add(EntryEvent());
+  }
+
+  @override
+  List<UserEntry> getEntries() {
     return List.unmodifiable(_entries);
   }
 

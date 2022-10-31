@@ -1,12 +1,14 @@
 import 'package:app_0byte/models/number_entry.dart';
 
 abstract class Database {
-  NumberEntry createNumberEntry({
-    required String number,
+  UserEntry createUserEntry({
+    required String input,
     required String label,
   });
 
-  List<NumberEntry> getEntries();
+  void deleteUserEntry(UserEntry entry);
+
+  List<UserEntry> getEntries();
 
   Stream<EntryEvent> watchEntries();
 }

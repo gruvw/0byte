@@ -1,7 +1,7 @@
-import 'package:app_0byte/providers/providers.dart';
+import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
@@ -12,8 +12,6 @@ class ConverterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int n = ConversionType.hexadecimal.defaultTargetSize;
-
     return Scaffold(
       backgroundColor: ColorTheme.background1,
       appBar: AppBar(
@@ -57,21 +55,24 @@ class _NumberEntries extends ConsumerWidget {
     if (entries.isEmpty) {
       return TextButton(
           onPressed: (() =>
-              database.createNumberEntry(number: "0b11111", label: "value")),
+              database.createUserEntry(input: "0b11111", label: "value")),
           child: Text("click me to add entry"));
     }
 
     return Column(
       children: [
         for (final entry in entries)
-          ConversionEntryWidget(
-            input: entry.number,
-            label: entry.label,
+          SlidableDelete(
+            onDelete: (_) => entry.delete(),
+            child: ConversionEntryWidget(entry: entry),
           ),
         TextButton(
-            onPressed: (() => database.createNumberEntry(
-                number: "0b010101", label: "another value")),
-            child: Text("click me to add another entry")),
+          onPressed: () => database.createUserEntry(
+            input: "0b010101",
+            label: "another value",
+          ),
+          child: Text("click me to add another entry"),
+        ),
       ],
     );
   }

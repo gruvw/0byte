@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/utils/conversion.dart';
-import 'package:tuple/tuple.dart';
 
 class ConversionEntryWidget extends ConsumerWidget {
-  final String input;
-  final String? label;
+  final UserEntry entry;
 
   const ConversionEntryWidget({
-    required this.input,
-    this.label,
+    required this.entry,
     super.key,
   });
 
@@ -24,20 +23,20 @@ class ConversionEntryWidget extends ConsumerWidget {
     final targetType = ref.watch(targetConversionTypeProvider);
     final targetSize = ref.watch(targetSizeProvider);
 
-    final Text? subtitle = label != null
+    final Text? subtitle = entry.label != null
         ? Text(
-            label!,
+            entry.label!,
             style: const TextStyle(
                 fontFamily: FontTheme.fontFamily1, color: ColorTheme.text2),
           )
         : null;
 
-    Tuple2<ConversionType, String>? parsedInput = parseInput(input);
+    Tuple2<ConversionType, String>? parsedInput = parseInput(entry.input);
 
     if (parsedInput == null) {
       return ListTile(
+        title: _NumberWidget(entry.input),
         subtitle: subtitle,
-        title: _NumberWidget(input),
       );
     }
 
@@ -66,7 +65,7 @@ class ConversionEntryWidget extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _NumberWidget(input),
+              _NumberWidget(inputType.prefix + inputData),
               if (subtitle != null) subtitle,
             ],
           ),

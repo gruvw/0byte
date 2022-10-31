@@ -12,7 +12,7 @@ final targetConversionTypeProvider =
 final targetSizeProvider =
     StateProvider((ref) => ConversionType.hexadecimal.defaultTargetSize);
 
-final entriesProvider = Provider<List<NumberEntry>>(
+final entriesProvider = Provider<List<UserEntry>>(
   (ref) {
     ref.watch(_entryEventStreamProvider);
     return database.getEntries();

@@ -1,4 +1,6 @@
-abstract class NumberEntry {
-  abstract String number;
-  abstract String label;
+abstract class UserEntry {
+  abstract String input;
+  abstract String? label;
+
+  void delete();
 }
