@@ -11,6 +11,6 @@ class FlutterUserEntry extends UserEntry {
 
   @override
   void delete() {
-    database.deleteUserEntry(this);
+    database.deleteUserEntry(entry: this);
   }
 }
