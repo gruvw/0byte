@@ -10,6 +10,7 @@ No support for bookmarking, no data persistence, basic data validation
 [X] Delete entry
 [X] Change conversion target
 [X] Change target size
+[X] Arbitrary large number conversion
 [X] Handle scrolling
 [X] Color data prefix
 [X] Testing of conversion
@@ -21,7 +22,7 @@ No support for bookmarking, no data persistence, basic data validation
 [ ] Reorder entries
 [ ] Create Logo + integration
 [ ] Splash screen
-[ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process)
+[ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions)
 [ ] Copy values on long click
 
 ## Alpha release `0.0.2-a.1`

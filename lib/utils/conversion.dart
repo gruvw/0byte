@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
 
+// TODO maybe async
+
 String converted({
   required String data,
   required ConversionType inputType,
@@ -14,10 +16,11 @@ String converted({
   String absData = negativeInput ? data.substring(1) : data;
 
   // Absolute input to decimal
-  num abs = 0;
+  BigInt abs = BigInt.zero;
   for (int i = 0; i < absData.length; ++i) {
-    abs += inputType.alphabet.indexOf(absData[absData.length - i - 1]) *
-        pow(inputType.base, i);
+    abs += BigInt.from(
+            inputType.alphabet.indexOf(absData[absData.length - i - 1])) *
+        BigInt.from(inputType.base).pow(i);
   }
 
   // Absolute input decimal to binary
@@ -31,8 +34,8 @@ String converted({
       growable: true);
 
   for (int i = 0; i < binary.length; ++i) {
-    binary[binary.length - i - 1] = abs % 2 != 0;
-    abs = abs ~/ 2;
+    binary[binary.length - i - 1] = (abs % BigInt.two).toInt() != 0;
+    abs = abs ~/ BigInt.two;
   }
 
   // Negative input => transform binary using 2's complement
@@ -54,16 +57,16 @@ String converted({
   if (negativeOutput) _twoComplement(binary);
 
   // Unsigned binary output => decimal
-  num number = 0;
+  BigInt number = BigInt.zero;
   for (int i = 0; i < binary.length; ++i) {
-    number += binary[binary.length - i - 1] ? pow(2, i) : 0;
+    number += binary[binary.length - i - 1] ? BigInt.two.pow(i) : BigInt.zero;
   }
 
   // Decimal => final base
+  BigInt targetBase = BigInt.from(targetType.base);
   for (int i = 0; i < targetSize; ++i) {
-    converted =
-        targetType.alphabet[(number % targetType.base) as int] + converted;
-    number = number ~/ targetType.base;
+    converted = targetType.alphabet[(number % targetBase).toInt()] + converted;
+    number = number ~/ targetBase;
   }
 
   converted = leftTrimmed(converted, targetType);

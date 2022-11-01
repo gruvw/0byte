@@ -233,7 +233,7 @@ void main() {
 
   group("Random identity conversion", () {
     final Random random = Random();
-    const int maxSize = 9; // TODO fix more precision (num)
+    const int maxSize = 100;
     const int minSize = 1;
     const int iterations = 10000;
     for (final conversionType in ConversionType.values) {
