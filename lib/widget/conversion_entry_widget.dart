@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
+import 'package:app_0byte/widget/number_widget.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
@@ -9,8 +10,6 @@ import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/utils/conversion.dart';
-
-// TODO ConversionEntry and stateless ConvertedWidget(entry)
 
 class ConversionEntryWidget extends HookConsumerWidget {
   final UserEntry entry;
@@ -36,7 +35,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
         counterText: "",
         border: InputBorder.none,
         isDense: true,
-        contentPadding: EdgeInsets.fromLTRB(0, 2, 0, 5),
+        contentPadding: EdgeInsets.fromLTRB(0, 2, 0, 0),
       ),
       onSubmitted: (value) {
         entry.label = value;
@@ -47,7 +46,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
 
     if (parsedInput == null) {
       return ListTile(
-        title: _NumberWidget(entry.input),
+        title: NumberWidget(entry.input),
         subtitle: subtitle,
       );
     }
@@ -55,7 +54,48 @@ class ConversionEntryWidget extends HookConsumerWidget {
     ConversionType inputType = parsedInput.item1;
     String inputData = parsedInput.item2;
 
-    // Maybe dont call in build ?
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IntrinsicWidth(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                NumberWidget(inputType.prefix + inputData),
+                subtitle,
+              ],
+            ),
+          ),
+          _ConvertedWidget(
+            inputData: inputData,
+            inputType: inputType,
+            targetSize: targetSize,
+            targetType: targetType,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ConvertedWidget extends StatelessWidget {
+  final String inputData;
+  final ConversionType inputType;
+  final int targetSize;
+  final ConversionType targetType;
+
+  const _ConvertedWidget({
+    required this.inputData,
+    required this.inputType,
+    required this.targetSize,
+    required this.targetType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // FIXME Maybe dont call in build ?
     String result = converted(
       data: inputData,
       targetSize: targetSize,
@@ -70,81 +110,18 @@ class ConversionEntryWidget extends HookConsumerWidget {
       targetType: inputType,
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return IntrinsicWidth(
+      child: Column(
         children: [
-          IntrinsicWidth(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _NumberWidget(inputType.prefix + inputData),
-                subtitle,
-              ],
+          NumberWidget(result),
+          if (symmetric != inputType.prefix + leftTrimmed(inputData, inputType))
+            const Divider(
+              color: ColorTheme.warning,
+              thickness: 4,
+              height: 6,
             ),
-          ),
-          IntrinsicWidth(
-            child: Column(
-              children: [
-                _NumberWidget(result),
-                if (symmetric !=
-                    inputType.prefix + leftTrimmed(inputData, inputType))
-                  const Divider(
-                    color: ColorTheme.warning,
-                    thickness: 4,
-                    height: 6,
-                  ),
-              ],
-            ),
-          ),
         ],
       ),
-    );
-  }
-}
-
-class _NumberWidget extends StatelessWidget {
-  static const _displayTitleStyle = TextStyle(
-    fontFamily: FontTheme.fontFamily2,
-    fontSize: FontTheme.fontSize2,
-    color: ColorTheme.text1,
-    fontWeight: FontWeight.w500,
-  );
-
-  final String number;
-
-  const _NumberWidget(this.number);
-
-  @override
-  Widget build(BuildContext context) {
-    Tuple2<ConversionType, String>? parsedNumber = parseInput(number);
-
-    if (parsedNumber == null) {
-      return Text(
-        number,
-        style: _displayTitleStyle.apply(
-          color: ColorTheme.danger,
-        ),
-      );
-    }
-
-    ConversionType numberType = parsedNumber.item1;
-    String numberData = parsedNumber.item2;
-
-    return Row(
-      children: [
-        Text(
-          numberType.prefix,
-          style: _displayTitleStyle.apply(
-            color: ColorTheme.textPrefix,
-          ),
-        ),
-        Text(
-          numberData,
-          style: _displayTitleStyle,
-        ),
-      ],
     );
   }
 }

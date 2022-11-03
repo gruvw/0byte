@@ -17,7 +17,7 @@ No support for bookmarking, no data persistence, basic data validation
 
 ## Beta release `0.0.1-b`
 
-[ ] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii)
+[ ] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii, subtitle not empty)
 [ ] Handle entries UI overflow (middle)
 [ ] Reorder entries
 [ ] Create Logo + integration

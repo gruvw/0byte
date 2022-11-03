@@ -8,6 +8,8 @@ class FlutterDatabase extends Database {
     createUserEntry(input: "0d4", label: "y");
     createUserEntry(input: "0d8", label: "z");
     createUserEntry(input: "0d11", label: "zz");
+    createUserEntry(input: "0aaa", label: "zz");
+    createUserEntry(input: "0x30", label: "zz");
   }
 
   final List<FlutterUserEntry> _entries = [];
