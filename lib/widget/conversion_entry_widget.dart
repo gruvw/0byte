@@ -10,7 +10,9 @@ import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
-class ConversionEntryWidget extends ConsumerWidget {
+// TODO ConversionEntry and stateless ConvertedWidget(entry)
+
+class ConversionEntryWidget extends HookConsumerWidget {
   final UserEntry entry;
 
   const ConversionEntryWidget({
@@ -23,13 +25,23 @@ class ConversionEntryWidget extends ConsumerWidget {
     final targetType = ref.watch(targetConversionTypeProvider);
     final targetSize = ref.watch(targetSizeProvider);
 
-    final Text? subtitle = entry.label != null
-        ? Text(
-            entry.label!,
-            style: const TextStyle(
-                fontFamily: FontTheme.fontFamily1, color: ColorTheme.text2),
-          )
-        : null;
+    final entry = ref.watch(entryProvider(this.entry));
+
+    final Widget subtitle = TextField(
+      controller: TextEditingController(text: entry.label),
+      cursorColor: ColorTheme.text2,
+      style: const TextStyle(
+          fontFamily: FontTheme.fontFamily1, color: ColorTheme.text2),
+      decoration: const InputDecoration(
+        counterText: "",
+        border: InputBorder.none,
+        isDense: true,
+        contentPadding: EdgeInsets.fromLTRB(0, 2, 0, 5),
+      ),
+      onSubmitted: (value) {
+        entry.label = value;
+      },
+    );
 
     Tuple2<ConversionType, String>? parsedInput = parseInput(entry.input);
 
@@ -43,6 +55,7 @@ class ConversionEntryWidget extends ConsumerWidget {
     ConversionType inputType = parsedInput.item1;
     String inputData = parsedInput.item2;
 
+    // Maybe dont call in build ?
     String result = converted(
       data: inputData,
       targetSize: targetSize,
@@ -62,12 +75,14 @@ class ConversionEntryWidget extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _NumberWidget(inputType.prefix + inputData),
-              if (subtitle != null) subtitle,
-            ],
+          IntrinsicWidth(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _NumberWidget(inputType.prefix + inputData),
+                subtitle,
+              ],
+            ),
           ),
           IntrinsicWidth(
             child: Column(

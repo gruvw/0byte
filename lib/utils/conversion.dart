@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
 
-// TODO maybe async
-
 String converted({
   required String data,
   required ConversionType inputType,
@@ -43,9 +41,9 @@ String converted({
 
   // Extend sign
   if (negativeInput) {
-    int n_add = (targetSize * _log2(targetType.base)).ceil() - binary.length;
-    if (n_add > 0) {
-      binary.insertAll(0, List.filled(n_add, binary[0]));
+    int nAdd = (targetSize * _log2(targetType.base)).ceil() - binary.length;
+    if (nAdd > 0) {
+      binary.insertAll(0, List.filled(nAdd, binary[0]));
     }
   }
 

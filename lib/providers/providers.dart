@@ -14,12 +14,22 @@ final targetSizeProvider =
 
 final entriesProvider = Provider<List<UserEntry>>(
   (ref) {
-    ref.watch(_entryEventStreamProvider);
+    ref.watch(_entriesEventStreamProvider);
     return database.getEntries();
   },
 );
-final _entryEventStreamProvider = StreamProvider<EntryEvent>(
+final _entriesEventStreamProvider = StreamProvider<EntryEvent>(
   (ref) async* {
     yield* database.watchEntries();
+  },
+);
+
+final entryProvider = Provider.family<UserEntry, UserEntry>((ref, entry) {
+  ref.watch(_entryEventStreamProvider(entry));
+  return entry;
+});
+final _entryEventStreamProvider = StreamProvider.family<EntryEvent, UserEntry>(
+  (ref, entry) async* {
+    yield* database.watchEntries().where((event) => event.entry == entry);
   },
 );
