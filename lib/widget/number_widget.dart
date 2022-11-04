@@ -16,24 +16,23 @@ class NumberWidget extends StatelessWidget {
   final ConversionType type;
   final String input;
 
+  final void Function(String newInput)? onChanged;
+
   const NumberWidget({
     super.key,
     required this.type,
     required this.input,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     String? number = parseInput(type, input);
 
-    if (number == null) {
-      return Text(
-        input,
-        style: _displayTitleStyle.apply(
-          color: ColorTheme.danger,
-        ),
-      );
-    }
+    String text = number ?? input;
+    TextStyle textStyle = _displayTitleStyle.apply(
+      color: number == null ? ColorTheme.danger : null,
+    );
 
     return Row(
       children: [
@@ -43,10 +42,28 @@ class NumberWidget extends StatelessWidget {
             color: ColorTheme.textPrefix,
           ),
         ),
-        Text(
-          number,
-          style: _displayTitleStyle,
-        ),
+        if (onChanged != null)
+          IntrinsicWidth(
+            child: TextField(
+              controller: TextEditingController(text: text),
+              cursorColor: ColorTheme.text1,
+              keyboardType: TextInputType.number,
+              style: textStyle,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              ),
+              onSubmitted: (value) {
+                onChanged!(value);
+              },
+            ),
+          )
+        else
+          Text(
+            text,
+            style: textStyle,
+          ),
       ],
     );
   }

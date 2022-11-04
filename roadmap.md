@@ -6,7 +6,7 @@ No support for bookmarking, no data persistence, basic data validation
 
 [ ] Data input form (text to input first value) (keyboard digit row ?)
 [X] Add entry
-[ ] Edit entry (number or rename)
+[X] Edit entry (number or rename)
 [X] Delete entry
 [X] Change conversion target
 [X] Change target size

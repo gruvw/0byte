@@ -32,15 +32,21 @@ class ConversionEntryWidget extends HookConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IntrinsicWidth(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                NumberWidget(
-                  type: entry.type,
-                  input: number ?? entry.input,
-                ),
-                TextField(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              NumberWidget(
+                type: entry.type,
+                input: number ?? entry.input,
+                onChanged: (newInput) {
+                  if (newInput.isEmpty) {
+                    return entry.delete();
+                  }
+                  entry.input = newInput;
+                },
+              ),
+              IntrinsicWidth(
+                child: TextField(
                   controller: TextEditingController(text: entry.label),
                   cursorColor: ColorTheme.text2,
                   style: const TextStyle(
@@ -52,12 +58,11 @@ class ConversionEntryWidget extends HookConsumerWidget {
                     isDense: true,
                     contentPadding: EdgeInsets.fromLTRB(0, 2, 0, 0),
                   ),
-                  onSubmitted: (value) {
-                    entry.label = value;
-                  },
+                  // TODO what to do when user empties subtitle
+                  onSubmitted: (value) => entry.label = value,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           if (number != null)
             _ConvertedWidget(
