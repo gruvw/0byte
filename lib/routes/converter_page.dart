@@ -1,3 +1,4 @@
+import 'package:app_0byte/models/conversion_types.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/providers/providers.dart';
@@ -55,8 +56,11 @@ class _NumberEntries extends ConsumerWidget {
     // TODO
     if (entries.isEmpty) {
       return TextButton(
-          onPressed: (() =>
-              database.createUserEntry(input: "0b11111", label: "value")),
+          onPressed: (() => database.createUserEntry(
+                type: ConversionType.binary,
+                input: "11111",
+                label: "value",
+              )),
           child: Text("click me to add entry"));
     }
 
@@ -69,7 +73,8 @@ class _NumberEntries extends ConsumerWidget {
           ),
         TextButton(
           onPressed: () => database.createUserEntry(
-            input: "0b010101",
+            type: ConversionType.binary,
+            input: "010101",
             label: "another value",
           ),
           child: Text("click me to add another entry"),

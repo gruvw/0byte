@@ -6,229 +6,205 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
-// TODO name tests
-
 void main() {
-  test("", () {
-    var parsed = parseInput("0b100110")!;
+  test("Binary to signed", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 10,
+      inputType: ConversionType.binary,
+      number: parseInput(ConversionType.binary, "100110")!,
       targetType: ConversionType.signedDecimal,
+      targetSize: 10,
     );
-    expect(res, equals("0s-26"));
+    expect(res, equals("-26"));
   });
 
-  test("", () {
-    var parsed = parseInput("0s-9999990")!;
+  test("Large signed negative identity", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-9999990")!,
+      targetType: ConversionType.signedDecimal,
       targetSize: 10,
-      targetType: ConversionType.signedDecimal,
     );
-    expect(res, equals("0s-9999990"));
+    expect(res, equals("-9999990"));
   });
-  test("", () {
-    var parsed = parseInput("0b11111101111101")!;
+  test("Binary to ASCII", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 3,
+      inputType: ConversionType.binary,
+      number: parseInput(ConversionType.binary, "11111101111101")!,
       targetType: ConversionType.ascii,
-    );
-    expect(res, "0a~}");
-  });
-  test("", () {
-    var parsed = parseInput("0x7D")!;
-    String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
       targetSize: 3,
+    );
+    expect(res, "~}");
+  });
+  test("Hexadecimal to ASCII", () {
+    String res = converted(
+      inputType: ConversionType.hexadecimal,
+      number: parseInput(ConversionType.hexadecimal, "7D")!,
       targetType: ConversionType.ascii,
-    );
-    expect(res, "0a}");
-  });
-  test("", () {
-    var parsed = parseInput("0a~")!;
-    String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
       targetSize: 3,
-      targetType: ConversionType.signedDecimal,
     );
-    expect(res, "0s-2");
+    expect(res, "}");
   });
-  test("", () {
-    var parsed = parseInput("0s10")!;
+  test("ASCII as signed", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
+      inputType: ConversionType.ascii,
+      number: parseInput(ConversionType.ascii, "~")!,
+      targetType: ConversionType.signedDecimal,
+      targetSize: 3,
+    );
+    expect(res, "-2");
+  });
+  test("Small hexadecimal from signed", () {
+    String res = converted(
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "10")!,
       targetSize: 2,
       targetType: ConversionType.hexadecimal,
     );
-    expect(res, "0x0A");
+    expect(res, "0A");
   });
-  test("", () {
-    var parsed = parseInput("0s-10")!;
+  test("Signed to binary", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 10,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-10")!,
       targetType: ConversionType.binary,
+      targetSize: 10,
     );
-    expect(res, "0b1111110110");
+    expect(res, "1111110110");
   });
-  test("", () {
-    var parsed = parseInput("0s-10")!;
+  test("Signed to hexadecimal", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 8,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-10")!,
       targetType: ConversionType.hexadecimal,
-    );
-    expect(res, "0xFFFFFFF6");
-  });
-  test("", () {
-    var parsed = parseInput("0s-1")!;
-    String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
       targetSize: 8,
-      targetType: ConversionType.hexadecimal,
     );
-    expect(res, "0xFFFFFFFF");
+    expect(res, "FFFFFFF6");
   });
-  test("", () {
-    var parsed = parseInput("0x25")!;
+  test("-1 to hexadecimal", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 3,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-1")!,
+      targetType: ConversionType.hexadecimal,
+      targetSize: 8,
+    );
+    expect(res, "FFFFFFFF");
+  });
+  test("Hexadecimal to unsigned", () {
+    String res = converted(
+      inputType: ConversionType.hexadecimal,
+      number: parseInput(ConversionType.hexadecimal, "25")!,
       targetType: ConversionType.unsignedDecimal,
-    );
-    expect(res, "0d37");
-  });
-  test("", () {
-    var parsed = parseInput("0x25")!;
-    String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
       targetSize: 3,
+    );
+    expect(res, "37");
+  });
+  test("Hexadecimal to signed", () {
+    String res = converted(
+      inputType: ConversionType.hexadecimal,
+      number: parseInput(ConversionType.hexadecimal, "25")!,
       targetType: ConversionType.signedDecimal,
-    );
-    expect(res, "0s37");
-  });
-  test("", () {
-    var parsed = parseInput("0s37")!;
-    String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
       targetSize: 3,
-      targetType: ConversionType.hexadecimal,
     );
-    expect(res, "0x025");
+    expect(res, "37");
   });
-  test("", () {
-    var parsed = parseInput("0d37")!;
+  test("Signed to hexadecimal padded", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "37")!,
+      targetType: ConversionType.hexadecimal,
       targetSize: 3,
-      targetType: ConversionType.hexadecimal,
     );
-    expect(res, "0x025");
+    expect(res, "025");
   });
-  test("", () {
-    var parsed = parseInput("0s-37")!;
+  test("Unsigned to hexadecimal padded", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
+      inputType: ConversionType.unsignedDecimal,
+      number: parseInput(ConversionType.unsignedDecimal, "37")!,
+      targetType: ConversionType.hexadecimal,
+      targetSize: 3,
+    );
+    expect(res, "025");
+  });
+  test("Signed negative to hexadecimal", () {
+    String res = converted(
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-37")!,
+      targetType: ConversionType.hexadecimal,
       targetSize: 4,
-      targetType: ConversionType.hexadecimal,
     );
-    expect(res, "0xFFDB");
+    expect(res, "FFDB");
   });
-  test("", () {
-    var parsed = parseInput("0s9")!;
+  test("Signed identity", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 3,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "9")!,
       targetType: ConversionType.signedDecimal,
-    );
-    expect(res, "0s9");
-  });
-  test("", () {
-    var parsed = parseInput("0d9")!;
-    String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
       targetSize: 3,
-      targetType: ConversionType.signedDecimal,
     );
-    expect(res, "0s-7");
+    expect(res, "9");
   });
-  test("", () {
-    var parsed = parseInput("0s-7")!;
+  test("Unsigned to signed ?", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
+      inputType: ConversionType.unsignedDecimal,
+      number: parseInput(ConversionType.unsignedDecimal, "9")!,
+      targetType: ConversionType.signedDecimal,
+      targetSize: 3,
+    );
+    expect(res, "-7");
+  });
+  test("Signed to unsigned ?", () {
+    String res = converted(
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-7")!,
+      targetType: ConversionType.unsignedDecimal,
       targetSize: 1,
-      targetType: ConversionType.unsignedDecimal,
     );
-    expect(res, "0d9");
+    expect(res, "9");
   });
-  test("", () {
-    var parsed = parseInput("0s9999999999")!;
+  test("Large signed to hexadecimal", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 8,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "9999999999")!,
       targetType: ConversionType.hexadecimal,
-    );
-    expect(res, "0x540BE3FF");
-  });
-  test("", () {
-    var parsed = parseInput("0s0001")!;
-    String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
       targetSize: 8,
+    );
+    expect(res, "540BE3FF");
+  });
+  test("Padded signed identity", () {
+    String res = converted(
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "0001")!,
       targetType: ConversionType.signedDecimal,
+      targetSize: 8,
     );
-    expect(res, "0s1");
+    expect(res, "1");
   });
-  test("", () {
-    var parsed = parseInput("0s-1")!;
+  test("-1 to unsigned", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 2,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-1")!,
       targetType: ConversionType.unsignedDecimal,
-    );
-    expect(res, "0d27");
-  });
-  test("", () {
-    var parsed = parseInput("0s-00001")!;
-    String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
       targetSize: 2,
-      targetType: ConversionType.unsignedDecimal,
     );
-    expect(res, "0d27");
+    expect(res, "27");
   });
-  test("ASCII not negative", () {
-    var parsed = parseInput("0a-0")!;
+  test("Padded -1 to unsigned", () {
     String res = converted(
-      data: parsed.item2,
-      inputType: parsed.item1,
-      targetSize: 14,
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-00001")!,
+      targetType: ConversionType.unsignedDecimal,
+      targetSize: 2,
+    );
+    expect(res, "27");
+  });
+  test("ASCII not using sign", () {
+    String res = converted(
+      inputType: ConversionType.ascii,
+      number: parseInput(ConversionType.ascii, "-0")!,
       targetType: ConversionType.binary,
+      targetSize: 14,
     );
-    expect(res, "0b01011010110000");
+    expect(res, "01011010110000");
   });
 
   group("Random identity conversion", () {
@@ -240,19 +216,19 @@ void main() {
       test("on ${conversionType.name}", () {
         for (var i = 0; i < iterations; i++) {
           int length = random.nextInt(maxSize - minSize + 1) + minSize;
-          String input = conversionType.prefix;
+          String input = "";
           for (int i = 0; i < length; i++) {
             input += conversionType
                 .alphabet[random.nextInt(conversionType.alphabet.length)];
           }
-          var parsed = parseInput(input)!;
+          String number = parseInput(conversionType, input)!;
           String res = converted(
-            data: parsed.item2,
-            inputType: parsed.item1,
-            targetSize: parsed.item2.length,
+            inputType: conversionType,
+            number: number,
             targetType: conversionType,
+            targetSize: number.length,
           );
-          expect(res, parsed.item1.prefix + parsed.item2);
+          expect(res, number);
         }
       });
     }

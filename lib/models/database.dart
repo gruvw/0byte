@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -8,6 +9,7 @@ abstract class Database {
       StreamController<EntryEvent>.broadcast();
 
   UserEntry createUserEntry({
+    required ConversionType type,
     required String input,
     required String label,
   });

@@ -4,14 +4,14 @@ import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
 
 String converted({
-  required String data,
   required ConversionType inputType,
-  required int targetSize,
+  required String number,
   required ConversionType targetType,
+  required int targetSize,
 }) {
   bool negativeInput =
-      data.startsWith(sign) && inputType == ConversionType.signedDecimal;
-  String absData = negativeInput ? data.substring(1) : data;
+      number.startsWith(sign) && inputType == ConversionType.signedDecimal;
+  String absData = negativeInput ? number.substring(1) : number;
 
   // Absolute input to decimal
   BigInt abs = BigInt.zero;
@@ -55,21 +55,36 @@ String converted({
   if (negativeOutput) _twoComplement(binary);
 
   // Unsigned binary output => decimal
-  BigInt number = BigInt.zero;
+  BigInt decimal = BigInt.zero;
   for (int i = 0; i < binary.length; ++i) {
-    number += binary[binary.length - i - 1] ? BigInt.two.pow(i) : BigInt.zero;
+    decimal += binary[binary.length - i - 1] ? BigInt.two.pow(i) : BigInt.zero;
   }
 
   // Decimal => final base
   BigInt targetBase = BigInt.from(targetType.base);
   for (int i = 0; i < targetSize; ++i) {
-    converted = targetType.alphabet[(number % targetBase).toInt()] + converted;
-    number = number ~/ targetBase;
+    converted = targetType.alphabet[(decimal % targetBase).toInt()] + converted;
+    decimal = decimal ~/ targetBase;
   }
 
-  converted = leftTrimmed(converted, targetType);
+  converted = leftTrimmed(targetType, converted);
 
-  return targetType.prefix + (negativeOutput ? sign : "") + converted;
+  return (negativeOutput ? sign : "") + converted;
+}
+
+bool isSymmetric({
+  required ConversionType inputType,
+  required String number,
+  required ConversionType targetType,
+  required String result,
+}) {
+  String symmetric = converted(
+    number: result,
+    targetSize: splitSign(number).item2.length,
+    inputType: targetType,
+    targetType: inputType,
+  );
+  return number == symmetric;
 }
 
 double _log2(num x) => log(x) / log(2);

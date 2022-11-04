@@ -6,6 +6,9 @@ class FlutterUserEntry extends UserEntry {
   @override
   final FlutterDatabase database;
 
+  @override
+  final int typeIndex;
+
   String flutterInput;
   @override
   String get input => flutterInput;
@@ -26,6 +29,7 @@ class FlutterUserEntry extends UserEntry {
 
   FlutterUserEntry({
     required this.database,
+    required this.typeIndex,
     required this.flutterInput,
     required this.flutterLabel,
   });

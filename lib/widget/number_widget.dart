@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
 
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/styles/colors.dart';
@@ -14,36 +13,38 @@ class NumberWidget extends StatelessWidget {
     fontWeight: FontWeight.w500,
   );
 
-  final String number;
+  final ConversionType type;
+  final String input;
 
-  const NumberWidget(this.number);
+  const NumberWidget({
+    super.key,
+    required this.type,
+    required this.input,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Tuple2<ConversionType, String>? parsedNumber = parseInput(number);
+    String? number = parseInput(type, input);
 
-    if (parsedNumber == null) {
+    if (number == null) {
       return Text(
-        number,
+        input,
         style: _displayTitleStyle.apply(
           color: ColorTheme.danger,
         ),
       );
     }
 
-    ConversionType numberType = parsedNumber.item1;
-    String numberData = parsedNumber.item2;
-
     return Row(
       children: [
         Text(
-          numberType.prefix,
+          type.prefix,
           style: _displayTitleStyle.apply(
             color: ColorTheme.textPrefix,
           ),
         ),
         Text(
-          numberData,
+          number,
           style: _displayTitleStyle,
         ),
       ],
