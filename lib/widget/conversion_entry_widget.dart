@@ -45,6 +45,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
                   entry.input = newInput;
                 },
               ),
+              // Entry Label
               IntrinsicWidth(
                 child: TextField(
                   controller: TextEditingController(text: entry.label),
@@ -56,10 +57,15 @@ class ConversionEntryWidget extends HookConsumerWidget {
                     counterText: "",
                     border: InputBorder.none,
                     isDense: true,
-                    contentPadding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+                    contentPadding: EdgeInsets.fromLTRB(0, 3, 0, 0),
                   ),
-                  // TODO what to do when user empties subtitle
-                  onSubmitted: (value) => entry.label = value,
+                  onSubmitted: (value) {
+                    if (value.isEmpty) {
+                      final position = ref.read(entriesProvider).indexOf(entry);
+                      value = "Value ${position + 1}";
+                    }
+                    entry.label = value;
+                  },
                 ),
               ),
             ],

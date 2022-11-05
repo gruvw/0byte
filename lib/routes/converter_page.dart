@@ -77,10 +77,12 @@ class ConverterPage extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                final nbEntries = container.read(entriesProvider).length;
+
                 database.createUserEntry(
                   type: conversionType,
                   input: "",
-                  label: "VALUE",
+                  label: "Value ${nbEntries + 1}",
                 );
               },
             ),

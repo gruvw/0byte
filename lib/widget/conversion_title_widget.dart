@@ -67,6 +67,7 @@ class _ConversionTypeSelector extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: DropdownButtonHideUnderline(
+            // FIXME remove empty space (padding) caused by longest option
             child: DropdownButton(
               dropdownColor: ColorTheme.background2,
               focusColor: ColorTheme.background3,

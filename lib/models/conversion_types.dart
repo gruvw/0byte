@@ -1,13 +1,14 @@
 enum ConversionType {
   hexadecimal("HEX", "0123456789ABCDEF", 8, "0x"),
-  binary("BIN", "01", 32, "0b"),
-  unsignedDecimal("DEC", "0123456789", 32, "0d"),
-  signedDecimal("±DEC", "0123456789", 30, "0s"),
+  binary("BIN", "01", 16, "0b"),
+  unsignedDecimal("DEC", "0123456789", 10, "0d"),
+  signedDecimal("±DEC", "0123456789", 10, "0s"),
   ascii(
-      "ASCII",
-      "�······························· !\"#\$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·",
-      30,
-      "0a");
+    "ASCII",
+    "�······························· !\"#\$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·",
+    10,
+    "0a",
+  );
 
   final String label;
   final String alphabet;

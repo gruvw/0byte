@@ -44,6 +44,7 @@ class NumberWidget extends StatelessWidget {
         ),
         if (onChanged != null)
           IntrinsicWidth(
+            // Entry Input
             child: TextField(
               autofocus: input.isEmpty,
               controller: TextEditingController(text: text),
@@ -53,7 +54,7 @@ class NumberWidget extends StatelessWidget {
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 isDense: true,
-                contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                contentPadding: EdgeInsets.zero,
               ),
               onSubmitted: (value) {
                 onChanged!(value);
