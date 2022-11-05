@@ -45,10 +45,11 @@ class NumberWidget extends StatelessWidget {
         if (onChanged != null)
           IntrinsicWidth(
             child: TextField(
+              autofocus: input.isEmpty,
               controller: TextEditingController(text: text),
               cursorColor: ColorTheme.text1,
               keyboardType: TextInputType.number,
-              style: textStyle,
+              style: textStyle, // TODO dynamicly change using parseInput
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 isDense: true,
