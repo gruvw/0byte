@@ -51,8 +51,9 @@ class ConversionEntryWidget extends HookConsumerWidget {
                   controller: TextEditingController(text: entry.label),
                   cursorColor: ColorTheme.text2,
                   style: const TextStyle(
-                      fontFamily: FontTheme.fontFamily1,
-                      color: ColorTheme.text2),
+                    fontFamily: FontTheme.fontFamily1,
+                    color: ColorTheme.text2,
+                  ),
                   decoration: const InputDecoration(
                     counterText: "",
                     border: InputBorder.none,

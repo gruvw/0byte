@@ -7,7 +7,10 @@ import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/styles/fonts.dart';
 
 class ConversionTitleWidget extends StatelessWidget {
-  static const _titleStyle = TextStyle(fontSize: 23);
+  static const _titleStyle = TextStyle(
+    fontSize: FontTheme.fontSize3,
+    fontFamily: FontTheme.fontFamily1,
+  );
 
   const ConversionTitleWidget({super.key});
 
@@ -39,7 +42,7 @@ class _ConversionTypeSelector extends ConsumerWidget {
     color: ColorTheme.accent,
     fontWeight: FontWeight.w600,
     fontFamily: FontTheme.fontFamily2,
-    fontSize: 23,
+    fontSize: FontTheme.fontSize3,
   );
 
   const _ConversionTypeSelector();

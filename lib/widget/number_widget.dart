@@ -10,8 +10,8 @@ class NumberWidget extends StatelessWidget {
   static const _displayTitleStyle = TextStyle(
     fontFamily: FontTheme.fontFamily2,
     fontSize: FontTheme.fontSize2,
-    color: ColorTheme.text1,
     fontWeight: FontWeight.w500,
+    color: ColorTheme.text1,
   );
 
   static TextStyle styleFromInput(ConversionType type, String input) {
@@ -49,7 +49,6 @@ class NumberWidget extends StatelessWidget {
         ),
         if (onChanged != null)
           IntrinsicWidth(
-            // Entry Input
             child: _NumberField(
               type: type,
               text: text,
@@ -82,6 +81,7 @@ class _NumberField extends HookWidget {
     final controller = useTextEditingController(text: text);
     final style = useState(NumberWidget.styleFromInput(type, text));
 
+    // Entry Input
     return TextField(
       autofocus: text.isEmpty,
       controller: controller,

@@ -4,43 +4,7 @@ import 'package:app_0byte/models/flutter_store/flutter_number_entry.dart';
 import 'package:app_0byte/models/number_entry.dart';
 
 class FlutterDatabase extends Database {
-  FlutterDatabase() {
-    createUserEntry(
-      type: ConversionType.unsignedDecimal,
-      input: "1",
-      label: "x",
-    );
-    createUserEntry(
-      type: ConversionType.unsignedDecimal,
-      input: "4",
-      label: "y",
-    );
-    createUserEntry(
-      type: ConversionType.unsignedDecimal,
-      input: "8",
-      label: "z",
-    );
-    createUserEntry(
-      type: ConversionType.unsignedDecimal,
-      input: "11",
-      label: "zz",
-    );
-    createUserEntry(
-      type: ConversionType.ascii,
-      input: "aa",
-      label: "zz",
-    );
-    createUserEntry(
-      type: ConversionType.hexadecimal,
-      input: "30",
-      label: "zz",
-    );
-    createUserEntry(
-      type: ConversionType.signedDecimal,
-      input: "-02",
-      label: "zz",
-    );
-  }
+  FlutterDatabase();
 
   final List<FlutterUserEntry> _entries = [];
 
