@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/styles/colors.dart';
@@ -12,6 +13,14 @@ class NumberWidget extends StatelessWidget {
     color: ColorTheme.text1,
     fontWeight: FontWeight.w500,
   );
+
+  static TextStyle styleFromInput(ConversionType type, String input) {
+    String? number = parseInput(type, input);
+
+    return _displayTitleStyle.apply(
+      color: number == null ? ColorTheme.danger : null,
+    );
+  }
 
   final ConversionType type;
   final String input;
@@ -28,11 +37,7 @@ class NumberWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? number = parseInput(type, input);
-
     String text = number ?? input;
-    TextStyle textStyle = _displayTitleStyle.apply(
-      color: number == null ? ColorTheme.danger : null,
-    );
 
     return Row(
       children: [
@@ -45,28 +50,53 @@ class NumberWidget extends StatelessWidget {
         if (onChanged != null)
           IntrinsicWidth(
             // Entry Input
-            child: TextField(
-              autofocus: input.isEmpty,
-              controller: TextEditingController(text: text),
-              cursorColor: ColorTheme.text1,
-              keyboardType: TextInputType.number,
-              style: textStyle, // TODO dynamicly change using parseInput
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: EdgeInsets.zero,
-              ),
-              onSubmitted: (value) {
-                onChanged!(value);
-              },
+            child: _NumberField(
+              type: type,
+              text: text,
+              onSubmitted: onChanged!,
             ),
           )
         else
           Text(
             text,
-            style: textStyle,
+            style: styleFromInput(type, input),
           ),
       ],
+    );
+  }
+}
+
+class _NumberField extends HookWidget {
+  final ConversionType type;
+  final String text;
+  final void Function(String newInput) onSubmitted;
+
+  const _NumberField({
+    required this.type,
+    required this.text,
+    required this.onSubmitted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = useTextEditingController(text: text);
+    final style = useState(NumberWidget.styleFromInput(type, text));
+
+    return TextField(
+      autofocus: text.isEmpty,
+      controller: controller,
+      cursorColor: ColorTheme.text1,
+      keyboardType: TextInputType.number,
+      style: style.value,
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        isDense: true,
+        contentPadding: EdgeInsets.zero,
+      ),
+      onSubmitted: (value) => onSubmitted(value),
+      onChanged: (value) {
+        style.value = NumberWidget.styleFromInput(type, controller.text);
+      },
     );
   }
 }
