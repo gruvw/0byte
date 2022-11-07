@@ -1,3 +1,4 @@
+import 'package:app_0byte/styles/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -17,7 +18,7 @@ void main() {
         initialRoute: "/",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: "Roboto",
+          fontFamily: FontTheme.fontFamily1,
           scaffoldBackgroundColor: ColorTheme.background1,
           appBarTheme: const AppBarTheme(
             backgroundColor: ColorTheme.background3,

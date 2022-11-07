@@ -9,7 +9,7 @@ import 'package:app_0byte/styles/fonts.dart';
 class ConversionTitleWidget extends StatelessWidget {
   static const _titleStyle = TextStyle(
     fontSize: FontTheme.fontSize3,
-    fontFamily: FontTheme.fontFamily1,
+    fontFamily: FontTheme.fontFamily2,
   );
 
   const ConversionTitleWidget({super.key});
@@ -67,70 +67,69 @@ class _ConversionTypeSelector extends ConsumerWidget {
               const SizedBox(width: 10),
             ],
           ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          child: DropdownButtonHideUnderline(
-            // FIXME remove empty space (padding) caused by longest option
-            child: DropdownButton(
-              dropdownColor: ColorTheme.background2,
-              focusColor: ColorTheme.background3,
-              elevation: 0,
-              icon: const Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 3),
-                child: Icon(
-                  Icons.expand_more,
-                  size: 32,
-                  color: ColorTheme.accent,
-                ),
+        DropdownButtonHideUnderline(
+          // FIXME remove empty space (padding) caused by longest option
+          child: DropdownButton(
+            dropdownColor: ColorTheme.background2,
+            focusColor: ColorTheme.background3,
+            elevation: 0,
+            icon: const Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 3),
+              child: Icon(
+                Icons.expand_more,
+                size: 32,
+                color: ColorTheme.accent,
               ),
-              style: _targetTextStyle,
-              value: targetType,
-              onChanged: (value) {
-                ref.read(targetConversionTypeProvider.notifier).state = value!;
-                ref.read(targetSizeProvider.notifier).state =
-                    value.defaultTargetSize;
-              },
-              items: [
-                for (final conversionType in ConversionType.values)
-                  DropdownMenuItem(
-                    value: conversionType,
-                    child: Text(conversionType.label),
-                  ),
-                DropdownMenuItem(
-                  enabled: false,
-                  child: Row(
-                    children: [
-                      const Text(
-                        "N: ",
-                        style: _targetTextStyle,
-                      ),
-                      IntrinsicWidth(
-                        child: TextField(
-                          controller: nTextController,
-                          cursorColor: ColorTheme.accent,
-                          decoration: const InputDecoration(
-                            counterText: "",
-                            border: InputBorder.none,
-                          ),
-                          style: _targetTextStyle,
-                          maxLength: 2,
-                          keyboardType: TextInputType.number,
-                          enableSuggestions: false,
-                          onSubmitted: (value) {
-                            int newValue = int.tryParse(value) ?? targetSize;
-                            newValue = newValue != 0 ? newValue : targetSize;
-                            ref.read(targetSizeProvider.notifier).state =
-                                newValue;
-                            nTextController.text = newValue.toString();
-                            Navigator.pop(context);
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
             ),
+            style: _targetTextStyle,
+            value: targetType,
+            onChanged: (value) {
+              ref.read(targetConversionTypeProvider.notifier).state = value!;
+              ref.read(targetSizeProvider.notifier).state =
+                  value.defaultTargetSize;
+            },
+            items: [
+              for (final conversionType in ConversionType.values)
+                DropdownMenuItem(
+                  value: conversionType,
+                  child: Text(conversionType.label),
+                ),
+              DropdownMenuItem(
+                enabled: false,
+                child: Row(
+                  children: [
+                    const Text(
+                      "N:",
+                      style: _targetTextStyle,
+                    ),
+                    const SizedBox(width: 5),
+                    IntrinsicWidth(
+                      // N field
+                      child: TextField(
+                        controller: nTextController,
+                        cursorColor: ColorTheme.accent,
+                        decoration: const InputDecoration(
+                          counterText: "",
+                          border: InputBorder.none,
+                        ),
+                        style: _targetTextStyle,
+                        maxLength: 2,
+                        keyboardType: TextInputType.number,
+                        enableSuggestions: false,
+                        onSubmitted: (value) {
+                          int newValue = int.tryParse(value) ?? targetSize;
+                          newValue = newValue != 0 ? newValue : targetSize;
+                          ref.read(targetSizeProvider.notifier).state =
+                              newValue;
+                          nTextController.text = newValue.toString();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ],
