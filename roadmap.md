@@ -24,7 +24,7 @@ No support for bookmarking, no data persistence, basic data validation
 - [ ] Splash screen
 - [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy)
 - [X] Copy values on long click
-- [ ] Responsive Conversion
+- [X] Responsive Conversion
 
 ## Alpha release `v0.0.2-alpha.1`
 

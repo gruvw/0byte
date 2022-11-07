@@ -26,12 +26,14 @@ class NumberWidget extends StatelessWidget {
   final ConversionType type;
   final String input;
 
+  final void Function(String newInput)? onChanged;
   final void Function(String newInput)? onSubmitted;
 
   const NumberWidget({
     super.key,
     required this.type,
     required this.input,
+    this.onChanged,
     this.onSubmitted,
   });
 
@@ -65,7 +67,7 @@ class NumberWidget extends StatelessWidget {
     }
 
     return GestureDetector(
-      onSecondaryLongPress: valueToClipboard,
+      onSecondaryTap: valueToClipboard,
       onLongPress: valueToClipboard,
       child: Row(
         children: [
@@ -77,12 +79,13 @@ class NumberWidget extends StatelessWidget {
             ),
           ),
           // Number
-          if (onSubmitted != null)
+          if (onChanged != null && onSubmitted != null)
             // Editable
             IntrinsicWidth(
               child: _NumberField(
                 type: type,
                 text: text,
+                onChanged: onChanged!,
                 onSubmitted: onSubmitted!,
               ),
             )
@@ -101,11 +104,14 @@ class NumberWidget extends StatelessWidget {
 class _NumberField extends HookWidget {
   final ConversionType type;
   final String text;
+
+  final void Function(String newInput) onChanged;
   final void Function(String newInput) onSubmitted;
 
   const _NumberField({
     required this.type,
     required this.text,
+    required this.onChanged,
     required this.onSubmitted,
   });
 
@@ -126,8 +132,9 @@ class _NumberField extends HookWidget {
         isDense: true,
         contentPadding: EdgeInsets.zero,
       ),
-      onSubmitted: (value) => onSubmitted(value),
+      onSubmitted: onSubmitted,
       onChanged: (value) {
+        onChanged(value);
         style.value = NumberWidget.styleFromInput(type, controller.text);
       },
     );
