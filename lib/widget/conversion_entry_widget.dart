@@ -35,10 +35,11 @@ class ConversionEntryWidget extends HookConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Entry number
               NumberWidget(
                 type: entry.type,
                 input: number ?? entry.input,
-                onChanged: (newInput) {
+                onSubmitted: (newInput) {
                   if (newInput.isEmpty) {
                     return entry.delete();
                   }
@@ -71,6 +72,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
               ),
             ],
           ),
+          // Result
           if (number != null)
             _ConvertedWidget(
               number: number,

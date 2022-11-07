@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:app_0byte/models/conversion_types.dart';
@@ -25,13 +26,13 @@ class NumberWidget extends StatelessWidget {
   final ConversionType type;
   final String input;
 
-  final void Function(String newInput)? onChanged;
+  final void Function(String newInput)? onSubmitted;
 
   const NumberWidget({
     super.key,
     required this.type,
     required this.input,
-    this.onChanged,
+    this.onSubmitted,
   });
 
   @override
@@ -39,28 +40,60 @@ class NumberWidget extends StatelessWidget {
     String? number = parseInput(type, input);
     String text = number ?? input;
 
-    return Row(
-      children: [
-        Text(
-          type.prefix,
-          style: _displayTitleStyle.apply(
-            color: ColorTheme.textPrefix,
-          ),
-        ),
-        if (onChanged != null)
-          IntrinsicWidth(
-            child: _NumberField(
-              type: type,
-              text: text,
-              onSubmitted: onChanged!,
+    void valueToClipboard() {
+      FocusScope.of(context).unfocus();
+      String copy = type.prefix + text;
+      Clipboard.setData(ClipboardData(text: copy)).then(
+        (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: RichText(
+            text: TextSpan(
+              children: [
+                const TextSpan(text: "Copied "),
+                TextSpan(
+                  text: "$copy",
+                  style: const TextStyle(
+                    fontFamily: FontTheme.fontFamily2,
+                    color: ColorTheme.accent,
+                  ),
+                ),
+                const TextSpan(text: " to clipboard."),
+              ],
             ),
-          )
-        else
-          Text(
-            text,
-            style: styleFromInput(type, input),
           ),
-      ],
+        )),
+      );
+    }
+
+    return GestureDetector(
+      onSecondaryLongPress: valueToClipboard,
+      onLongPress: valueToClipboard,
+      child: Row(
+        children: [
+          // Prefix
+          Text(
+            type.prefix,
+            style: _displayTitleStyle.apply(
+              color: ColorTheme.textPrefix,
+            ),
+          ),
+          // Number
+          if (onSubmitted != null)
+            // Editable
+            IntrinsicWidth(
+              child: _NumberField(
+                type: type,
+                text: text,
+                onSubmitted: onSubmitted!,
+              ),
+            )
+          else
+            // Non-editable
+            Text(
+              text,
+              style: styleFromInput(type, input),
+            ),
+        ],
+      ),
     );
   }
 }
