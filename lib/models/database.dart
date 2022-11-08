@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/number_entry.dart';
-import 'package:flutter/cupertino.dart';
 
 abstract class Database {
   final StreamController<EntryEvent> entryEventsController =

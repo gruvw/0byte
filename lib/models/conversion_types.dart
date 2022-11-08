@@ -17,8 +17,11 @@ enum ConversionType {
   final int defaultTargetSize;
 
   const ConversionType(
-      this.label, this.alphabet, this.defaultTargetSize, this.prefix)
-      : base = alphabet.length;
+    this.label,
+    this.alphabet,
+    this.defaultTargetSize,
+    this.prefix,
+  ) : base = alphabet.length;
 }
 
 final Map<String, ConversionType> typeFromPrefix =

@@ -1,5 +1,6 @@
-import 'package:app_0byte/routes/converter_page.dart';
 import 'package:flutter/material.dart';
+
+import 'package:app_0byte/routes/converter_page.dart';
 
 class RouteGenerator {
   static Route generateRoute(RouteSettings settings) {

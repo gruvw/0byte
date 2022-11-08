@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 import 'package:app_0byte/widget/number_widget.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/number_entry.dart';
@@ -23,22 +24,11 @@ class ConversionEntryWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final entry = ref.watch(entryProvider(this.entry));
 
-    final targetType = ref.watch(targetConversionTypeProvider);
-    final targetSize = ref.watch(targetSizeProvider);
-
     String? number = parseInput(entry.type, entry.input);
     final textNotifier = useValueNotifier(number ?? entry.input);
 
-    TextEditingController labelController =
-        TextEditingController(text: entry.label);
-
-    void onLabelSubmitted(String newLabel) {
-      if (newLabel.isEmpty) {
-        final position = ref.read(entriesProvider).indexOf(entry);
-        newLabel = "Value ${position + 1}";
-      }
-      entry.label = newLabel;
-    }
+    final targetType = ref.watch(targetConversionTypeProvider);
+    final targetSize = ref.watch(targetSizeProvider);
 
     String applyInput(String input) {
       if (entry.type == ConversionType.hexadecimal) {
@@ -70,28 +60,24 @@ class ConversionEntryWidget extends HookConsumerWidget {
                 },
               ),
               // Entry Label
-              IntrinsicWidth(
-                child: Focus(
-                  onFocusChange: (hasFocus) {
-                    if (!hasFocus) {
-                      onLabelSubmitted(labelController.text);
-                    }
-                  },
-                  child: TextField(
-                    controller: labelController,
-                    cursorColor: ColorTheme.text2,
-                    style: const TextStyle(
-                      fontFamily: FontTheme.fontFamily1,
-                      color: ColorTheme.text2,
-                    ),
-                    decoration: const InputDecoration(
-                      counterText: "",
-                      border: InputBorder.none,
-                      isDense: true,
-                      contentPadding: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                    ),
-                    onSubmitted: onLabelSubmitted,
-                  ),
+              FocusSubmittedTextField(
+                onSubmitted: (String newLabel) {
+                  if (newLabel.isEmpty) {
+                    final position = ref.read(entriesProvider).indexOf(entry);
+                    newLabel = "Value ${position + 1}";
+                  }
+                  entry.label = newLabel;
+                },
+                cursorColor: ColorTheme.text2,
+                style: const TextStyle(
+                  fontFamily: FontTheme.fontFamily1,
+                  color: ColorTheme.text2,
+                ),
+                decoration: const InputDecoration(
+                  counterText: "",
+                  border: InputBorder.none,
+                  isDense: true,
+                  contentPadding: EdgeInsets.fromLTRB(0, 3, 0, 0),
                 ),
               ),
             ],

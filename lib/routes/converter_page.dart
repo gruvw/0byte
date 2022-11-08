@@ -1,15 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/styles/settings.dart';
-import 'package:flutter/material.dart';
-
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ConverterPage extends StatelessWidget {
   const ConverterPage({super.key});

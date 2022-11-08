@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/database.dart';
-import 'package:flutter/cupertino.dart';
 
 abstract class UserEntry extends DatabaseObject {
   @protected

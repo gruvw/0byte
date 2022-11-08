@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import 'package:app_0byte/widget/utils/apply_text_formatter.dart';
+import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/styles/colors.dart';
 import 'package:app_0byte/styles/fonts.dart';
@@ -77,9 +79,7 @@ class NumberWidget extends StatelessWidget {
           // Prefix
           Text(
             type.prefix,
-            style: _displayTitleStyle.apply(
-              color: ColorTheme.textPrefix,
-            ),
+            style: _displayTitleStyle.apply(color: ColorTheme.textPrefix),
           ),
           // Number
           if (onChanged != null && onSubmitted != null)
@@ -93,10 +93,7 @@ class NumberWidget extends StatelessWidget {
             )
           else
             // Non-editable
-            Text(
-              text,
-              style: styleFromInput(type, input),
-            ),
+            Text(text, style: styleFromInput(type, input)),
         ],
       ),
     );
@@ -126,47 +123,23 @@ class _NumberField extends HookWidget {
     final style = useState(NumberWidget.styleFromInput(type, text));
 
     // Entry Input
-    return IntrinsicWidth(
-      child: Focus(
-        onFocusChange: (hasFocus) {
-          if (!hasFocus) {
-            onSubmitted(controller.text);
-          }
-        },
-        child: TextField(
-          autofocus: text.isEmpty,
-          controller: controller,
-          cursorColor: ColorTheme.text1,
-          keyboardType: TextInputType.number,
-          style: style.value,
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            isDense: true,
-            contentPadding: EdgeInsets.zero,
-          ),
-          inputFormatters: [ApplyTextFormatter(applyInput)],
-          onSubmitted: onSubmitted,
-          onChanged: (value) {
-            onChanged(value);
-            style.value = NumberWidget.styleFromInput(type, controller.text);
-          },
-        ),
+    return FocusSubmittedTextField(
+      autofocus: text.isEmpty,
+      onSubmitted: onSubmitted,
+      controller: controller,
+      cursorColor: ColorTheme.text1,
+      keyboardType: TextInputType.number,
+      style: style.value,
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        isDense: true,
+        contentPadding: EdgeInsets.zero,
       ),
-    );
-  }
-}
-
-class ApplyTextFormatter extends TextInputFormatter {
-  final String Function(String value) applyValue;
-
-  ApplyTextFormatter(this.applyValue);
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    return TextEditingValue(
-      text: applyValue(newValue.text),
-      selection: newValue.selection,
+      inputFormatters: [ApplyTextFormatter(applyInput)],
+      onChanged: (value) {
+        onChanged(value);
+        style.value = NumberWidget.styleFromInput(type, controller.text);
+      },
     );
   }
 }

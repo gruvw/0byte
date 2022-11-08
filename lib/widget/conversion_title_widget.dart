@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/styles/colors.dart';
@@ -54,13 +55,6 @@ class _ConversionTypeSelector extends ConsumerWidget {
 
     final nTextController = TextEditingController(text: targetSize.toString());
 
-    void onNSubmitted(String newN) {
-      int newValue = int.tryParse(newN) ?? targetSize;
-      newValue = newValue != 0 ? newValue : targetSize;
-      ref.read(targetSizeProvider.notifier).state = newValue;
-      nTextController.text = newValue.toString();
-    }
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -105,37 +99,26 @@ class _ConversionTypeSelector extends ConsumerWidget {
                 enabled: false,
                 child: Row(
                   children: [
-                    const Text(
-                      "N:",
-                      style: _targetTextStyle,
-                    ),
+                    const Text("N:", style: _targetTextStyle),
                     const SizedBox(width: 5),
-                    IntrinsicWidth(
-                      // N field
-                      child: Focus(
-                        onFocusChange: (hasFocus) {
-                          if (!hasFocus) {
-                            onNSubmitted(nTextController.text);
-                          }
-                        },
-                        child: TextField(
-                          controller: nTextController,
-                          cursorColor: ColorTheme.accent,
-                          decoration: const InputDecoration(
-                            counterText: "",
-                            border: InputBorder.none,
-                          ),
-                          style: _targetTextStyle,
-                          maxLength: 2,
-                          keyboardType: TextInputType.number,
-                          enableSuggestions: false,
-                          onSubmitted: (newN) {
-                            onNSubmitted(newN);
-                            Navigator.pop(context);
-                          },
-                        ),
+                    FocusSubmittedTextField(
+                      onSubmitted: (String newN) {
+                        int newValue = int.tryParse(newN) ?? targetSize;
+                        newValue = newValue != 0 ? newValue : targetSize;
+                        ref.read(targetSizeProvider.notifier).state = newValue;
+                        nTextController.text = newValue.toString();
+                      },
+                      controller: nTextController,
+                      cursorColor: ColorTheme.accent,
+                      decoration: const InputDecoration(
+                        counterText: "",
+                        border: InputBorder.none,
                       ),
-                    )
+                      style: _targetTextStyle,
+                      maxLength: 2,
+                      keyboardType: TextInputType.number,
+                      enableSuggestions: false,
+                    ),
                   ],
                 ),
               )
