@@ -26,6 +26,7 @@ class NumberWidget extends StatelessWidget {
   final ConversionType type;
   final String input;
 
+  final String Function(String input)? applyInput;
   final void Function(String newInput)? onChanged;
   final void Function(String newInput)? onSubmitted;
 
@@ -33,6 +34,7 @@ class NumberWidget extends StatelessWidget {
     super.key,
     required this.type,
     required this.input,
+    this.applyInput,
     this.onChanged,
     this.onSubmitted,
   });
@@ -85,6 +87,7 @@ class NumberWidget extends StatelessWidget {
             _NumberField(
               type: type,
               text: text,
+              applyInput: applyInput ?? (input) => input,
               onChanged: onChanged!,
               onSubmitted: onSubmitted!,
             )
@@ -104,12 +107,15 @@ class _NumberField extends HookWidget {
   final ConversionType type;
   final String text;
 
+  final String Function(String input) applyInput;
+
   final void Function(String newInput) onChanged;
   final void Function(String newInput) onSubmitted;
 
   const _NumberField({
     required this.type,
     required this.text,
+    required this.applyInput,
     required this.onChanged,
     required this.onSubmitted,
   });
@@ -138,6 +144,7 @@ class _NumberField extends HookWidget {
             isDense: true,
             contentPadding: EdgeInsets.zero,
           ),
+          inputFormatters: [ApplyTextFormatter(applyInput)],
           onSubmitted: onSubmitted,
           onChanged: (value) {
             onChanged(value);
@@ -145,6 +152,21 @@ class _NumberField extends HookWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class ApplyTextFormatter extends TextInputFormatter {
+  final String Function(String value) applyValue;
+
+  ApplyTextFormatter(this.applyValue);
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: applyValue(newValue.text),
+      selection: newValue.selection,
     );
   }
 }

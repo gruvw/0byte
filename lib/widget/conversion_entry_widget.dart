@@ -40,6 +40,13 @@ class ConversionEntryWidget extends HookConsumerWidget {
       entry.label = newLabel;
     }
 
+    String applyInput(String input) {
+      if (entry.type == ConversionType.hexadecimal) {
+        return input.toUpperCase();
+      }
+      return input;
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       child: Row(
@@ -52,12 +59,14 @@ class ConversionEntryWidget extends HookConsumerWidget {
               NumberWidget(
                 type: entry.type,
                 input: textNotifier.value,
-                onChanged: (newInput) => textNotifier.value = newInput,
+                applyInput: applyInput,
+                onChanged: (newInput) =>
+                    textNotifier.value = applyInput(newInput),
                 onSubmitted: (newInput) {
                   if (newInput.isEmpty) {
                     return entry.delete();
                   }
-                  entry.input = newInput;
+                  entry.input = applyInput(newInput);
                 },
               ),
               // Entry Label

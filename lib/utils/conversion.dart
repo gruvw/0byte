@@ -9,8 +9,7 @@ String converted({
   required ConversionType targetType,
   required int targetSize,
 }) {
-  bool negativeInput =
-      number.startsWith(sign) && inputType == ConversionType.signedDecimal;
+  bool negativeInput = splitSign(inputType, number).item1.isNotEmpty;
   String absData = negativeInput ? number.substring(1) : number;
 
   // Absolute input to decimal
@@ -80,7 +79,7 @@ bool isSymmetric({
 }) {
   String symmetric = converted(
     number: result,
-    targetSize: splitSign(number).item2.length,
+    targetSize: splitSign(inputType, number).item2.length,
     inputType: targetType,
     targetType: inputType,
   );

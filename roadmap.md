@@ -17,7 +17,7 @@ No support for bookmarking, no data persistence, basic data validation
 
 ## Beta release `v0.0.1-beta`
 
-- [ ] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii, subtitle not empty, not only sign alone)
+- [X] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii, subtitle not empty, not only sign alone)
 - [ ] Handle entries UI overflow (middle)
 - [ ] Reorder entries
 - [ ] Create Logo + integration
@@ -44,6 +44,7 @@ Persistence support
 
 - [ ] Support base 64 conversions
 - [ ] Support Latin-1/ISO 8859-1
+- [ ] Support Octal conversion
 
 ## Major release `v0.0.3`
 
