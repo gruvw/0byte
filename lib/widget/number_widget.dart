@@ -52,7 +52,7 @@ class NumberWidget extends StatelessWidget {
               children: [
                 const TextSpan(text: "Copied "),
                 TextSpan(
-                  text: "$copy",
+                  text: copy,
                   style: const TextStyle(
                     fontFamily: FontTheme.fontFamily2,
                     color: ColorTheme.accent,
@@ -66,6 +66,7 @@ class NumberWidget extends StatelessWidget {
       );
     }
 
+    // BUG long press temporarily focuses TextField
     return GestureDetector(
       onSecondaryTap: valueToClipboard,
       onLongPress: valueToClipboard,
@@ -81,13 +82,11 @@ class NumberWidget extends StatelessWidget {
           // Number
           if (onChanged != null && onSubmitted != null)
             // Editable
-            IntrinsicWidth(
-              child: _NumberField(
-                type: type,
-                text: text,
-                onChanged: onChanged!,
-                onSubmitted: onSubmitted!,
-              ),
+            _NumberField(
+              type: type,
+              text: text,
+              onChanged: onChanged!,
+              onSubmitted: onSubmitted!,
             )
           else
             // Non-editable
@@ -121,22 +120,31 @@ class _NumberField extends HookWidget {
     final style = useState(NumberWidget.styleFromInput(type, text));
 
     // Entry Input
-    return TextField(
-      autofocus: text.isEmpty,
-      controller: controller,
-      cursorColor: ColorTheme.text1,
-      keyboardType: TextInputType.number,
-      style: style.value,
-      decoration: const InputDecoration(
-        border: InputBorder.none,
-        isDense: true,
-        contentPadding: EdgeInsets.zero,
+    return IntrinsicWidth(
+      child: Focus(
+        onFocusChange: (hasFocus) {
+          if (!hasFocus) {
+            onSubmitted(controller.text);
+          }
+        },
+        child: TextField(
+          autofocus: text.isEmpty,
+          controller: controller,
+          cursorColor: ColorTheme.text1,
+          keyboardType: TextInputType.number,
+          style: style.value,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            isDense: true,
+            contentPadding: EdgeInsets.zero,
+          ),
+          onSubmitted: onSubmitted,
+          onChanged: (value) {
+            onChanged(value);
+            style.value = NumberWidget.styleFromInput(type, controller.text);
+          },
+        ),
       ),
-      onSubmitted: onSubmitted,
-      onChanged: (value) {
-        onChanged(value);
-        style.value = NumberWidget.styleFromInput(type, controller.text);
-      },
     );
   }
 }

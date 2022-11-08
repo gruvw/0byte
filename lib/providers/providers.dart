@@ -1,8 +1,9 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_database.dart';
 import 'package:app_0byte/models/number_entry.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final database = FlutterDatabase();
 

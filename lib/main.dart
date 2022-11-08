@@ -1,14 +1,15 @@
-import 'package:app_0byte/styles/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_strategy/url_strategy.dart';
 
+import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/routes/route_generator.dart';
 import 'package:app_0byte/styles/colors.dart';
-import 'package:url_strategy/url_strategy.dart';
 
 void main() {
   setPathUrlStrategy();
+
   runApp(
     UncontrolledProviderScope(
       container: container,

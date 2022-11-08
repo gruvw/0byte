@@ -25,6 +25,7 @@ No support for bookmarking, no data persistence, basic data validation
 - [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy)
 - [X] Copy values on long click
 - [X] Responsive Conversion
+- [X] TextFields submit on focus loss
 
 ## Alpha release `v0.0.2-alpha.1`
 

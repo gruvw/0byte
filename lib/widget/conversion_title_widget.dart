@@ -54,6 +54,13 @@ class _ConversionTypeSelector extends ConsumerWidget {
 
     final nTextController = TextEditingController(text: targetSize.toString());
 
+    void onNSubmitted(String newN) {
+      int newValue = int.tryParse(newN) ?? targetSize;
+      newValue = newValue != 0 ? newValue : targetSize;
+      ref.read(targetSizeProvider.notifier).state = newValue;
+      nTextController.text = newValue.toString();
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -105,25 +112,28 @@ class _ConversionTypeSelector extends ConsumerWidget {
                     const SizedBox(width: 5),
                     IntrinsicWidth(
                       // N field
-                      child: TextField(
-                        controller: nTextController,
-                        cursorColor: ColorTheme.accent,
-                        decoration: const InputDecoration(
-                          counterText: "",
-                          border: InputBorder.none,
-                        ),
-                        style: _targetTextStyle,
-                        maxLength: 2,
-                        keyboardType: TextInputType.number,
-                        enableSuggestions: false,
-                        onSubmitted: (value) {
-                          int newValue = int.tryParse(value) ?? targetSize;
-                          newValue = newValue != 0 ? newValue : targetSize;
-                          ref.read(targetSizeProvider.notifier).state =
-                              newValue;
-                          nTextController.text = newValue.toString();
-                          Navigator.pop(context);
+                      child: Focus(
+                        onFocusChange: (hasFocus) {
+                          if (!hasFocus) {
+                            onNSubmitted(nTextController.text);
+                          }
                         },
+                        child: TextField(
+                          controller: nTextController,
+                          cursorColor: ColorTheme.accent,
+                          decoration: const InputDecoration(
+                            counterText: "",
+                            border: InputBorder.none,
+                          ),
+                          style: _targetTextStyle,
+                          maxLength: 2,
+                          keyboardType: TextInputType.number,
+                          enableSuggestions: false,
+                          onSubmitted: (newN) {
+                            onNSubmitted(newN);
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     )
                   ],

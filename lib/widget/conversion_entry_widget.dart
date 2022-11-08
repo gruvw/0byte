@@ -29,6 +29,17 @@ class ConversionEntryWidget extends HookConsumerWidget {
     String? number = parseInput(entry.type, entry.input);
     final textNotifier = useValueNotifier(number ?? entry.input);
 
+    TextEditingController labelController =
+        TextEditingController(text: entry.label);
+
+    void onLabelSubmitted(String newLabel) {
+      if (newLabel.isEmpty) {
+        final position = ref.read(entriesProvider).indexOf(entry);
+        newLabel = "Value ${position + 1}";
+      }
+      entry.label = newLabel;
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       child: Row(
@@ -51,26 +62,27 @@ class ConversionEntryWidget extends HookConsumerWidget {
               ),
               // Entry Label
               IntrinsicWidth(
-                child: TextField(
-                  controller: TextEditingController(text: entry.label),
-                  cursorColor: ColorTheme.text2,
-                  style: const TextStyle(
-                    fontFamily: FontTheme.fontFamily1,
-                    color: ColorTheme.text2,
-                  ),
-                  decoration: const InputDecoration(
-                    counterText: "",
-                    border: InputBorder.none,
-                    isDense: true,
-                    contentPadding: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                  ),
-                  onSubmitted: (value) {
-                    if (value.isEmpty) {
-                      final position = ref.read(entriesProvider).indexOf(entry);
-                      value = "Value ${position + 1}";
+                child: Focus(
+                  onFocusChange: (hasFocus) {
+                    if (!hasFocus) {
+                      onLabelSubmitted(labelController.text);
                     }
-                    entry.label = value;
                   },
+                  child: TextField(
+                    controller: labelController,
+                    cursorColor: ColorTheme.text2,
+                    style: const TextStyle(
+                      fontFamily: FontTheme.fontFamily1,
+                      color: ColorTheme.text2,
+                    ),
+                    decoration: const InputDecoration(
+                      counterText: "",
+                      border: InputBorder.none,
+                      isDense: true,
+                      contentPadding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                    ),
+                    onSubmitted: onLabelSubmitted,
+                  ),
                 ),
               ),
             ],
