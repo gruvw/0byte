@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:tuple/tuple.dart';
 

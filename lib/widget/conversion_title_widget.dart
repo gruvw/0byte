@@ -102,13 +102,13 @@ class _ConversionTypeSelector extends ConsumerWidget {
                     const Text("N:", style: _targetTextStyle),
                     const SizedBox(width: 5),
                     FocusSubmittedTextField(
+                      controller: nTextController,
                       onSubmitted: (String newN) {
                         int newValue = int.tryParse(newN) ?? targetSize;
                         newValue = newValue != 0 ? newValue : targetSize;
                         ref.read(targetSizeProvider.notifier).state = newValue;
                         nTextController.text = newValue.toString();
                       },
-                      controller: nTextController,
                       cursorColor: ColorTheme.accent,
                       decoration: const InputDecoration(
                         counterText: "",

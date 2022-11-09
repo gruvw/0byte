@@ -61,6 +61,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
               ),
               // Entry Label
               FocusSubmittedTextField(
+                controller: TextEditingController(text: entry.label),
                 onSubmitted: (String newLabel) {
                   if (newLabel.isEmpty) {
                     final position = ref.read(entriesProvider).indexOf(entry);

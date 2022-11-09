@@ -20,9 +20,8 @@ No support for bookmarking, no data persistence, basic data validation
 - [X] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii, subtitle not empty, not only sign alone)
 - [ ] Handle entries UI overflow (middle)
 - [ ] Reorder entries
-- [ ] Create Logo + integration
+- [X] Create Logo + integration
 - [ ] Splash screen
-- [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy)
 - [X] Copy values on long click
 - [X] Responsive Conversion
 - [X] TextFields submit on focus loss
@@ -31,7 +30,8 @@ No support for bookmarking, no data persistence, basic data validation
 
 Persistence support
 
-- [ ] Add Hive/Drift and support saving (non-empty) pages
+- [ ] Support saving/bookmarking (non-empty) pages
+- [ ] Add Hive/Drift Database
 - [ ] Default to non-persistent page
 - [ ] List saved pages (title) on hamburger menu
 
@@ -45,6 +45,7 @@ Persistence support
 - [ ] Support base 64 conversions
 - [ ] Support Latin-1/ISO 8859-1
 - [ ] Support Octal conversion
+- [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy)
 
 ## Major release `v0.0.3`
 

@@ -124,11 +124,10 @@ class _NumberField extends HookWidget {
 
     // Entry Input
     return FocusSubmittedTextField(
-      autofocus: text.isEmpty,
-      onSubmitted: onSubmitted,
       controller: controller,
+      onSubmitted: onSubmitted,
+      autofocus: text.isEmpty,
       cursorColor: ColorTheme.text1,
-      keyboardType: TextInputType.number,
       style: style.value,
       decoration: const InputDecoration(
         border: InputBorder.none,

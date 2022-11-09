@@ -9,11 +9,12 @@ class FocusSubmittedTextField extends StatelessWidget {
   final TextStyle? style;
   final InputDecoration? decoration;
   final int? maxLength;
-  final TextInputType? keyboardType;
+  final TextInputType keyboardType;
   final bool enableSuggestions;
   final bool autofocus;
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChanged;
+  final TextInputAction textInputAction;
 
   const FocusSubmittedTextField({
     super.key,
@@ -23,11 +24,12 @@ class FocusSubmittedTextField extends StatelessWidget {
     this.style,
     this.decoration,
     this.maxLength,
-    this.keyboardType,
+    this.keyboardType = TextInputType.visiblePassword,
     this.enableSuggestions = true,
     this.autofocus = false,
     this.inputFormatters,
     this.onChanged,
+    this.textInputAction = TextInputAction.go,
   });
 
   @override
@@ -54,6 +56,7 @@ class FocusSubmittedTextField extends StatelessWidget {
           autofocus: autofocus,
           inputFormatters: inputFormatters,
           onChanged: onChanged,
+          textInputAction: textInputAction,
         ),
       ),
     );
