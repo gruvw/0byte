@@ -21,7 +21,7 @@ No support for bookmarking, no data persistence, basic data validation
 - [ ] Handle entries UI overflow (middle)
 - [ ] Reorder entries
 - [X] Create Logo + integration
-- [ ] Splash screen
+- [X] Splash screen
 - [X] Copy values on long click
 - [X] Responsive Conversion
 - [X] TextFields submit on focus loss

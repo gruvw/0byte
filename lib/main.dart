@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -9,6 +10,7 @@ import 'package:app_0byte/styles/colors.dart';
 
 void main() {
   setPathUrlStrategy();
+  FlutterNativeSplash.remove();
 
   runApp(
     UncontrolledProviderScope(
