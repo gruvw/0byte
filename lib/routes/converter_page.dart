@@ -1,3 +1,4 @@
+import 'package:app_0byte/models/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,6 +17,8 @@ class ConverterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final collection = container.read(collectionsProvider).first;
+
     return Scaffold(
       backgroundColor: ColorTheme.background1,
       appBar: AppBar(
@@ -36,11 +39,13 @@ class ConverterPage extends StatelessWidget {
       ),
       body: Column(
         mainAxisSize: MainAxisSize.max,
-        children: const [
-          ConversionTitleWidget(),
+        children: [
+          const ConversionTitleWidget(),
           Expanded(
             child: SingleChildScrollView(
-              child: _NumberEntries(),
+              child: _NumberEntries(
+                collection: collection,
+              ),
             ),
           ),
         ],
@@ -77,9 +82,11 @@ class ConverterPage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                final nbEntries = container.read(entriesProvider).length;
+                final nbEntries = collection.entries.length;
 
-                database.createUserEntry(
+                database.createNumberEntry(
+                  collection: collection,
+                  position: nbEntries,
                   type: conversionType,
                   input: "",
                   label: "Value ${nbEntries + 1}",
@@ -93,11 +100,14 @@ class ConverterPage extends StatelessWidget {
 }
 
 class _NumberEntries extends ConsumerWidget {
-  const _NumberEntries();
+  final Collection collection;
+
+  const _NumberEntries({required this.collection});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final entries = ref.watch(entriesProvider);
+    ref.watch(collectionEventProvider(collection));
+    final entries = collection.entries;
 
     return Column(
       children: [

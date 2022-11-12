@@ -1,13 +1,20 @@
+import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_database.dart';
 import 'package:app_0byte/models/number_entry.dart';
 
-class FlutterUserEntry extends UserEntry {
+class FlutterNumberEntry extends NumberEntry {
   @override
   final FlutterDatabase database;
 
   @override
   final int typeIndex;
+
+  @override
+  final Collection collection;
+
+  @override
+  int position;
 
   String flutterInput;
   @override
@@ -27,8 +34,10 @@ class FlutterUserEntry extends UserEntry {
     database.entryEventsController.add(EntryEvent(entry: this));
   }
 
-  FlutterUserEntry({
+  FlutterNumberEntry({
     required this.database,
+    required this.collection,
+    required this.position,
     required this.typeIndex,
     required this.flutterInput,
     required this.flutterLabel,
@@ -36,7 +45,6 @@ class FlutterUserEntry extends UserEntry {
 
   @override
   void delete() {
-    database.deleteUserEntry(entry: this);
-    database.entryEventsController.add(EntryEvent(entry: this));
+    database.deleteNumberEntry(entry: this);
   }
 }

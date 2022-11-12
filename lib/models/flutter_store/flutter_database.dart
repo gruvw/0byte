@@ -1,36 +1,63 @@
+import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/database.dart';
+import 'package:app_0byte/models/flutter_store/flutter_collection.dart';
 import 'package:app_0byte/models/flutter_store/flutter_number_entry.dart';
 import 'package:app_0byte/models/number_entry.dart';
 
 class FlutterDatabase extends Database {
+  final List<FlutterCollection> _collections = [];
+
   FlutterDatabase();
 
-  final List<FlutterUserEntry> _entries = [];
-
   @override
-  UserEntry createUserEntry({
+  NumberEntry createNumberEntry({
+    required Collection collection,
+    required int position,
     required ConversionType type,
     required String input,
     required String label,
   }) {
-    FlutterUserEntry entry = FlutterUserEntry(
+    FlutterNumberEntry entry = FlutterNumberEntry(
       database: this,
+      collection: collection,
+      position: position,
       typeIndex: type.index,
       flutterInput: input,
       flutterLabel: label,
     );
-    _entries.add(entry);
-    entryEventsController.add(EntryEvent(entry: entry));
+    collection.entries.add(entry);
+    collectionEventsController.add(CollectionEvent(collection: collection));
     return entry;
   }
 
-  void deleteUserEntry({required UserEntry entry}) {
-    _entries.remove(entry);
+  @override
+  Collection createCollection({
+    required String label,
+  }) {
+    FlutterCollection collection = FlutterCollection(
+      database: this,
+      flutterLabel: label,
+    );
+    _collections.add(collection);
+    collectionEventsController.add(CollectionEvent(collection: collection));
+    return collection;
+  }
+
+  void deleteNumberEntry({required NumberEntry entry}) {
+    entry.collection.entries.remove(entry);
+    collectionEventsController.add(CollectionEvent(
+      collection: entry.collection,
+    ));
+  }
+
+  void deleteCollection({required FlutterCollection collection}) {
+    _collections.remove(collection);
+    collectionEventsController.add(CollectionEvent(collection: collection));
   }
 
   @override
-  List<UserEntry> getEntries() {
-    return List.unmodifiable(_entries);
+  List<Collection> getCollections() {
+    return List.unmodifiable(_collections);
   }
 }

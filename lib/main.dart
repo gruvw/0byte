@@ -10,6 +10,8 @@ import 'package:app_0byte/styles/colors.dart';
 
 void main() {
   setPathUrlStrategy();
+
+  database.createCollection(label: "Default Collection");
   FlutterNativeSplash.remove();
 
   runApp(

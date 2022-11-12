@@ -13,7 +13,7 @@ import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
 class ConversionEntryWidget extends HookConsumerWidget {
-  final UserEntry entry;
+  final NumberEntry entry;
 
   const ConversionEntryWidget({
     required this.entry,
@@ -22,7 +22,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final entry = ref.watch(entryProvider(this.entry));
+    ref.watch(entryEventProvider(entry));
 
     String? number = parseInput(entry.type, entry.input);
     final textNotifier = useValueNotifier(number ?? entry.input);
@@ -64,7 +64,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
                 controller: TextEditingController(text: entry.label),
                 onSubmitted: (String newLabel) {
                   if (newLabel.isEmpty) {
-                    final position = ref.read(entriesProvider).indexOf(entry);
+                    final position = entry.collection.entries.indexOf(entry);
                     newLabel = "Value ${position + 1}";
                   }
                   entry.label = newLabel;
