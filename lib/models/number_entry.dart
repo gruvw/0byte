@@ -15,5 +15,25 @@ abstract class NumberEntry extends DatabaseObject {
   abstract String label;
   abstract int position;
 
-  void delete();
+  void move(int newPosition) {
+    final entries = collection.sortedEntries;
+
+    for (int i = newPosition; i < position; i++) {
+      entries[i].position++;
+    }
+    for (int i = position + 1; i <= newPosition; i++) {
+      entries[i].position--;
+    }
+    position = newPosition;
+
+    database.collectionEventsController.add(CollectionEvent(
+      collection: collection,
+    ));
+  }
+
+  void delete() {
+    for (final entry in collection.entries) {
+      entry.position--;
+    }
+  }
 }

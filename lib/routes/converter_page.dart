@@ -1,8 +1,9 @@
-import 'package:app_0byte/models/collection.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/styles/settings.dart';
@@ -42,10 +43,8 @@ class ConverterPage extends StatelessWidget {
         children: [
           const ConversionTitleWidget(),
           Expanded(
-            child: SingleChildScrollView(
-              child: _NumberEntries(
-                collection: collection,
-              ),
+            child: _NumberEntries(
+              collection: collection,
             ),
           ),
         ],
@@ -107,9 +106,31 @@ class _NumberEntries extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(collectionEventProvider(collection));
-    final entries = collection.entries;
+    final entries = collection.sortedEntries;
 
-    return Column(
+    return ReorderableListView(
+      dragStartBehavior: DragStartBehavior.down,
+      buildDefaultDragHandles: false,
+      onReorder: (oldIndex, newIndex) {
+        if (oldIndex < newIndex) {
+          newIndex -= 1;
+        }
+        entries[oldIndex].move(newIndex);
+      },
+      children: [
+        for (final entry in entries)
+          ReorderableDelayedDragStartListener(
+            key: UniqueKey(),
+            index: entry.position,
+            child: SlidableDelete(
+              onDelete: (_) => entry.delete(),
+              child: ConversionEntryWidget(entry: entry),
+            ),
+          ),
+      ],
+    );
+
+    Column(
       children: [
         for (final entry in entries)
           SlidableDelete(

@@ -64,8 +64,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
                 controller: TextEditingController(text: entry.label),
                 onSubmitted: (String newLabel) {
                   if (newLabel.isEmpty) {
-                    final position = entry.collection.entries.indexOf(entry);
-                    newLabel = "Value ${position + 1}";
+                    newLabel = "Value ${entry.position + 1}";
                   }
                   entry.label = newLabel;
                 },

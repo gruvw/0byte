@@ -45,6 +45,7 @@ class FlutterNumberEntry extends NumberEntry {
 
   @override
   void delete() {
+    super.delete();
     database.deleteNumberEntry(entry: this);
   }
 }
