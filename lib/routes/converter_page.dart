@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/widget/forms/text_form.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/styles/fonts.dart';
@@ -28,7 +29,27 @@ class ConverterPage extends StatelessWidget {
           Icons.menu,
           color: ColorTheme.text1,
         ),
+        title: HookConsumer(
+          builder: (context, ref, child) {
+            ref.watch(collectionEventProvider(collection));
+            return Text(collection.label);
+          },
+        ),
         actions: [
+          IconButton(
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => TextForm(
+                title: "Collection title",
+                initialText: collection.label,
+                callback: (newTitle) => collection.label = newTitle,
+              ),
+            ),
+            icon: const Icon(
+              Icons.edit,
+              color: ColorTheme.text1,
+            ),
+          ),
           IconButton(
             onPressed: () {},
             icon: const Icon(

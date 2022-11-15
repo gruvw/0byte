@@ -20,7 +20,8 @@ No support for bookmarking, no data persistence, basic data validation
 - [X] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii, subtitle not empty, not only sign alone)
 - [ ] Handle entries UI overflow (middle)
 - [X] Reorder entries
-- [ ] UI collection related operation (edit label, create entry, list collections, collection title)
+- [ ] UI collection related operation (edit label, create collection, list collections, collection title)
+- [ ] Collection related attributes (N, target type)
 - [X] Create Logo + integration
 - [X] Splash screen
 - [X] Copy values on long click
