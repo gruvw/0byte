@@ -208,6 +208,24 @@ void main() {
     );
     expect(res, "01011010110000");
   });
+  test("-8 to bin", () {
+    String res = converted(
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-8")!,
+      targetType: ConversionType.binary,
+      targetSize: 6,
+    );
+    expect(res, "111000");
+  });
+  test("-64 to bin", () {
+    String res = converted(
+      inputType: ConversionType.signedDecimal,
+      number: parseInput(ConversionType.signedDecimal, "-64")!,
+      targetType: ConversionType.binary,
+      targetSize: 8,
+    );
+    expect(res, "11000000");
+  });
 
   group("Random identity conversion", () {
     final Random random = Random();

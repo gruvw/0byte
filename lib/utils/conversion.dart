@@ -95,7 +95,7 @@ void _twoComplement(List<bool> binary) {
 
   bool carry = true;
   int i = binary.length - 1;
-  while (carry && i > 0) {
+  while (carry && i >= 0) {
     bool tmp = binary[i];
     binary[i] = tmp ^ carry;
     carry = tmp & carry;
