@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/widget/forms/text_form.dart';
@@ -32,7 +33,10 @@ class ConverterPage extends StatelessWidget {
         title: HookConsumer(
           builder: (context, ref, child) {
             ref.watch(collectionEventProvider(collection));
-            return Text(collection.label);
+            return Text(
+              collection.label,
+              style: GoogleFonts.getFont(FontTheme.fontFamily1),
+            );
           },
         ),
         actions: [

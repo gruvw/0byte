@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
@@ -69,10 +70,8 @@ class ConversionEntryWidget extends HookConsumerWidget {
                   entry.label = newLabel;
                 },
                 cursorColor: ColorTheme.text2,
-                style: const TextStyle(
-                  fontFamily: FontTheme.fontFamily1,
-                  color: ColorTheme.text2,
-                ),
+                style: GoogleFonts.getFont(FontTheme.fontFamily1)
+                    .apply(color: ColorTheme.text2),
                 decoration: const InputDecoration(
                   counterText: "",
                   border: InputBorder.none,
