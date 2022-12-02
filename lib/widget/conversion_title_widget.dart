@@ -1,3 +1,5 @@
+import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/providers/updaters.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -50,19 +52,20 @@ class _ConversionTypeSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final targetType = ref.watch(targetConversionTypeProvider);
-    final targetSize = ref.watch(targetSizeProvider);
+    final collection = ref.watch(selectedCollectionProvider);
+    ref.subscribe(collectionUpdater(collection));
 
-    final nTextController = TextEditingController(text: targetSize.toString());
+    final nTextController =
+        TextEditingController(text: collection.targetSize.toString());
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        if (targetSize != targetType.defaultTargetSize)
+        if (collection.targetSize != collection.targetType.defaultTargetSize)
           Row(
             children: [
               Text(
-                targetSize.toString(),
+                collection.targetSize.toString(),
                 style: _targetTextStyle,
               ),
               const SizedBox(width: 10),
@@ -83,11 +86,10 @@ class _ConversionTypeSelector extends ConsumerWidget {
               ),
             ),
             style: _targetTextStyle,
-            value: targetType,
+            value: collection.targetType,
             onChanged: (value) {
-              ref.read(targetConversionTypeProvider.notifier).state = value!;
-              ref.read(targetSizeProvider.notifier).state =
-                  value.defaultTargetSize;
+              collection.targetType = value!;
+              collection.targetSize = value.defaultTargetSize;
             },
             items: [
               for (final conversionType in ConversionType.values)
@@ -104,9 +106,11 @@ class _ConversionTypeSelector extends ConsumerWidget {
                     FocusSubmittedTextField(
                       controller: nTextController,
                       onSubmitted: (String newN) {
-                        int newValue = int.tryParse(newN) ?? targetSize;
-                        newValue = newValue != 0 ? newValue : targetSize;
-                        ref.read(targetSizeProvider.notifier).state = newValue;
+                        int newValue =
+                            int.tryParse(newN) ?? collection.targetSize;
+                        newValue =
+                            newValue != 0 ? newValue : collection.targetSize;
+                        collection.targetSize = newValue;
                         nTextController.text = newValue.toString();
                       },
                       cursorColor: ColorTheme.accent,

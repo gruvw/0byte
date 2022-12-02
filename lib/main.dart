@@ -1,3 +1,4 @@
+import 'package:app_0byte/models/conversion_types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +12,6 @@ import 'package:app_0byte/styles/colors.dart';
 void main() {
   setPathUrlStrategy();
 
-  database.createCollection(label: "Default Collection");
   FlutterNativeSplash.remove();
 
   runApp(

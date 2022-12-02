@@ -20,7 +20,7 @@ class ConverterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final collection = container.read(collectionsProvider).first;
+    final collection = container.read(selectedCollectionProvider);
 
     return Scaffold(
       backgroundColor: ColorTheme.background1,
@@ -151,16 +151,6 @@ class _NumberEntries extends ConsumerWidget {
               onDelete: (_) => entry.delete(),
               child: ConversionEntryWidget(entry: entry),
             ),
-          ),
-      ],
-    );
-
-    Column(
-      children: [
-        for (final entry in entries)
-          SlidableDelete(
-            onDelete: (_) => entry.delete(),
-            child: ConversionEntryWidget(entry: entry),
           ),
       ],
     );

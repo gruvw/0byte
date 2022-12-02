@@ -16,12 +16,32 @@ class FlutterCollection extends Collection {
   @override
   set label(String newLabel) {
     flutterLabel = newLabel;
-    database.collectionEventsController.add(CollectionEvent(collection: this));
+    _notify();
+  }
+
+  int flutterTargetTypeIndex;
+  @override
+  int get targetTypeIndex => flutterTargetTypeIndex;
+  @override
+  set targetTypeIndex(int newTypeIndex) {
+    flutterTargetTypeIndex = newTypeIndex;
+    _notify();
+  }
+
+  int flutterTargetSize;
+  @override
+  int get targetSize => flutterTargetSize;
+  @override
+  set targetSize(int newN) {
+    flutterTargetSize = newN;
+    _notify();
   }
 
   FlutterCollection({
     required this.database,
     required this.flutterLabel,
+    required this.flutterTargetTypeIndex,
+    required this.flutterTargetSize,
   });
 
   @override
@@ -29,4 +49,7 @@ class FlutterCollection extends Collection {
     super.delete();
     database.deleteCollection(collection: this);
   }
+
+  void _notify() => database.collectionEventsController
+      .add(CollectionEvent(collection: this));
 }

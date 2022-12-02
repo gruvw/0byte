@@ -23,6 +23,8 @@ abstract class Database {
 
   Collection createCollection({
     required String label,
+    required ConversionType targetType,
+    required int targetSize,
   });
 
   List<Collection> getCollections();

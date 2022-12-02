@@ -34,10 +34,14 @@ class FlutterDatabase extends Database {
   @override
   Collection createCollection({
     required String label,
+    required ConversionType targetType,
+    required int targetSize,
   }) {
     FlutterCollection collection = FlutterCollection(
       database: this,
       flutterLabel: label,
+      flutterTargetTypeIndex: targetType.index,
+      flutterTargetSize: targetSize,
     );
     _collections.add(collection);
     collectionEventsController.add(CollectionEvent(collection: collection));

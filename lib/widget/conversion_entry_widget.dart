@@ -1,3 +1,6 @@
+import 'package:app_0byte/models/collection.dart';
+import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/providers/updaters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,9 +30,6 @@ class ConversionEntryWidget extends HookConsumerWidget {
 
     String? number = parseInput(entry.type, entry.input);
     final textNotifier = useValueNotifier(number ?? entry.input);
-
-    final targetType = ref.watch(targetConversionTypeProvider);
-    final targetSize = ref.watch(targetSizeProvider);
 
     String applyInput(String input) {
       if (entry.type == ConversionType.hexadecimal) {
@@ -85,8 +85,6 @@ class ConversionEntryWidget extends HookConsumerWidget {
           _ConvertedWidget(
             textNotifier: textNotifier,
             inputType: entry.type,
-            targetSize: targetSize,
-            targetType: targetType,
           ),
         ],
       ),
@@ -94,23 +92,21 @@ class ConversionEntryWidget extends HookConsumerWidget {
   }
 }
 
-class _ConvertedWidget extends HookWidget {
+class _ConvertedWidget extends HookConsumerWidget {
   final ConversionType inputType;
   final ValueNotifier<String> textNotifier;
-  final int targetSize;
-  final ConversionType targetType;
 
   const _ConvertedWidget({
     required this.inputType,
     required this.textNotifier,
-    required this.targetSize,
-    required this.targetType,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final text = useValueListenable(textNotifier);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final collection = ref.watch(selectedCollectionProvider);
+    ref.subscribe(collectionUpdater(collection));
 
+    final text = useValueListenable(textNotifier);
     String? number = parseInput(inputType, text);
 
     if (number == null) return Column();
@@ -119,13 +115,13 @@ class _ConvertedWidget extends HookWidget {
     String result = converted(
       inputType: inputType,
       number: number,
-      targetType: targetType,
-      targetSize: targetSize,
+      targetType: collection.targetType,
+      targetSize: collection.targetSize,
     );
     bool symmetric = isSymmetric(
       inputType: inputType,
       number: number,
-      targetType: targetType,
+      targetType: collection.targetType,
       result: result,
     );
 
@@ -133,7 +129,7 @@ class _ConvertedWidget extends HookWidget {
       child: Column(
         children: [
           NumberWidget(
-            type: targetType,
+            type: collection.targetType,
             input: result,
           ),
           if (!symmetric)
