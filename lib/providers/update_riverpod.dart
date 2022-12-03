@@ -25,33 +25,3 @@ extension Subscribe on WidgetRef {
     updater.subscribe(this, updater.element);
   }
 }
-
-// class MutableNotifier<T> extends ChangeNotifier {
-//   final T element;
-
-//   MutableNotifier(this.element);
-// }
-
-
-// final collectionViewProvider = ChangeNotifierProvider(
-//   (ref) {
-//     final collection = ref.watch(selectedCollectionProvider);
-//     ref.watch(collectionEventProvider(collection));
-//     return MutableNotifier(collection);
-//   },
-// );
-
-
-// Provider<T> mutableProvider<T>(
-//     T Function(ChangeNotifierProviderRef<MutableNotifier<T>>) createFn) {
-//   final changeProvider = ChangeNotifierProvider<MutableNotifier<T>>(
-//     (ref) {
-//       final element = createFn(ref);
-//       return MutableNotifier(element);
-//     },
-//   );
-
-//   return Provider(
-//     (ref) => ref.watch(changeProvider).element, # not working because element is mutable
-//   );
-// }

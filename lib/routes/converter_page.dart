@@ -4,6 +4,8 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/widget/forms/text_form.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/conversion_types.dart';
@@ -32,7 +34,7 @@ class ConverterPage extends StatelessWidget {
         ),
         title: HookConsumer(
           builder: (context, ref, child) {
-            ref.watch(collectionEventProvider(collection));
+            ref.subscribe(collectionUpdater(collection));
             return Text(
               collection.label,
               style: GoogleFonts.getFont(FontTheme.fontFamily1),
@@ -130,7 +132,7 @@ class _NumberEntries extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(collectionEventProvider(collection));
+    ref.subscribe(collectionUpdater(collection));
     final entries = collection.sortedEntries;
 
     return ReorderableListView(
