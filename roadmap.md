@@ -18,7 +18,7 @@ No support for bookmarking, no data persistence, basic data validation
 ## Beta release `v0.0.1-beta`
 
 - [X] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii, subtitle not empty, not only sign alone)
-- [ ] Handle entries UI overflow (middle)
+- [X] Handle entries UI overflow (middle), **converted to issue**
 - [X] Reorder entries
 - [ ] UI collection related operation (edit label, create collection, list collections, collection title)
 - [X] Collection related attributes (N, target type)

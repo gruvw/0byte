@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/widget/collections_list_widget.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/widget/forms/text_form.dart';
 import 'package:app_0byte/models/collection.dart';
@@ -28,10 +29,10 @@ class ConverterPage extends StatelessWidget {
       backgroundColor: ColorTheme.background1,
       appBar: AppBar(
         backgroundColor: ColorTheme.background3,
-        leading: const Icon(
-          Icons.menu,
-          color: ColorTheme.text1,
-        ),
+        // leading: const Icon(
+        //   Icons.menu,
+        //   color: ColorTheme.text1,
+        // ),
         title: HookConsumer(
           builder: (context, ref, child) {
             ref.subscribe(collectionUpdater(collection));
@@ -64,6 +65,12 @@ class ConverterPage extends StatelessWidget {
             ),
           )
         ],
+      ),
+      drawer: const SafeArea(
+        child: Drawer(
+          backgroundColor: ColorTheme.background1,
+          child: CollectionsList(),
+        ),
       ),
       body: Column(
         mainAxisSize: MainAxisSize.max,

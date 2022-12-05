@@ -5,4 +5,5 @@ abstract class FontTheme {
   static const double fontSize1 = 30;
   static const double fontSize2 = 27;
   static const double fontSize3 = 23;
+  static const double fontSize4 = 20;
 }
