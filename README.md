@@ -1,3 +1,3 @@
 # 0byte
 
-Base conversion application
+Cross platform base conversion application
