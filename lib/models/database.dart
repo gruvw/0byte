@@ -49,4 +49,6 @@ class CollectionEvent {
 abstract class DatabaseObject {
   @protected
   Database get database;
+
+  void delete();
 }

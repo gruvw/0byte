@@ -1,27 +1,33 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Updater<State> {
-  final State element;
-  final Function(WidgetRef ref, State element) subscribe;
+  final Function(WidgetRef ref) subscribe;
 
-  static UpdaterFamily<State> family<State>(
-          Function(WidgetRef ref, State element) subscribe) =>
-      UpdaterFamily<State>(subscribe);
-
-  Updater(this.element, this.subscribe);
+  Updater(this.subscribe);
 }
 
-class UpdaterFamily<State> {
+class FamilyUpdater<State> extends Updater {
+  static FamilyUpdaterBuilder<State> family<State>(
+          Function(WidgetRef ref, State element) subscribe) =>
+      FamilyUpdaterBuilder<State>(subscribe);
+
+  FamilyUpdater(
+    State element,
+    Function(WidgetRef ref, State element) familySubscribe,
+  ) : super((ref) => familySubscribe(ref, element));
+}
+
+class FamilyUpdaterBuilder<State> {
   final Function(WidgetRef ref, State element) subscribe;
 
-  const UpdaterFamily(this.subscribe);
+  const FamilyUpdaterBuilder(this.subscribe);
 
-  Updater<State> call(State element) => Updater(element, subscribe);
+  FamilyUpdater<State> call(State element) => FamilyUpdater(element, subscribe);
 }
 
 extension Subscribe on WidgetRef {
   /// Rebuilds the widget when updater receives an update (even if the state did not change).
   void subscribe<State>(Updater<State> updater) {
-    updater.subscribe(this, updater.element);
+    updater.subscribe(this);
   }
 }

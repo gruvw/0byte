@@ -15,9 +15,14 @@ abstract class Collection extends DatabaseObject {
   List<NumberEntry> get sortedEntries =>
       entries..sort((a, b) => a.position.compareTo(b.position));
 
-  void delete() {
+  void deleteEntries() {
     for (final entry in entries) {
       entry.delete();
     }
+  }
+
+  @override
+  void delete() {
+    deleteEntries();
   }
 }

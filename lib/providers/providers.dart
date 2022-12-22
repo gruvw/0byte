@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/styles/settings.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_database.dart';
@@ -37,10 +37,18 @@ final entryEventProvider = StreamProvider.family<EntryEvent, NumberEntry>(
   },
 );
 
-final selectedCollectionProvider = StateProvider(
-  (ref) => database.createCollection(
-    label: "Default Collection",
-    targetType: ConversionType.binary,
-    targetSize: ConversionType.binary.defaultTargetSize,
-  ),
+final selectedCollectionProvider = StateProvider<Collection>(
+  (ref) {
+    final collections = ref.read(collectionsProvider);
+
+    if (collections.isEmpty) {
+      return database.createCollection(
+        label: "My Collection",
+        targetType: SettingsTheme.defaultTargetType,
+        targetSize: SettingsTheme.defaultTargetType.defaultTargetSize,
+      );
+    }
+
+    return collections.first;
+  },
 );

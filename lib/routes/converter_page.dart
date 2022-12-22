@@ -18,21 +18,17 @@ import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
 
-class ConverterPage extends StatelessWidget {
+class ConverterPage extends HookConsumerWidget {
   const ConverterPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final collection = container.read(selectedCollectionProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final collection = ref.watch(selectedCollectionProvider);
 
     return Scaffold(
       backgroundColor: ColorTheme.background1,
       appBar: AppBar(
         backgroundColor: ColorTheme.background3,
-        // leading: const Icon(
-        //   Icons.menu,
-        //   color: ColorTheme.text1,
-        // ),
         title: HookConsumer(
           builder: (context, ref, child) {
             ref.subscribe(collectionUpdater(collection));
@@ -57,13 +53,6 @@ class ConverterPage extends StatelessWidget {
               color: ColorTheme.text1,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.bookmark_border,
-              color: ColorTheme.text1,
-            ),
-          )
         ],
       ),
       drawer: const SafeArea(
