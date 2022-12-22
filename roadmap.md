@@ -20,7 +20,7 @@ No support for bookmarking, no data persistence, basic data validation
 - [X] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii, subtitle not empty, not only sign alone)
 - [X] Handle entries UI overflow (middle), **converted to issue**
 - [X] Reorder entries
-- [ ] UI collection related operation (edit label, create collection, list collections, collection title)
+- [X] UI collection related operation (edit label, create collection, list collections, collection title)
 - [X] Collection related attributes (N, target type)
 - [X] Create Logo + integration
 - [X] Splash screen
@@ -32,7 +32,7 @@ No support for bookmarking, no data persistence, basic data validation
 
 Persistence support
 
-- [ ] Support saving/bookmarking (non-empty) pages
+- [X] Support saving/bookmarking (non-empty) pages
 - [ ] Add Hive/Drift Database
 - [ ] Default to non-persistent page
 - [ ] List saved pages (title) on hamburger menu
