@@ -31,6 +31,7 @@ abstract class NumberEntry extends DatabaseObject {
     ));
   }
 
+  @override
   void delete() {
     for (final entry in collection.entries) {
       entry.position--;

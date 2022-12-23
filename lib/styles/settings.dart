@@ -6,4 +6,8 @@ class SettingsTheme {
   static const double floatingActionChildrenSize = 62;
   static const double conversionSpacing = 20;
   static const ConversionType defaultTargetType = ConversionType.binary;
+
+  static const String newCollectionButtonLabel = "New Collection";
+  static const String defaultCollectionLabel = "My Collection";
+  static const String defaultValueLabel = "Value";
 }

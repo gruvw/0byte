@@ -16,9 +16,7 @@ abstract class Collection extends DatabaseObject {
       entries..sort((a, b) => a.position.compareTo(b.position));
 
   void deleteEntries() {
-    for (final entry in entries) {
-      entry.delete();
-    }
+    entries.map((e) => e.delete());
   }
 
   @override

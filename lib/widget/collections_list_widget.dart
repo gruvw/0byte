@@ -26,6 +26,7 @@ class CollectionsList extends HookConsumerWidget {
     return ListView.separated(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       itemBuilder: (context, index) {
+        // "New Collection" button
         if (index == collections.length) {
           return ListTile(
             leading: const Icon(
@@ -33,7 +34,7 @@ class CollectionsList extends HookConsumerWidget {
               color: ColorTheme.text2,
             ),
             title: const Text(
-              "New collection",
+              SettingsTheme.newCollectionButtonLabel,
               style: TextStyle(
                 fontFamily: FontTheme.fontFamily1,
                 fontSize: FontTheme.fontSize4,
@@ -43,7 +44,8 @@ class CollectionsList extends HookConsumerWidget {
             onTap: () {
               changeSelectedCollection(
                 database.createCollection(
-                  label: "My Collection ${collections.length + 1}",
+                  label:
+                      "${SettingsTheme.defaultCollectionLabel} ${collections.length + 1}",
                   targetType: SettingsTheme.defaultTargetType,
                   targetSize: SettingsTheme.defaultTargetType.defaultTargetSize,
                 ),
@@ -85,7 +87,7 @@ class CollectionsList extends HookConsumerWidget {
       separatorBuilder: (context, index) => const Divider(
         color: ColorTheme.text2,
       ),
-      // One more for the new collection button
+      // One more for the "new collection" button
       itemCount: collections.length + 1,
     );
   }

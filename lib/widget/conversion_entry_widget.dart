@@ -33,7 +33,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
 
     String applyInput(String input) {
       if (entry.type == ConversionType.hexadecimal) {
-        return input.toUpperCase();
+        input = input.toUpperCase();
       }
       return input;
     }
@@ -65,7 +65,8 @@ class ConversionEntryWidget extends HookConsumerWidget {
                 controller: TextEditingController(text: entry.label),
                 onSubmitted: (String newLabel) {
                   if (newLabel.isEmpty) {
-                    newLabel = "Value ${entry.position + 1}";
+                    newLabel =
+                        "${SettingsTheme.defaultValueLabel} ${entry.position + 1}";
                   }
                   entry.label = newLabel;
                 },

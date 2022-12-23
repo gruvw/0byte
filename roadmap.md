@@ -33,6 +33,7 @@ No support for bookmarking, no data persistence, basic data validation
 Persistence support
 
 - [X] Support saving/bookmarking (non-empty) pages
+- [ ] Fix moving entry color
 - [ ] Add Hive/Drift Database
 - [ ] Default to non-persistent page
 - [ ] List saved pages (title) on hamburger menu
