@@ -33,14 +33,14 @@ No support for bookmarking, no data persistence, basic data validation
 Persistence support
 
 - [X] Support saving/bookmarking (non-empty) pages
-- [ ] Fix moving entry color
+- [ ] Fix moving entry color #2
+- [ ] Style popup forms
 - [ ] Add Hive/Drift Database
-- [ ] Default to non-persistent page
-- [ ] List saved pages (title) on hamburger menu
+- [X] List saved pages (title) on hamburger menu
 
 ## Alpha release `v0.0.2-alpha.2`
 
-- [ ] Import export pages
+- [ ] Import & export pages
 - [ ] Share single page
 
 ## Beta release `v0.0.2-beta`
@@ -48,7 +48,7 @@ Persistence support
 - [ ] Support base 64 conversions
 - [ ] Support Latin-1/ISO 8859-1
 - [ ] Support Octal conversion
-- [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy)
+- [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy, local data/no server -> exports)
 
 ## Major release `v0.0.3`
 

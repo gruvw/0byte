@@ -1,3 +1,5 @@
+import 'package:app_0byte/styles/colors.dart';
+import 'package:app_0byte/styles/fonts.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/styles/settings.dart';
@@ -22,13 +24,23 @@ class TextForm extends StatelessWidget {
         MediaQuery.of(context).size.width * SettingsTheme.formDialogWidthRatio;
 
     return AlertDialog(
-      title: Text(title),
+      backgroundColor: ColorTheme.background1,
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: ColorTheme.text1,
+        ),
+      ),
       content: ConstrainedBox(
         constraints: BoxConstraints(minWidth: width, maxWidth: width),
         child: TextField(
           controller: controller,
           autofocus: true,
           textCapitalization: TextCapitalization.sentences,
+          cursorColor: ColorTheme.text1,
+          style: const TextStyle(
+            color: ColorTheme.text1,
+          ),
         ),
       ),
       actions: [
@@ -37,7 +49,15 @@ class TextForm extends StatelessWidget {
             callback(controller.text.isEmpty ? initialText : controller.text);
             Navigator.pop(context);
           },
-          child: const Text("OK"),
+          child: const Text(
+            "OK",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: FontTheme.fontSize5,
+              fontFamily: FontTheme.fontFamily2,
+              color: ColorTheme.textPrefix,
+            ),
+          ),
         ),
       ],
     );
