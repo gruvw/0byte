@@ -131,26 +131,29 @@ class _NumberEntries extends ConsumerWidget {
     ref.subscribe(collectionUpdater(collection));
     final entries = collection.sortedEntries;
 
-    return ReorderableListView(
-      dragStartBehavior: DragStartBehavior.down,
-      buildDefaultDragHandles: false,
-      onReorder: (oldIndex, newIndex) {
-        if (oldIndex < newIndex) {
-          newIndex -= 1;
-        }
-        entries[oldIndex].move(newIndex);
-      },
-      children: [
-        for (final entry in entries)
-          ReorderableDelayedDragStartListener(
-            key: UniqueKey(),
-            index: entry.position,
-            child: SlidableDelete(
-              onDelete: (_) => entry.delete(),
-              child: ConversionEntryWidget(entry: entry),
+    return Theme(
+      data: ThemeData(canvasColor: ColorTheme.background2),
+      child: ReorderableListView(
+        dragStartBehavior: DragStartBehavior.down,
+        buildDefaultDragHandles: false,
+        onReorder: (oldIndex, newIndex) {
+          if (oldIndex < newIndex) {
+            newIndex -= 1;
+          }
+          entries[oldIndex].move(newIndex);
+        },
+        children: [
+          for (final entry in entries)
+            ReorderableDelayedDragStartListener(
+              key: UniqueKey(),
+              index: entry.position,
+              child: SlidableDelete(
+                onDelete: (_) => entry.delete(),
+                child: ConversionEntryWidget(entry: entry),
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

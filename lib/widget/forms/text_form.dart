@@ -41,6 +41,13 @@ class TextForm extends StatelessWidget {
           style: const TextStyle(
             color: ColorTheme.text1,
           ),
+          decoration: const InputDecoration(
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: ColorTheme.textPrefix,
+              ),
+            ),
+          ),
         ),
       ),
       actions: [
