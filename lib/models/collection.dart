@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/number_entry.dart';
@@ -19,17 +17,17 @@ abstract class Collection extends DatabaseObject {
   List<NumberEntry> get sortedEntries =>
       entries..sort((a, b) => a.position.compareTo(b.position));
 
-  void deleteEntries() {
+  void deleteEntries([bool broadcast = true]) {
     for (final entry in List.of(entries)) {
-      entry.delete();
+      entry.delete(broadcast);
     }
   }
 
-  void notify() => database.collectionEventsController
-      .add(CollectionEvent(collection: this));
+  void notify(EventType type) => database.collectionEventsController
+      .add(CollectionEvent(collection: this, type: type));
 
   @override
-  void delete() {
-    deleteEntries();
+  void delete([bool broadcast = true]) {
+    deleteEntries(broadcast);
   }
 }

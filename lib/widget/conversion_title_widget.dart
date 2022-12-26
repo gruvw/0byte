@@ -53,7 +53,7 @@ class _ConversionTypeSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final collection = ref.watch(selectedCollectionProvider);
-    ref.subscribe(collectionUpdater(collection));
+    ref.subscribe(collectionEditionUpdater(collection));
 
     final nTextController =
         TextEditingController(text: collection.targetSize.toString());

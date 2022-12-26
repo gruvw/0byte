@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart' hide HiveCollection;
 
+import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/hive_store/hive_collection.dart';
 import 'package:app_0byte/models/hive_store/hive_database.dart';
@@ -65,7 +66,7 @@ class HiveNumberEntry extends NumberEntry {
   set input(String newInput) {
     hiveStoreNumberEntry.hiveInput = newInput;
     hiveStoreNumberEntry.save();
-    notify();
+    notify(EventType.edit);
   }
 
   @override
@@ -74,16 +75,18 @@ class HiveNumberEntry extends NumberEntry {
   set label(String newLabel) {
     hiveStoreNumberEntry.hiveLabel = newLabel;
     hiveStoreNumberEntry.save();
-    notify();
+    notify(EventType.edit);
   }
 
   @override
-  void delete() {
+  void delete([bool broadcast = true]) {
     super.delete();
     collection.hiveStoreCollection.entriesKeys.remove(hiveStoreNumberEntry.key);
     collection.hiveStoreCollection.save();
     hiveStoreNumberEntry.delete();
-    collection.notify();
+    if (broadcast) {
+      collection.notify(EventType.edit);
+    }
   }
 
   @override

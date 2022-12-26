@@ -26,7 +26,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.subscribe(entryUpdater(entry));
+    ref.subscribe(entryEditionUpdater(entry));
 
     String? number = parseInput(entry.type, entry.input);
     final textNotifier = useValueNotifier(number ?? entry.input);
@@ -108,7 +108,7 @@ class _ConvertedWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final collection = ref.watch(selectedCollectionProvider);
-    ref.subscribe(collectionUpdater(collection));
+    ref.subscribe(collectionEditionUpdater(collection));
 
     final text = useValueListenable(textNotifier);
     String? number = parseInput(inputType, text);

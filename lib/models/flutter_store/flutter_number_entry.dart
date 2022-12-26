@@ -1,4 +1,5 @@
 import 'package:app_0byte/models/collection.dart';
+import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_database.dart';
 import 'package:app_0byte/models/number_entry.dart';
 
@@ -18,7 +19,7 @@ class FlutterNumberEntry extends NumberEntry {
   @override
   set input(String newInput) {
     flutterInput = newInput;
-    notify();
+    notify(EventType.edit);
   }
 
   String flutterLabel;
@@ -27,7 +28,7 @@ class FlutterNumberEntry extends NumberEntry {
   @override
   set label(String newLabel) {
     flutterLabel = newLabel;
-    notify();
+    notify(EventType.edit);
   }
 
   FlutterNumberEntry({
@@ -40,8 +41,8 @@ class FlutterNumberEntry extends NumberEntry {
   });
 
   @override
-  void delete() {
-    super.delete();
+  void delete([bool broadcast = true]) {
+    super.delete(broadcast);
     (database as FlutterDatabase).deleteNumberEntry(entry: this);
   }
 }

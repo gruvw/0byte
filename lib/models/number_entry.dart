@@ -28,13 +28,14 @@ abstract class NumberEntry extends DatabaseObject {
     }
     position = newPosition;
 
-    collection.notify();
+    collection.notify(EventType.edit);
   }
 
-  void notify() => database.entryEventsController.add(EntryEvent(entry: this));
+  void notify(EventType type) =>
+      database.entryEventsController.add(EntryEvent(entry: this, type: type));
 
   @override
-  void delete() {
+  void delete([bool broadcast = true]) {
     for (final entry in collection.entries) {
       entry.position--;
     }

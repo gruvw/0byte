@@ -11,34 +11,38 @@ final database = HiveDatabase();
 
 final container = ProviderContainer();
 
-final collectionEventProvider =
-    StreamProvider.family<CollectionEvent, Collection>(
+final collectionEditionEventProvider =
+    StreamProvider.autoDispose.family<CollectionEvent, Collection>(
   (ref, collection) async* {
-    yield* database
-        .watchCollections()
-        .where((event) => event.collection == collection);
+    yield* database.watchCollections().where(
+          (event) =>
+              event.type == EventType.edit && event.collection == collection,
+        );
   },
 );
 
-final collectionsProvider = Provider(
+final collectionsProvider = Provider.autoDispose(
   (ref) {
     ref.watch(collectionsEventProvider);
     return database.getCollections();
   },
 );
-final collectionsEventProvider = StreamProvider<CollectionEvent>(
+final collectionsEventProvider = StreamProvider.autoDispose<CollectionEvent>(
   (ref) async* {
     yield* database.watchCollections();
   },
 );
 
-final entryEventProvider = StreamProvider.family<EntryEvent, NumberEntry>(
+final entryEditionEventProvider =
+    StreamProvider.autoDispose.family<EntryEvent, NumberEntry>(
   (ref, entry) async* {
-    yield* database.watchEntries().where((event) => event.entry == entry);
+    yield* database
+        .watchEntries()
+        .where((event) => event.entry == entry && event.type == EventType.edit);
   },
 );
 
-final selectedCollectionProvider = StateProvider<Collection>(
+final selectedCollectionProvider = StateProvider.autoDispose<Collection>(
   (ref) {
     final collections = ref.read(collectionsProvider);
 

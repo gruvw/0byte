@@ -24,19 +24,15 @@ class ConverterPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final collection = ref.watch(selectedCollectionProvider);
+    ref.subscribe(collectionEditionUpdater(collection));
 
     return Scaffold(
       backgroundColor: ColorTheme.background1,
       appBar: AppBar(
         backgroundColor: ColorTheme.background3,
-        title: HookConsumer(
-          builder: (context, ref, child) {
-            ref.subscribe(collectionUpdater(collection));
-            return Text(
-              collection.label,
-              style: GoogleFonts.getFont(FontTheme.fontFamily1),
-            );
-          },
+        title: Text(
+          collection.label,
+          style: GoogleFonts.getFont(FontTheme.fontFamily1),
         ),
         actions: [
           IconButton(
@@ -92,6 +88,7 @@ class ConverterPage extends HookConsumerWidget {
               labelShadow: [],
               labelStyle: const TextStyle(
                 color: ColorTheme.text1,
+                fontFamily: FontTheme.fontFamily2,
               ),
               label: conversionType.label,
               child: Text(
@@ -121,14 +118,13 @@ class ConverterPage extends HookConsumerWidget {
   }
 }
 
-class _NumberEntries extends ConsumerWidget {
+class _NumberEntries extends StatelessWidget {
   final Collection collection;
 
   const _NumberEntries({required this.collection});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.subscribe(collectionUpdater(collection));
+  Widget build(BuildContext context) {
     final entries = collection.sortedEntries;
 
     return Theme(

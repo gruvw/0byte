@@ -1,10 +1,13 @@
 import 'package:app_0byte/models/collection.dart';
+import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_number_entry.dart';
+import 'package:app_0byte/utils/reorderable_list.dart';
 
 class FlutterCollection extends Collection {
+  final List<FlutterNumberEntry> flutterEntries = [];
   @override
-  final List<FlutterNumberEntry> entries = [];
+  List<FlutterNumberEntry> get entries => ReorderableListView(flutterEntries);
 
   String flutterLabel;
   @override
@@ -12,7 +15,7 @@ class FlutterCollection extends Collection {
   @override
   set label(String newLabel) {
     flutterLabel = newLabel;
-    notify();
+    notify(EventType.edit);
   }
 
   int flutterTargetTypeIndex;
@@ -21,7 +24,7 @@ class FlutterCollection extends Collection {
   @override
   set targetTypeIndex(int newTypeIndex) {
     flutterTargetTypeIndex = newTypeIndex;
-    notify();
+    notify(EventType.edit);
   }
 
   int flutterTargetSize;
@@ -30,7 +33,7 @@ class FlutterCollection extends Collection {
   @override
   set targetSize(int newN) {
     flutterTargetSize = newN;
-    notify();
+    notify(EventType.edit);
   }
 
   FlutterCollection({
@@ -41,8 +44,8 @@ class FlutterCollection extends Collection {
   });
 
   @override
-  void delete() {
-    super.delete();
+  void delete([bool broadcast = true]) {
+    super.delete(false);
     (database as FlutterDatabase).deleteCollection(collection: this);
   }
 }

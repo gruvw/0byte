@@ -16,9 +16,8 @@ class CollectionsList extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.subscribe(collectionsUpdater);
 
-    final collections = database.getCollections()
-      ..sort((a, b) => a.label.compareTo(b.label));
-    final selectedCollection = ref.watch(selectedCollectionProvider);
+    final collections = database.getCollections();
+    final selectedCollection = ref.read(selectedCollectionProvider);
 
     void changeSelectedCollection(Collection collection) {
       ref.read(selectedCollectionProvider.notifier).state = collection;
@@ -79,11 +78,12 @@ class CollectionsList extends HookConsumerWidget {
                     color: ColorTheme.danger,
                   ),
                   onPressed: () {
-                    if (selectedCollection == collection) {
-                      ref.read(selectedCollectionProvider.notifier).state =
-                          collections.firstWhere((c) => c != collection);
-                    }
+                    bool deletedCurrent = selectedCollection == collection;
                     collection.delete();
+                    if (deletedCurrent) {
+                      ref.read(selectedCollectionProvider.notifier).state =
+                          database.getCollections().first;
+                    }
                   },
                 ),
           onTap: () => changeSelectedCollection(collection),

@@ -7,12 +7,12 @@ final collectionsUpdater = Updater<List<Collection>>((ref) {
   ref.watch(collectionsProvider);
 });
 
-final collectionUpdater = FamilyUpdater.family<Collection>(
+final collectionEditionUpdater = FamilyUpdater.family<Collection>(
   (ref, element) {
-    ref.watch(collectionEventProvider(element));
+    ref.watch(collectionEditionEventProvider(element));
   },
 );
 
-final entryUpdater = FamilyUpdater.family<NumberEntry>((ref, element) {
-  ref.watch(entryEventProvider(element));
+final entryEditionUpdater = FamilyUpdater.family<NumberEntry>((ref, element) {
+  ref.watch(entryEditionEventProvider(element));
 });

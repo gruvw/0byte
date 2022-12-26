@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart' hide HiveCollection;
 
+import 'package:app_0byte/models/database.dart';
+import 'package:app_0byte/utils/reorderable_list.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/hive_store/hive_database.dart';
 import 'package:app_0byte/models/hive_store/hive_number_entry.dart';
@@ -10,7 +12,7 @@ part 'hive_collection.g.dart';
 @HiveType(typeId: 0)
 class HiveStoreCollection with HiveObjectMixin {
   @HiveField(0)
-  final List<String> entriesKeys;
+  final List<int> entriesKeys;
 
   @HiveField(1)
   String hiveLabel;
@@ -38,12 +40,14 @@ class HiveCollection extends Collection {
   });
 
   @override
-  List<NumberEntry> get entries => hiveStoreCollection.entriesKeys
-      .map((k) => HiveNumberEntry(
-            database: database,
-            hiveStoreNumberEntry: (database as HiveDatabase).entriesBox.get(k)!,
-          ))
-      .toList();
+  List<NumberEntry> get entries =>
+      ReorderableListView(hiveStoreCollection.entriesKeys
+          .map((k) => HiveNumberEntry(
+                database: database,
+                hiveStoreNumberEntry:
+                    (database as HiveDatabase).entriesBox.get(k)!,
+              ))
+          .toList());
 
   @override
   String get label => hiveStoreCollection.hiveLabel;
@@ -51,7 +55,7 @@ class HiveCollection extends Collection {
   set label(String newLabel) {
     hiveStoreCollection.hiveLabel = newLabel;
     hiveStoreCollection.save();
-    notify();
+    notify(EventType.edit);
   }
 
   @override
@@ -60,7 +64,7 @@ class HiveCollection extends Collection {
   set targetTypeIndex(int newTypeIndex) {
     hiveStoreCollection.hiveTypeIndex = newTypeIndex;
     hiveStoreCollection.save();
-    notify();
+    notify(EventType.edit);
   }
 
   @override
@@ -69,14 +73,16 @@ class HiveCollection extends Collection {
   set targetSize(int newTargetSize) {
     hiveStoreCollection.hiveTargetSize = newTargetSize;
     hiveStoreCollection.save();
-    notify();
+    notify(EventType.edit);
   }
 
   @override
-  void delete() {
-    super.delete();
+  void delete([bool broadcast = true]) {
+    super.delete(false);
     hiveStoreCollection.delete();
-    notify();
+    if (broadcast) {
+      notify(EventType.delete);
+    }
   }
 
   @override

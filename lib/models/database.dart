@@ -36,23 +36,37 @@ abstract class Database {
       collectionEventsController.stream;
 }
 
-class EntryEvent {
-  final NumberEntry entry;
-
-  EntryEvent({required this.entry});
-}
-
-class CollectionEvent {
-  final Collection collection;
-
-  CollectionEvent({required this.collection});
-}
-
 abstract class DatabaseObject {
   @protected
   final Database database;
 
   DatabaseObject({required this.database});
 
-  void delete();
+  void delete([bool broadcast = true]);
+}
+
+enum EventType { delete, edit, create }
+
+class DatabaseEvent {
+  final EventType type;
+
+  DatabaseEvent({required this.type});
+}
+
+class EntryEvent extends DatabaseEvent {
+  final NumberEntry entry;
+
+  EntryEvent({
+    required this.entry,
+    required super.type,
+  });
+}
+
+class CollectionEvent extends DatabaseEvent {
+  final Collection collection;
+
+  CollectionEvent({
+    required this.collection,
+    required super.type,
+  });
 }

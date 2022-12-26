@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart' hide HiveCollection;
-import 'package:nanoid/nanoid.dart';
 
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/conversion_types.dart';
@@ -28,8 +27,6 @@ class HiveDatabase extends Database {
         await Hive.openBox<HiveStoreNumberEntry>(HiveDatabase.entriesBoxName);
     collectionsBox = await Hive.openBox<HiveStoreCollection>(
         HiveDatabase.collectionsBoxName);
-    print(entriesBox.length);
-    print(collectionsBox.length);
   }
 
   @override
@@ -51,10 +48,10 @@ class HiveDatabase extends Database {
       database: this,
       hiveStoreNumberEntry: hiveStoreNumberEntry,
     );
-    entriesBox.put(nanoid(), hiveStoreNumberEntry);
+    entriesBox.add(hiveStoreNumberEntry);
     collection.hiveStoreCollection.entriesKeys.add(hiveStoreNumberEntry.key);
     collection.hiveStoreCollection.save();
-    collection.notify();
+    collection.notify(EventType.edit);
     return hiveEntry;
   }
 
@@ -74,18 +71,19 @@ class HiveDatabase extends Database {
       database: this,
       hiveStoreCollection: hiveStoreCollection,
     );
-    collectionsBox.put(nanoid(), hiveStoreCollection);
-    hiveCollection.notify();
+    collectionsBox.add(hiveStoreCollection);
+    hiveCollection.notify(EventType.create);
     return hiveCollection;
   }
 
   @override
   List<Collection> getCollections() {
-    return collectionsBox.values
+    return List.unmodifiable(collectionsBox.values
         .map((c) => HiveCollection(
               database: this,
               hiveStoreCollection: c,
             ))
-        .toList();
+        .toList()
+      ..sort((a, b) => a.label.compareTo(b.label)));
   }
 }
