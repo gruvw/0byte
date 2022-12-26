@@ -77,13 +77,6 @@ class HiveDatabase extends Database {
     return hiveCollection;
   }
 
-  void deleteNumberEntry({required NumberEntry entry}) {
-    entry.collection.entries.remove(entry);
-    collectionEventsController.add(CollectionEvent(
-      collection: entry.collection,
-    ));
-  }
-
   @override
   List<Collection> getCollections() {
     return List.unmodifiable(

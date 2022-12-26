@@ -35,7 +35,7 @@ Persistence support
 - [X] Support saving/bookmarking (non-empty) pages
 - [X] Fix moving entry color #2
 - [X] Style popup forms
-- [ ] Add Hive database support
+- [X] Add Hive database support
 - [X] List saved pages (title) on hamburger menu
 
 ## Alpha release `v0.0.2-alpha.2`

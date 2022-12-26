@@ -77,4 +77,12 @@ class HiveCollection extends Collection {
     hiveStoreCollection.delete();
     notify();
   }
+
+  @override
+  bool operator ==(covariant HiveCollection other) =>
+      database == other.database &&
+      hiveStoreCollection.key == other.hiveStoreCollection.key;
+
+  @override
+  int get hashCode => Object.hash(database, hiveStoreCollection.key);
 }

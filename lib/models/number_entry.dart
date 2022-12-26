@@ -28,9 +28,7 @@ abstract class NumberEntry extends DatabaseObject {
     }
     position = newPosition;
 
-    database.collectionEventsController.add(CollectionEvent(
-      collection: collection,
-    ));
+    collection.notify();
   }
 
   void notify() => database.entryEventsController.add(EntryEvent(entry: this));

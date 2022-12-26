@@ -1,4 +1,3 @@
-import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/hive_store/hive_collection.dart';
 import 'package:app_0byte/models/hive_store/hive_database.dart';
 import 'package:app_0byte/models/number_entry.dart';
@@ -81,7 +80,16 @@ class HiveNumberEntry extends NumberEntry {
   void delete() {
     super.delete();
     collection.hiveStoreCollection.entriesKeys.remove(hiveStoreNumberEntry.key);
+    collection.hiveStoreCollection.save();
     hiveStoreNumberEntry.delete();
     collection.notify();
   }
+
+  @override
+  bool operator ==(covariant HiveNumberEntry other) =>
+      database == other.database &&
+      hiveStoreNumberEntry.key == other.hiveStoreNumberEntry.key;
+
+  @override
+  int get hashCode => Object.hash(database, hiveStoreNumberEntry.key);
 }
