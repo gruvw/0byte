@@ -4,9 +4,9 @@ import 'package:nanoid/nanoid.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/database.dart';
+import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/hive_store/hive_collection.dart';
 import 'package:app_0byte/models/hive_store/hive_number_entry.dart';
-import 'package:app_0byte/models/number_entry.dart';
 
 class HiveDatabase extends Database {
   static const String entriesBoxName = "entries";
@@ -28,6 +28,8 @@ class HiveDatabase extends Database {
         await Hive.openBox<HiveStoreNumberEntry>(HiveDatabase.entriesBoxName);
     collectionsBox = await Hive.openBox<HiveStoreCollection>(
         HiveDatabase.collectionsBoxName);
+    print(entriesBox.length);
+    print(collectionsBox.length);
   }
 
   @override
@@ -38,7 +40,7 @@ class HiveDatabase extends Database {
     required String input,
     required String label,
   }) {
-    HiveStoreNumberEntry hiveStoreEntry = HiveStoreNumberEntry(
+    HiveStoreNumberEntry hiveStoreNumberEntry = HiveStoreNumberEntry(
       hiveLabel: label,
       hiveTypeIndex: type.index,
       hiveInput: input,
@@ -47,10 +49,10 @@ class HiveDatabase extends Database {
     );
     HiveNumberEntry hiveEntry = HiveNumberEntry(
       database: this,
-      hiveStoreNumberEntry: hiveStoreEntry,
+      hiveStoreNumberEntry: hiveStoreNumberEntry,
     );
-    entriesBox.put(nanoid(), hiveStoreEntry);
-    collection.hiveStoreCollection.entriesKeys.add(hiveStoreEntry.key);
+    entriesBox.put(nanoid(), hiveStoreNumberEntry);
+    collection.hiveStoreCollection.entriesKeys.add(hiveStoreNumberEntry.key);
     collection.hiveStoreCollection.save();
     collection.notify();
     return hiveEntry;
@@ -79,11 +81,11 @@ class HiveDatabase extends Database {
 
   @override
   List<Collection> getCollections() {
-    return List.unmodifiable(
-      collectionsBox.values.map((c) => HiveCollection(
-            database: this,
-            hiveStoreCollection: c,
-          )),
-    );
+    return collectionsBox.values
+        .map((c) => HiveCollection(
+              database: this,
+              hiveStoreCollection: c,
+            ))
+        .toList();
   }
 }

@@ -1,7 +1,7 @@
-import 'package:app_0byte/styles/colors.dart';
-import 'package:app_0byte/styles/fonts.dart';
 import 'package:flutter/material.dart';
 
+import 'package:app_0byte/styles/colors.dart';
+import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/styles/settings.dart';
 
 class TextForm extends StatelessWidget {

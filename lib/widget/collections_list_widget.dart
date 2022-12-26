@@ -1,4 +1,3 @@
-import 'package:app_0byte/models/hive_store/hive_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -17,7 +16,9 @@ class CollectionsList extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.subscribe(collectionsUpdater);
 
-    final collections = database.getCollections();
+    final collections = database.getCollections()
+      ..sort((a, b) => a.label.compareTo(b.label));
+    final selectedCollection = ref.watch(selectedCollectionProvider);
 
     void changeSelectedCollection(Collection collection) {
       ref.read(selectedCollectionProvider.notifier).state = collection;
@@ -58,6 +59,9 @@ class CollectionsList extends HookConsumerWidget {
         final collection = collections[index];
 
         return ListTile(
+          tileColor: collection == selectedCollection
+              ? ColorTheme.background2
+              : Colors.transparent,
           title: Text(
             collection.label,
             overflow: TextOverflow.ellipsis,
@@ -75,7 +79,7 @@ class CollectionsList extends HookConsumerWidget {
                     color: ColorTheme.danger,
                   ),
                   onPressed: () {
-                    if (ref.read(selectedCollectionProvider) == collection) {
+                    if (selectedCollection == collection) {
                       ref.read(selectedCollectionProvider.notifier).state =
                           collections.firstWhere((c) => c != collection);
                     }

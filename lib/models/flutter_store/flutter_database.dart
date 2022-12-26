@@ -27,7 +27,7 @@ class FlutterDatabase extends Database {
       flutterLabel: label,
     );
     collection.entries.add(entry);
-    collectionEventsController.add(CollectionEvent(collection: collection));
+    collection.notify();
     return entry;
   }
 
@@ -44,24 +44,22 @@ class FlutterDatabase extends Database {
       flutterTargetSize: targetSize,
     );
     _collections.add(collection);
-    collectionEventsController.add(CollectionEvent(collection: collection));
+    collection.notify();
     return collection;
   }
 
   void deleteNumberEntry({required NumberEntry entry}) {
     entry.collection.entries.remove(entry);
-    collectionEventsController.add(CollectionEvent(
-      collection: entry.collection,
-    ));
+    entry.collection.notify();
   }
 
   void deleteCollection({required FlutterCollection collection}) {
     _collections.remove(collection);
-    collectionEventsController.add(CollectionEvent(collection: collection));
+    collection.notify();
   }
 
   @override
   List<Collection> getCollections() {
-    return List.unmodifiable(_collections);
+    return List.of(_collections);
   }
 }

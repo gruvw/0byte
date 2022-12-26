@@ -1,8 +1,9 @@
+import 'package:hive/hive.dart' hide HiveCollection;
+
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/hive_store/hive_database.dart';
 import 'package:app_0byte/models/hive_store/hive_number_entry.dart';
 import 'package:app_0byte/models/number_entry.dart';
-import 'package:hive/hive.dart' hide HiveCollection;
 
 part 'hive_collection.g.dart';
 
@@ -65,8 +66,8 @@ class HiveCollection extends Collection {
   @override
   int get targetSize => hiveStoreCollection.hiveTargetSize;
   @override
-  set targetSize(int newN) {
-    hiveStoreCollection.hiveTargetSize = newN;
+  set targetSize(int newTargetSize) {
+    hiveStoreCollection.hiveTargetSize = newTargetSize;
     hiveStoreCollection.save();
     notify();
   }

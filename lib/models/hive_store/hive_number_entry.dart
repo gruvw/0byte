@@ -1,7 +1,8 @@
+import 'package:hive/hive.dart' hide HiveCollection;
+
+import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/hive_store/hive_collection.dart';
 import 'package:app_0byte/models/hive_store/hive_database.dart';
-import 'package:app_0byte/models/number_entry.dart';
-import 'package:hive/hive.dart' hide HiveCollection;
 
 part 'hive_number_entry.g.dart';
 

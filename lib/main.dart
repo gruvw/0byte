@@ -32,7 +32,6 @@ void main() async {
             bodyText1: TextStyle(),
             bodyText2: TextStyle(),
           ).apply(
-            fontFamily: "Fira Code",
             bodyColor: ColorTheme.text1,
             displayColor: ColorTheme.text1,
           ),
