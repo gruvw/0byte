@@ -8,7 +8,8 @@ import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/routes/route_generator.dart';
 import 'package:app_0byte/styles/colors.dart';
 
-void main() {
+void main() async {
+  await database.init();
   setPathUrlStrategy();
 
   FlutterNativeSplash.remove();

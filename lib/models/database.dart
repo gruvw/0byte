@@ -13,6 +13,8 @@ abstract class Database {
   final StreamController<CollectionEvent> collectionEventsController =
       StreamController<CollectionEvent>.broadcast();
 
+  Future<void> init() async {}
+
   NumberEntry createNumberEntry({
     required Collection collection,
     required int position,
@@ -48,7 +50,9 @@ class CollectionEvent {
 
 abstract class DatabaseObject {
   @protected
-  Database get database;
+  final Database database;
+
+  DatabaseObject({required this.database});
 
   void delete();
 }

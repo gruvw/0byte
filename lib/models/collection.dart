@@ -8,6 +8,8 @@ abstract class Collection extends DatabaseObject {
   abstract int targetTypeIndex;
   abstract int targetSize;
 
+  Collection({required super.database});
+
   ConversionType get targetType => ConversionType.values[targetTypeIndex];
 
   set targetType(ConversionType newType) => targetTypeIndex = newType.index;
@@ -18,6 +20,9 @@ abstract class Collection extends DatabaseObject {
   void deleteEntries() {
     entries.map((e) => e.delete());
   }
+
+  void notify() => database.collectionEventsController
+      .add(CollectionEvent(collection: this));
 
   @override
   void delete() {

@@ -5,9 +5,6 @@ import 'package:app_0byte/models/flutter_store/flutter_number_entry.dart';
 
 class FlutterCollection extends Collection {
   @override
-  final FlutterDatabase database;
-
-  @override
   final List<FlutterNumberEntry> entries = [];
 
   String flutterLabel;
@@ -16,7 +13,7 @@ class FlutterCollection extends Collection {
   @override
   set label(String newLabel) {
     flutterLabel = newLabel;
-    _notify();
+    notify();
   }
 
   int flutterTargetTypeIndex;
@@ -25,7 +22,7 @@ class FlutterCollection extends Collection {
   @override
   set targetTypeIndex(int newTypeIndex) {
     flutterTargetTypeIndex = newTypeIndex;
-    _notify();
+    notify();
   }
 
   int flutterTargetSize;
@@ -34,11 +31,11 @@ class FlutterCollection extends Collection {
   @override
   set targetSize(int newN) {
     flutterTargetSize = newN;
-    _notify();
+    notify();
   }
 
   FlutterCollection({
-    required this.database,
+    required super.database,
     required this.flutterLabel,
     required this.flutterTargetTypeIndex,
     required this.flutterTargetSize,
@@ -47,9 +44,6 @@ class FlutterCollection extends Collection {
   @override
   void delete() {
     super.delete();
-    database.deleteCollection(collection: this);
+    (database as FlutterDatabase).deleteCollection(collection: this);
   }
-
-  void _notify() => database.collectionEventsController
-      .add(CollectionEvent(collection: this));
 }

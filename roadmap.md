@@ -35,20 +35,23 @@ Persistence support
 - [X] Support saving/bookmarking (non-empty) pages
 - [X] Fix moving entry color #2
 - [X] Style popup forms
-- [ ] Add Hive/Drift Database
+- [ ] Add Hive database support
 - [X] List saved pages (title) on hamburger menu
 
 ## Alpha release `v0.0.2-alpha.2`
 
+Sharing
+
 - [ ] Import & export pages
 - [ ] Share single page
+- [ ] Page to clipboard
 
 ## Beta release `v0.0.2-beta`
 
 - [ ] Support base 64 conversions
 - [ ] Support Latin-1/ISO 8859-1
 - [ ] Support Octal conversion
-- [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy, local data/no server -> exports)
+- [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy (features), local data/no server -> exports)
 
 ## Major release `v0.0.3`
 

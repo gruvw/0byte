@@ -5,6 +5,8 @@ import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/database.dart';
 
 abstract class NumberEntry extends DatabaseObject {
+  NumberEntry({required super.database});
+
   @protected
   abstract final int typeIndex;
   late final ConversionType type = ConversionType.values[typeIndex];
@@ -30,6 +32,8 @@ abstract class NumberEntry extends DatabaseObject {
       collection: collection,
     ));
   }
+
+  void notify() => database.entryEventsController.add(EntryEvent(entry: this));
 
   @override
   void delete() {
