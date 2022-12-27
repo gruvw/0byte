@@ -12,7 +12,7 @@ part 'hive_collection.g.dart';
 @HiveType(typeId: 0)
 class HiveStoreCollection with HiveObjectMixin {
   @HiveField(0)
-  final List<int> entriesKeys;
+  final List<String> entriesKeys;
 
   @HiveField(1)
   String hiveLabel;

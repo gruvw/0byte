@@ -17,7 +17,7 @@ class HiveStoreCollectionAdapter extends TypeAdapter<HiveStoreCollection> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return HiveStoreCollection(
-      entriesKeys: (fields[0] as List).cast<int>(),
+      entriesKeys: (fields[0] as List).cast<String>(),
       hiveLabel: fields[1] as String,
       hiveTypeIndex: fields[2] as int,
       hiveTargetSize: fields[3] as int,

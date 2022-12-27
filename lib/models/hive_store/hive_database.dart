@@ -6,6 +6,7 @@ import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/hive_store/hive_collection.dart';
 import 'package:app_0byte/models/hive_store/hive_number_entry.dart';
+import 'package:nanoid/nanoid.dart';
 
 class HiveDatabase extends Database {
   static const String entriesBoxName = "entries";
@@ -48,7 +49,7 @@ class HiveDatabase extends Database {
       database: this,
       hiveStoreNumberEntry: hiveStoreNumberEntry,
     );
-    entriesBox.add(hiveStoreNumberEntry);
+    entriesBox.put(nanoid(), hiveStoreNumberEntry);
     collection.hiveStoreCollection.entriesKeys.add(hiveStoreNumberEntry.key);
     collection.hiveStoreCollection.save();
     collection.notify(EventType.edit);
@@ -71,7 +72,7 @@ class HiveDatabase extends Database {
       database: this,
       hiveStoreCollection: hiveStoreCollection,
     );
-    collectionsBox.add(hiveStoreCollection);
+    collectionsBox.put(nanoid(), hiveStoreCollection);
     hiveCollection.notify(EventType.create);
     return hiveCollection;
   }
