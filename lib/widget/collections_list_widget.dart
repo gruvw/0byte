@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -78,9 +80,11 @@ class CollectionsList extends HookConsumerWidget {
                     color: ColorTheme.danger,
                   ),
                   onPressed: () {
-                    bool deletedCurrent = selectedCollection == collection;
-                    collection.delete();
-                    if (deletedCurrent) {
+                    // Workaround, fixes #3
+                    Future.delayed(const Duration(seconds: 0), () {
+                      collection.delete();
+                    });
+                    if (selectedCollection == collection) {
                       ref.read(selectedCollectionProvider.notifier).state =
                           database.getCollections().first;
                     }
