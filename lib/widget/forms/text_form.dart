@@ -60,7 +60,7 @@ class TextForm extends StatelessWidget {
             "OK",
             style: TextStyle(
               fontWeight: FontWeight.w500,
-              fontSize: FontTheme.fontSize5,
+              fontSize: FontTheme.fontSize6,
               fontFamily: FontTheme.fontFamily2,
               color: ColorTheme.textPrefix,
             ),

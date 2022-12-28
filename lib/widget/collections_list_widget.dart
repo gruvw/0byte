@@ -12,6 +12,12 @@ import 'package:app_0byte/styles/fonts.dart';
 import 'package:app_0byte/styles/settings.dart';
 
 class CollectionsList extends HookConsumerWidget {
+  static const drawerTextStyle = TextStyle(
+    fontFamily: FontTheme.fontFamily1,
+    fontSize: FontTheme.fontSize4,
+    color: ColorTheme.text2,
+  );
+
   const CollectionsList({super.key});
 
   @override
@@ -38,11 +44,7 @@ class CollectionsList extends HookConsumerWidget {
             ),
             title: const Text(
               SettingsTheme.newCollectionButtonLabel,
-              style: TextStyle(
-                fontFamily: FontTheme.fontFamily1,
-                fontSize: FontTheme.fontSize4,
-                color: ColorTheme.text2,
-              ),
+              style: drawerTextStyle,
             ),
             onTap: () {
               changeSelectedCollection(
@@ -53,6 +55,23 @@ class CollectionsList extends HookConsumerWidget {
                   targetSize: SettingsTheme.defaultTargetType.defaultTargetSize,
                 ),
               );
+            },
+          );
+        }
+
+        // "Import collection" button
+        if (index == collections.length + 1) {
+          return ListTile(
+            leading: const Icon(
+              Icons.download,
+              color: ColorTheme.text2,
+            ),
+            title: const Text(
+              SettingsTheme.importCollectionButtonLabel,
+              style: drawerTextStyle,
+            ),
+            onTap: () {
+              // TODO
             },
           );
         }
@@ -96,8 +115,8 @@ class CollectionsList extends HookConsumerWidget {
       separatorBuilder: (context, index) => const Divider(
         color: ColorTheme.text2,
       ),
-      // One more for the "new collection" button
-      itemCount: collections.length + 1,
+      // One more for the "new collection" button, One more for the "import collection"
+      itemCount: collections.length + 2,
     );
   }
 }

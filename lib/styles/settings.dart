@@ -8,6 +8,9 @@ class SettingsTheme {
   static const ConversionType defaultTargetType = ConversionType.binary;
 
   static const String newCollectionButtonLabel = "New Collection";
+  static const String importCollectionButtonLabel = "Import Collection";
+  static const String exportCollectionButtonLabel = "Export Collection";
+  static const String copyCollectionButtonLabel = "Copy Collection";
   static const String defaultCollectionLabel = "My Collection";
   static const String defaultValueLabel = "Value";
 }

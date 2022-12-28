@@ -4,6 +4,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/widget/utils/text_icon.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/widget/collections_list_widget.dart';
 import 'package:app_0byte/providers/updaters.dart';
@@ -19,6 +20,12 @@ import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
 
 class ConverterPage extends HookConsumerWidget {
+  static const menuTextStyle = TextStyle(
+    fontFamily: FontTheme.fontFamily1,
+    fontSize: FontTheme.fontSize5,
+    color: ColorTheme.text1,
+  );
+
   const ConverterPage({super.key});
 
   @override
@@ -36,6 +43,10 @@ class ConverterPage extends HookConsumerWidget {
         ),
         actions: [
           IconButton(
+            icon: const Icon(
+              Icons.edit,
+              color: ColorTheme.text1,
+            ),
             onPressed: () => showDialog(
               context: context,
               builder: (context) => TextForm(
@@ -44,10 +55,41 @@ class ConverterPage extends HookConsumerWidget {
                 callback: (newTitle) => collection.label = newTitle,
               ),
             ),
-            icon: const Icon(
-              Icons.edit,
-              color: ColorTheme.text1,
-            ),
+          ),
+          PopupMenuButton(
+            color: ColorTheme.background3,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: const TextIcon(
+                  leading: Icon(
+                    Icons.file_upload,
+                    color: ColorTheme.text1,
+                  ),
+                  text: Text(
+                    SettingsTheme.exportCollectionButtonLabel,
+                    style: menuTextStyle,
+                  ),
+                ),
+                onTap: () {
+                  // TODO
+                },
+              ),
+              PopupMenuItem(
+                child: const TextIcon(
+                  leading: Icon(
+                    Icons.content_copy,
+                    color: ColorTheme.text1,
+                  ),
+                  text: Text(
+                    SettingsTheme.copyCollectionButtonLabel,
+                    style: menuTextStyle,
+                  ),
+                ),
+                onTap: () {
+                  // TODO
+                },
+              )
+            ],
           ),
         ],
       ),

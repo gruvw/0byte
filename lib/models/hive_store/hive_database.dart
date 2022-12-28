@@ -1,3 +1,4 @@
+import 'package:nanoid/nanoid.dart';
 import 'package:hive_flutter/hive_flutter.dart' hide HiveCollection;
 
 import 'package:app_0byte/models/collection.dart';
@@ -6,7 +7,6 @@ import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/hive_store/hive_collection.dart';
 import 'package:app_0byte/models/hive_store/hive_number_entry.dart';
-import 'package:nanoid/nanoid.dart';
 
 class HiveDatabase extends Database {
   static const String entriesBoxName = "entries";
