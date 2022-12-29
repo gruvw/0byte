@@ -71,7 +71,19 @@ class CollectionsList extends HookConsumerWidget {
               style: drawerTextStyle,
             ),
             onTap: () {
-              // TODO
+              // TODO import collection
+              bool success = true;
+              // TODO set current selection to imported collection (if success)
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    success
+                        ? "Successfully imported collection."
+                        : "An error occured while importing collection.",
+                  ),
+                ),
+              );
             },
           );
         }

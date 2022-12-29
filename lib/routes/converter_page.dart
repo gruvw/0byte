@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -71,7 +72,12 @@ class ConverterPage extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  // TODO
+                  // TODO export collection
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Exported collection."),
+                    ),
+                  );
                 },
               ),
               PopupMenuItem(
@@ -86,7 +92,14 @@ class ConverterPage extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  // TODO
+                  // TODO collection to clipboard
+                  Clipboard.setData(ClipboardData(text: "TODO")).then(
+                    (_) => ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Copied collection to clipboard."),
+                      ),
+                    ),
+                  );
                 },
               )
             ],
