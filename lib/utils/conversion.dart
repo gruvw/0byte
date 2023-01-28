@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
+import 'package:tuple/tuple.dart';
 
 String converted({
   required ConversionType inputType,
@@ -101,4 +102,30 @@ void _twoComplement(List<bool> binary) {
     carry = tmp & carry;
     i--;
   }
+}
+
+// (result, isSymmetric) or null if parsing error
+Tuple2<String, bool>? convertEntry(
+  ConversionType inputType,
+  String input,
+  ConversionType targetType,
+  int targetSize,
+) {
+  String? number = parseInput(inputType, input);
+
+  if (number == null) return null;
+
+  String result = converted(
+    inputType: inputType,
+    number: number,
+    targetType: targetType,
+    targetSize: targetSize,
+  );
+  bool symmetric = isSymmetric(
+    inputType: inputType,
+    number: number,
+    targetType: targetType,
+    result: result,
+  );
+  return Tuple2(result, symmetric);
 }

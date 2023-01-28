@@ -13,4 +13,6 @@ class SettingsTheme {
   static const String copyCollectionButtonLabel = "Copy Collection";
   static const String defaultCollectionLabel = "My Collection";
   static const String defaultValueLabel = "Value";
+  static const String symmetricArrow = "<->";
+  static const String nonSymmetricArrow = "-->";
 }

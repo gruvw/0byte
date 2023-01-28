@@ -74,7 +74,7 @@ class ConverterPage extends HookConsumerWidget {
                 onTap: () {
                   // TODO export collection
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text("Exported collection."),
                     ),
                   );
@@ -93,9 +93,9 @@ class ConverterPage extends HookConsumerWidget {
                 ),
                 onTap: () {
                   // TODO collection to clipboard
-                  Clipboard.setData(ClipboardData(text: "TODO")).then(
+                  Clipboard.setData(const ClipboardData(text: "TODO")).then(
                     (_) => ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text("Copied collection to clipboard."),
                       ),
                     ),

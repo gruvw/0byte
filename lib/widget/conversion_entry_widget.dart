@@ -111,32 +111,25 @@ class _ConvertedWidget extends HookConsumerWidget {
     ref.subscribe(collectionEditionUpdater(collection));
 
     final text = useValueListenable(textNotifier);
-    String? number = parseInput(inputType, text);
-
-    if (number == null) return Column();
 
     // FIXME Maybe dont call in build ?
-    String result = converted(
-      inputType: inputType,
-      number: number,
-      targetType: collection.targetType,
-      targetSize: collection.targetSize,
+    final result = convertEntry(
+      inputType,
+      text,
+      collection.targetType,
+      collection.targetSize,
     );
-    bool symmetric = isSymmetric(
-      inputType: inputType,
-      number: number,
-      targetType: collection.targetType,
-      result: result,
-    );
+
+    if (result == null) return Column();
 
     return IntrinsicWidth(
       child: Column(
         children: [
           NumberWidget(
             type: collection.targetType,
-            input: result,
+            input: result.item1,
           ),
-          if (!symmetric)
+          if (!result.item2)
             const Divider(
               color: ColorTheme.warning,
               thickness: 4,

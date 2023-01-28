@@ -1,3 +1,5 @@
+import 'package:app_0byte/styles/settings.dart';
+import 'package:app_0byte/utils/conversion.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/models/collection.dart';
@@ -39,5 +41,21 @@ abstract class NumberEntry extends DatabaseObject {
     for (final entry in collection.entries) {
       entry.position--;
     }
+  }
+
+  @override
+  String toString() {
+    String res = "$label: ${type.prefix}$input";
+    final converted = convertEntry(
+      type,
+      input,
+      collection.targetType,
+      collection.targetSize,
+    );
+    if (converted != null) {
+      res +=
+          " ${converted.item2 ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${converted.item1}";
+    }
+    return res;
   }
 }
