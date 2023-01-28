@@ -39,7 +39,11 @@ abstract class Collection extends DatabaseObject {
 
   @override
   String toString() {
-    String res = "$label (to ${targetType.label} $targetSize)\n";
+    String res = "$label (to ${targetType.label} $targetSize)";
+    if (entries.isEmpty) {
+      // Prevent reduce on empty list error
+      return res;
+    }
     List<String> labels = List.empty(growable: true);
     List<String> inputs = List.empty(growable: true);
     List<Tuple2<String, bool>?> converts = List.empty(growable: true);
@@ -55,12 +59,11 @@ abstract class Collection extends DatabaseObject {
         converts.map((e) => e?.item1.length ?? 0).reduce(max);
     for (var i = 0; i < inputs.length; i++) {
       res +=
-          "${pad(entries[i].label, maxLabelLength, left: false)}: ${pad(entries[i].type.prefix + inputs[i], maxInputLength + entries[i].type.prefix.length)}";
+          "\n${pad(entries[i].label, maxLabelLength, left: false)}: ${pad(entries[i].type.prefix + inputs[i], maxInputLength + entries[i].type.prefix.length)}";
       if (converts[i] != null) {
         res +=
             " ${converts[i]!.item2 ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${targetType.prefix}${pad(converts[i]!.item1, maxConvertLength, left: false)}";
       }
-      res += i < inputs.length - 1 ? "\n" : "";
     }
     return res;
   }
