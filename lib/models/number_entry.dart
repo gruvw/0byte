@@ -39,7 +39,9 @@ abstract class NumberEntry extends DatabaseObject {
   @override
   void delete([bool broadcast = true]) {
     for (final entry in collection.entries) {
-      entry.position--;
+      if (entry.position > position) {
+        entry.position--;
+      }
     }
   }
 

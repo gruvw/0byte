@@ -92,11 +92,24 @@ class ConverterPage extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  // TODO collection to clipboard
-                  Clipboard.setData(const ClipboardData(text: "TODO")).then(
+                  Clipboard.setData(ClipboardData(text: collection.toString()))
+                      .then(
                     (_) => ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Copied collection to clipboard."),
+                      SnackBar(
+                        content: RichText(
+                          text: TextSpan(
+                            children: [
+                              const TextSpan(text: "Copied "),
+                              TextSpan(
+                                text: collection.label,
+                                style: const TextStyle(
+                                  color: ColorTheme.textPrefix,
+                                ),
+                              ),
+                              const TextSpan(text: " to clipboard."),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   );

@@ -39,11 +39,11 @@ abstract class Collection extends DatabaseObject {
 
   @override
   String toString() {
-    String res = "$label (to ${targetType.label} $targetSize\n)";
-    List<String> labels = List.empty();
-    List<String> inputs = List.empty();
-    List<Tuple2<String, bool>?> converts = List.empty();
-    for (final entry in entries) {
+    String res = "$label (to ${targetType.label} $targetSize)\n";
+    List<String> labels = List.empty(growable: true);
+    List<String> inputs = List.empty(growable: true);
+    List<Tuple2<String, bool>?> converts = List.empty(growable: true);
+    for (final entry in sortedEntries) {
       labels.add(entry.label);
       inputs.add(entry.input);
       converts
