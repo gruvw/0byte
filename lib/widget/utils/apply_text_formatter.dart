@@ -8,9 +8,14 @@ class ApplyTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
+    String updatedText = applyValue(newValue.text);
+    int sizeDiff = newValue.text.length - updatedText.length;
     return TextEditingValue(
-      text: applyValue(newValue.text),
-      selection: newValue.selection,
+      text: updatedText,
+      selection: TextSelection(
+        baseOffset: newValue.selection.baseOffset - sizeDiff,
+        extentOffset: newValue.selection.extentOffset - sizeDiff,
+      ),
     );
   }
 }

@@ -32,9 +32,18 @@ class ConversionEntryWidget extends HookConsumerWidget {
     final textNotifier = useValueNotifier(number ?? entry.input);
 
     String applyInput(String input) {
+      // Trim number prefix
+      if (parseInput(entry.type, input) == null) {
+        if (input.startsWith(entry.type.prefix)) {
+          input = input.replaceFirst(entry.type.prefix, "");
+        }
+      }
+
+      // HEX to maj
       if (entry.type == ConversionType.hexadecimal) {
         input = input.toUpperCase();
       }
+
       return input;
     }
 

@@ -6,7 +6,6 @@ import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/styles/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
-import 'package:app_0byte/utils/utils.dart';
 
 abstract class Collection extends DatabaseObject {
   abstract final List<NumberEntry> entries;
@@ -59,10 +58,10 @@ abstract class Collection extends DatabaseObject {
         converts.map((e) => e?.item1.length ?? 0).reduce(max);
     for (var i = 0; i < inputs.length; i++) {
       res +=
-          "\n${pad(entries[i].label, maxLabelLength, left: false)}: ${pad(entries[i].type.prefix + inputs[i], maxInputLength + entries[i].type.prefix.length)}";
+          "\n${entries[i].label.padRight(maxLabelLength)}: ${(entries[i].type.prefix + inputs[i]).padLeft(maxInputLength + entries[i].type.prefix.length)}";
       if (converts[i] != null) {
         res +=
-            " ${converts[i]!.item2 ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${targetType.prefix}${pad(converts[i]!.item1, maxConvertLength, left: false)}";
+            " ${converts[i]!.item2 ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${targetType.prefix}${converts[i]!.item1.padRight(maxConvertLength)}";
       }
     }
     return res;

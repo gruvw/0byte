@@ -45,7 +45,7 @@ Sharing
 - [ ] Import & export pages
 - [ ] Share single page
 - [X] Collection to clipboard
-- [ ] Invalid inputs starting with correct prefix (case insensitive) that would be valid without the prefix are automatically converted (easier copy paste)
+- [X] Invalid inputs starting with correct prefix (case insensitive) are automatically converted (easier copy paste)
 
 ## Beta release `v0.0.2-beta`
 
