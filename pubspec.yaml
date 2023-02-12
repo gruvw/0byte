@@ -42,7 +42,9 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   nanoid: ^1.0.0
-
+  path_provider: ^2.0.11
+  file_picker: ^5.0.1
+  permission_handler: ^10.0.2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0
@@ -52,6 +54,7 @@ dev_dependencies:
   flutter_app_name:
     git: # see https://github.com/f-prime/flutter_app_name/pull/6
       url: https://github.com/qixotic/flutter_app_name
+      ref: f2bc2676224f5aa74e59271715af7f1da6d3e26e
 
   flutter_test:
     sdk: flutter
