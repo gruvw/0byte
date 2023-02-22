@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app_0byte/utils/import_export.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,13 +74,20 @@ class ConverterPage extends HookConsumerWidget {
                     style: menuTextStyle,
                   ),
                 ),
-                onTap: () {
-                  // TODO export collection
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Exported collection."),
+                onTap: () async {
+                  File? file = await exportCollection(collection);
+                  if (file == null) {
+                    return;
+                  }
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    duration: const Duration(seconds: 10),
+                    action: SnackBarAction(
+                      label: "Ok",
+                      onPressed: () =>
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar(),
                     ),
-                  );
+                    content: Text("Exported collection to ${file.path}."),
+                  ));
                 },
               ),
               PopupMenuItem(

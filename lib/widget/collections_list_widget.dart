@@ -67,7 +67,7 @@ class CollectionsList extends HookConsumerWidget {
               color: ColorTheme.text2,
             ),
             title: const Text(
-              SettingsTheme.importCollectionButtonLabel,
+              SettingsTheme.importButtonLabel,
               style: drawerTextStyle,
             ),
             onTap: () {
