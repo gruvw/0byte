@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/styles/settings.dart';
+import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
@@ -12,8 +12,8 @@ import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
 import 'package:app_0byte/providers/providers.dart';
-import 'package:app_0byte/styles/colors.dart';
-import 'package:app_0byte/styles/fonts.dart';
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
 class ConversionEntryWidget extends HookConsumerWidget {

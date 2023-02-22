@@ -5,8 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:app_0byte/widget/utils/apply_text_formatter.dart';
 import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 import 'package:app_0byte/models/conversion_types.dart';
-import 'package:app_0byte/styles/colors.dart';
-import 'package:app_0byte/styles/fonts.dart';
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
 
 class NumberWidget extends StatelessWidget {

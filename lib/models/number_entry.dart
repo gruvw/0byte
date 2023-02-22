@@ -1,4 +1,5 @@
-import 'package:app_0byte/styles/settings.dart';
+import 'package:app_0byte/global/data_fields.dart';
+import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:flutter/material.dart';
 
@@ -60,4 +61,11 @@ abstract class NumberEntry extends DatabaseObject {
     }
     return res;
   }
+
+  Map<String, dynamic> toJson() => {
+        EntryFields.input: input,
+        EntryFields.label: label,
+        EntryFields.typeIndex: typeIndex,
+        EntryFields.position: position,
+      };
 }

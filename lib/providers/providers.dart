@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/styles/settings.dart';
+import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/hive_store/hive_database.dart';

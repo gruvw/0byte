@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_0byte/styles/colors.dart';
-import 'package:app_0byte/styles/fonts.dart';
-import 'package:app_0byte/styles/settings.dart';
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/global/styles/settings.dart';
 
 class TextForm extends StatelessWidget {
   final String title;

@@ -7,9 +7,9 @@ import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
-import 'package:app_0byte/styles/colors.dart';
-import 'package:app_0byte/styles/fonts.dart';
-import 'package:app_0byte/styles/settings.dart';
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/global/styles/settings.dart';
 
 class CollectionsList extends HookConsumerWidget {
   static const drawerTextStyle = TextStyle(
