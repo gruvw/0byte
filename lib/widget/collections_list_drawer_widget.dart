@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:app_0byte/utils/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
@@ -11,14 +13,14 @@ import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 
-class CollectionsList extends HookConsumerWidget {
+class CollectionsListDrawer extends HookConsumerWidget {
   static const drawerTextStyle = TextStyle(
     fontFamily: FontTheme.fontFamily1,
     fontSize: FontTheme.fontSize4,
     color: ColorTheme.text2,
   );
 
-  const CollectionsList({super.key});
+  const CollectionsListDrawer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,8 +51,7 @@ class CollectionsList extends HookConsumerWidget {
             onTap: () {
               changeSelectedCollection(
                 database.createCollection(
-                  label:
-                      "${SettingsTheme.defaultCollectionLabel} ${collections.length + 1}",
+                  label: uniqueLabel(SettingsTheme.defaultCollectionLabel),
                   targetType: SettingsTheme.defaultTargetType,
                   targetSize: SettingsTheme.defaultTargetType.defaultTargetSize,
                 ),
@@ -70,17 +71,19 @@ class CollectionsList extends HookConsumerWidget {
               SettingsTheme.importButtonLabel,
               style: drawerTextStyle,
             ),
-            onTap: () {
-              // TODO import collection
-              bool success = true;
-              // TODO set current selection to imported collection (if success)
+            onTap: () async {
+              bool? success = await import();
+              if (success == null) {
+                return;
+              }
+              // FIXME pop to show snackbar message but still on previous collection (bad ux, either show newly imported collection or message in front of drawer)
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
                     success
-                        ? "Successfully imported collection."
-                        : "An error occured while importing collection.",
+                        ? "Successfully imported."
+                        : "An error occurred while importing.",
                   ),
                 ),
               );

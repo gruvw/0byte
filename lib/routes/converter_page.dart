@@ -10,7 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/widget/utils/text_icon.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/widget/collections_list_widget.dart';
+import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/widget/forms/text_form.dart';
 import 'package:app_0byte/models/collection.dart';
@@ -132,7 +132,7 @@ class ConverterPage extends HookConsumerWidget {
       drawer: const SafeArea(
         child: Drawer(
           backgroundColor: ColorTheme.background1,
-          child: CollectionsList(),
+          child: CollectionsListDrawer(),
         ),
       ),
       body: Column(

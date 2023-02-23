@@ -22,6 +22,10 @@ enum ConversionType {
     this.defaultTargetSize,
     this.prefix,
   ) : base = alphabet.length;
+
+  static bool isValidTypeIndex(int typeIndex) {
+    return 0 <= typeIndex && typeIndex < values.length;
+  }
 }
 
 final Map<String, ConversionType> typeFromPrefix =
