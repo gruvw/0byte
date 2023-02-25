@@ -1,35 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-Future<File?> exportCollection(Collection collection) async {
-  if (Platform.isAndroid) {
-    await Permission.manageExternalStorage.request();
-    PermissionStatus permissionStatus =
-        await Permission.manageExternalStorage.status;
-    if (!permissionStatus.isGranted) {
-      return null;
-    }
-  }
-  String? directory =
-      await FilePicker.platform.getDirectoryPath(); // TODO support web
-  if (directory == null || directory == "/") {
-    return null;
-  }
-  String filePath =
-      "$directory/0byte_export_${DateTime.now().millisecondsSinceEpoch}.json";
-  String export = jsonEncode([collection.toJson()]);
-  File file = File(filePath)..createSync(recursive: true);
-  file.writeAsStringSync(export);
-  return file;
-}
+Future<File?> exportCollections() => _saveJson(jsonEncode(
+    [for (final c in container.read(collectionsProvider)) c.toJson()]));
+
+Future<File?> exportCollection(Collection collection) async =>
+    _saveJson(jsonEncode([collection.toJson()]));
 
 Future<bool?> import() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -48,6 +33,27 @@ Future<bool?> import() async {
     success = success && collectionSuccess;
   }
   return success;
+}
+
+Future<File?> _saveJson(String json) async {
+  if (Platform.isAndroid) {
+    await Permission.manageExternalStorage.request();
+    PermissionStatus permissionStatus =
+        await Permission.manageExternalStorage.status;
+    if (!permissionStatus.isGranted) {
+      return null;
+    }
+  }
+  String? directory =
+      await FilePicker.platform.getDirectoryPath(); // TODO support web
+  if (directory == null || directory == "/") {
+    return null;
+  }
+  String path =
+      "$directory/0byte_export_${DateTime.now().millisecondsSinceEpoch}.json";
+  File file = File(path)..createSync(recursive: true);
+  file.writeAsStringSync(json);
+  return file;
 }
 
 bool _importCollection(Map<String, dynamic> collectionData) {

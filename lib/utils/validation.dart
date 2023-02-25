@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app_0byte/providers/providers.dart';
 
 extension FieldValidation on Map<String, dynamic> {
@@ -14,16 +16,22 @@ extension FieldValidation on Map<String, dynamic> {
   }
 }
 
-String uniqueLabel(String label) {
-  int number = 0;
-  String getLabel() => number == 0 ? label : "$label $number";
+Pattern occurrence = RegExp(r" \((\d+)\)");
 
-  while (container
+String uniqueLabel(String label) {
+  String withoutOccurrence(String l) => l.replaceFirst(
+      occurrence, "", l.lastIndexOf(occurrence).clamp(0, l.length));
+
+  label = withoutOccurrence(label);
+
+  List<int> numbers = container
       .read(collectionsProvider)
       .map((c) => c.label)
-      .contains(getLabel())) {
-    ++number;
-  }
+      .where((l) => withoutOccurrence(l) == label)
+      .map((l) {
+    final matches = occurrence.allMatches(l);
+    return (matches.isEmpty ? 0 : int.parse(matches.last.group(1)!)) + 1;
+  }).toList();
 
-  return getLabel();
+  return numbers.isEmpty ? label : "$label (${numbers.reduce(max)})";
 }

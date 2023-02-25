@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_0byte/utils/validation.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,11 @@ class CollectionsListDrawer extends HookConsumerWidget {
 
     return ListView.separated(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      itemCount: collections.length + 3,
+      separatorBuilder: (context, index) => const Divider(
+        color: ColorTheme.text2,
+      ),
+      // One more for the "new collection" button, One more for the "import collection"
       itemBuilder: (context, index) {
         // "New Collection" button
         if (index == collections.length) {
@@ -91,6 +97,36 @@ class CollectionsListDrawer extends HookConsumerWidget {
           );
         }
 
+        // "Export collections" button
+        if (index == collections.length + 2) {
+          return ListTile(
+            leading: const Icon(
+              Icons.file_upload,
+              color: ColorTheme.text2,
+            ),
+            title: const Text(
+              SettingsTheme.exportCollectionsButtonLabel,
+              style: drawerTextStyle,
+            ),
+            onTap: () async {
+              File? file = await exportCollections();
+              if (file == null) {
+                return;
+              }
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: const Duration(seconds: 10),
+                action: SnackBarAction(
+                  label: "Ok",
+                  onPressed: () =>
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                ),
+                content: Text("Exported collections to ${file.path}."),
+              ));
+            },
+          );
+        }
+
         final collection = collections[index];
 
         return ListTile(
@@ -127,11 +163,6 @@ class CollectionsListDrawer extends HookConsumerWidget {
           onTap: () => changeSelectedCollection(collection),
         );
       },
-      separatorBuilder: (context, index) => const Divider(
-        color: ColorTheme.text2,
-      ),
-      // One more for the "new collection" button, One more for the "import collection"
-      itemCount: collections.length + 2,
     );
   }
 }

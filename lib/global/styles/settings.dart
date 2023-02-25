@@ -10,6 +10,7 @@ class SettingsTheme {
   static const String newCollectionButtonLabel = "New Collection";
   static const String importButtonLabel = "Import";
   static const String exportCollectionButtonLabel = "Export Collection";
+  static const String exportCollectionsButtonLabel = "Export Collections";
   static const String copyCollectionButtonLabel = "Copy Collection";
   static const String defaultCollectionLabel = "My Collection";
   static const String defaultValueLabel = "Value";
