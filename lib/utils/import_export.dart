@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:universal_html/html.dart' as html;
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:app_0byte/global/data_fields.dart';
@@ -10,10 +12,10 @@ import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/utils/validation.dart';
 
-Future<File?> exportCollections() => _saveJson(jsonEncode(
+Future<String?> exportCollections() => _saveJson(jsonEncode(
     [for (final c in container.read(collectionsProvider)) c.toJson()]));
 
-Future<File?> exportCollection(Collection collection) async =>
+Future<String?> exportCollection(Collection collection) async =>
     _saveJson(jsonEncode([collection.toJson()]));
 
 Future<bool?> import() async {
@@ -21,21 +23,42 @@ Future<bool?> import() async {
   if (result == null) {
     return null;
   }
-  File file = File(result.files.single.path!); // TODO WEB
-  String content = file.readAsStringSync();
-  final data = jsonDecode(content);
+
+  String content;
+  if (kIsWeb) {
+    content = utf8.decode(result.files.single.bytes!);
+  } else {
+    File file = File(result.files.single.path!);
+    content = file.readAsStringSync();
+  }
+
+  final data = jsonDecode(content); // FIXME try catch
   if (data is! Iterable) {
     return false;
   }
+
   bool success = true;
   for (final collectionData in data) {
     bool collectionSuccess = _importCollection(collectionData);
     success = success && collectionSuccess;
   }
+
   return success;
 }
 
-Future<File?> _saveJson(String json) async {
+Future<String?> _saveJson(String json) async {
+  String fileName =
+      "0byte_export_${DateTime.now().millisecondsSinceEpoch}.json";
+
+  if (kIsWeb) {
+    String content = base64Encode(utf8.encode(json));
+    html.AnchorElement(
+        href: "data:application/octet-stream;charset=utf-16le;base64,$content")
+      ..setAttribute("download", fileName)
+      ..click();
+    return "downloaded (web)";
+  }
+
   if (Platform.isAndroid) {
     await Permission.manageExternalStorage.request();
     PermissionStatus permissionStatus =
@@ -44,16 +67,15 @@ Future<File?> _saveJson(String json) async {
       return null;
     }
   }
-  String? directory =
-      await FilePicker.platform.getDirectoryPath(); // TODO support web
+
+  String? directory = await FilePicker.platform.getDirectoryPath();
   if (directory == null || directory == "/") {
     return null;
   }
-  String path =
-      "$directory/0byte_export_${DateTime.now().millisecondsSinceEpoch}.json";
-  File file = File(path)..createSync(recursive: true);
+  File file = File("$directory/$fileName")..createSync(recursive: true);
   file.writeAsStringSync(json);
-  return file;
+
+  return file.path;
 }
 
 bool _importCollection(Map<String, dynamic> collectionData) {
@@ -65,6 +87,7 @@ bool _importCollection(Map<String, dynamic> collectionData) {
       0 < collectionData[CollectionFields.targetSize])) {
     return false;
   }
+
   Collection collection = database.createCollection(
     label: uniqueLabel(collectionData[CollectionFields.label]),
     targetType:
@@ -74,11 +97,13 @@ bool _importCollection(Map<String, dynamic> collectionData) {
   if (!collectionData.hasField<Iterable>(CollectionFields.entries)) {
     return true;
   }
+
   bool success = true;
   for (final entryData in collectionData[CollectionFields.entries]) {
     bool entrySuccess = _importEntry(collection, entryData);
     success = success && entrySuccess;
   }
+
   return success;
 }
 
@@ -91,11 +116,13 @@ bool _importEntry(Collection collection, Map<String, dynamic> entryData) {
       entryData[EntryFields.position] >= 0)) {
     return false;
   }
+
   database.createNumberEntry(
       collection: collection,
       position: entryData[EntryFields.position],
       type: ConversionType.values[entryData[EntryFields.typeIndex]],
       input: entryData[EntryFields.input],
       label: entryData[EntryFields.label]);
+
   return true;
 }

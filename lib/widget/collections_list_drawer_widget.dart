@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:app_0byte/utils/validation.dart';
 import 'package:flutter/material.dart';
@@ -109,8 +108,8 @@ class CollectionsListDrawer extends HookConsumerWidget {
               style: drawerTextStyle,
             ),
             onTap: () async {
-              File? file = await exportCollections();
-              if (file == null) {
+              String? path = await exportCollections();
+              if (path == null) {
                 return;
               }
               Navigator.pop(context);
@@ -121,7 +120,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
                   onPressed: () =>
                       ScaffoldMessenger.of(context).hideCurrentSnackBar(),
                 ),
-                content: Text("Exported collections to ${file.path}."),
+                content: Text("Exported collections: $path."),
               ));
             },
           );

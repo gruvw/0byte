@@ -42,8 +42,9 @@ Persistence support
 
 Sharing
 
-- [ ] Import & export pages
-- [ ] Share single page
+- [ ] Fix web issues (cross-browser)
+- [X] Import & export pages
+- [X] Share single page
 - [X] Collection to clipboard
 - [X] Invalid inputs starting with correct prefix (case insensitive) are automatically converted (easier copy paste)
 
