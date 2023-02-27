@@ -18,6 +18,38 @@ Future<String?> exportCollections() => _saveJson(jsonEncode(
 Future<String?> exportCollection(Collection collection) async =>
     _saveJson(jsonEncode([collection.toJson()]));
 
+Future<String?> _saveJson(String json) async {
+  String fileName =
+      "0byte_export_${DateTime.now().millisecondsSinceEpoch}.json";
+
+  if (kIsWeb) {
+    String content = base64Encode(utf8.encode(json));
+    html.AnchorElement(
+        href: "data:application/octet-stream;charset=utf-16le;base64,$content")
+      ..setAttribute("download", fileName)
+      ..click();
+    return "downloading (web)";
+  }
+
+  if (Platform.isAndroid) {
+    await Permission.manageExternalStorage.request();
+    PermissionStatus permissionStatus =
+        await Permission.manageExternalStorage.status;
+    if (!permissionStatus.isGranted) {
+      return null;
+    }
+  }
+
+  String? directory = await FilePicker.platform.getDirectoryPath();
+  if (directory == null || directory == "/") {
+    return null;
+  }
+  File file = File("$directory/$fileName")..createSync(recursive: true);
+  file.writeAsStringSync(json);
+
+  return file.path;
+}
+
 Future<bool?> import() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
   if (result == null) {
@@ -44,38 +76,6 @@ Future<bool?> import() async {
   }
 
   return success;
-}
-
-Future<String?> _saveJson(String json) async {
-  String fileName =
-      "0byte_export_${DateTime.now().millisecondsSinceEpoch}.json";
-
-  if (kIsWeb) {
-    String content = base64Encode(utf8.encode(json));
-    html.AnchorElement(
-        href: "data:application/octet-stream;charset=utf-16le;base64,$content")
-      ..setAttribute("download", fileName)
-      ..click();
-    return "downloaded (web)";
-  }
-
-  if (Platform.isAndroid) {
-    await Permission.manageExternalStorage.request();
-    PermissionStatus permissionStatus =
-        await Permission.manageExternalStorage.status;
-    if (!permissionStatus.isGranted) {
-      return null;
-    }
-  }
-
-  String? directory = await FilePicker.platform.getDirectoryPath();
-  if (directory == null || directory == "/") {
-    return null;
-  }
-  File file = File("$directory/$fileName")..createSync(recursive: true);
-  file.writeAsStringSync(json);
-
-  return file.path;
 }
 
 bool _importCollection(Map<String, dynamic> collectionData) {

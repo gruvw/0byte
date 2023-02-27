@@ -68,3 +68,4 @@ Sharing
 
 - Custom keyboard for data input
 - Light theme support
+- Key-maps for keyboard only use (on web)
