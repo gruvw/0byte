@@ -42,11 +42,18 @@ Persistence support
 
 Sharing
 
-- [ ] Fix web issues (cross-browser)
 - [X] Import & export pages
 - [X] Share single page
 - [X] Collection to clipboard
 - [X] Invalid inputs starting with correct prefix (case insensitive) are automatically converted (easier copy paste)
+
+## Alpha release `v0.02-alpha.3`
+
+UI / WEB
+
+- [ ] Fix web issues (cross-browser)
+- [ ] Fix UI (scaling, font, responsive)
+- [ ] Fix #1
 
 ## Beta release `v0.0.2-beta`
 
