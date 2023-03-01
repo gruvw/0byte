@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
+import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
-import 'package:app_0byte/models/conversion_types.dart';
-import 'package:app_0byte/providers/providers.dart';
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
 
 class ConversionTitleWidget extends StatelessWidget {
   static const _titleStyle = TextStyle(
@@ -21,7 +23,10 @@ class ConversionTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: ColorTheme.background2,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(
+        vertical: PaddingTheme.titleVertical,
+        horizontal: PaddingTheme.titleHorizontal,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -30,7 +35,7 @@ class ConversionTitleWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: const [
               Text("Target:", style: _titleStyle),
-              SizedBox(width: 10),
+              SizedBox(width: DimensionsTheme.titleTargetHorizontalSpacing),
               _ConversionTypeSelector()
             ],
           )
@@ -68,7 +73,8 @@ class _ConversionTypeSelector extends ConsumerWidget {
                 collection.targetSize.toString(),
                 style: _targetTextStyle,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(
+                  width: DimensionsTheme.titleConversionSizeHorizontalSpacing),
             ],
           ),
         DropdownButtonHideUnderline(
@@ -78,10 +84,11 @@ class _ConversionTypeSelector extends ConsumerWidget {
             focusColor: ColorTheme.background3,
             elevation: 0,
             icon: const Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 3),
+              padding:
+                  EdgeInsets.fromLTRB(0, 0, 0, PaddingTheme.dropdownIconBottom),
               child: Icon(
                 Icons.expand_more,
-                size: 32,
+                size: DimensionsTheme.dropdownIconSize,
                 color: ColorTheme.accent,
               ),
             ),
@@ -102,7 +109,9 @@ class _ConversionTypeSelector extends ConsumerWidget {
                 child: Row(
                   children: [
                     const Text("N:", style: _targetTextStyle),
-                    const SizedBox(width: 5),
+                    const SizedBox(
+                        width:
+                            DimensionsTheme.targetSizeInputHorizontalSpacing),
                     FocusSubmittedTextField(
                       controller: nTextController,
                       onSubmitted: (String newN) {

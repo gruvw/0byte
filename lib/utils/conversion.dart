@@ -1,8 +1,9 @@
 import 'dart:math';
 
+import 'package:tuple/tuple.dart';
+
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
-import 'package:tuple/tuple.dart';
 
 String converted({
   required ConversionType inputType,

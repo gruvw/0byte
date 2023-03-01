@@ -1,6 +1,11 @@
 import 'dart:math';
 
+import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/providers/providers.dart';
+
+import 'input_parsing.dart';
+
+typedef ApplyInput = String Function(String);
 
 extension FieldValidation on Map<String, dynamic> {
   bool hasField<T>(String name) {
@@ -35,3 +40,19 @@ String uniqueLabel(String label) {
 
   return numbers.isEmpty ? label : "$label (${numbers.reduce(max)})";
 }
+
+ApplyInput applyInputFromType(ConversionType type) => (String input) {
+      // Trim number prefix
+      if (parseInput(type, input) == null) {
+        if (input.startsWith(type.prefix)) {
+          input = input.replaceFirst(type.prefix, "");
+        }
+      }
+
+      // HEX to maj
+      if (type == ConversionType.hexadecimal) {
+        input = input.toUpperCase();
+      }
+
+      return input;
+    };

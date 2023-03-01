@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:universal_html/html.dart' as html;
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:universal_html/html.dart' as html;
 
 import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/models/collection.dart';

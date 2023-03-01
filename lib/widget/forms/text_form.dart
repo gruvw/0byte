@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/styles/settings.dart';
 
 class TextForm extends StatelessWidget {
   final String title;
@@ -20,8 +20,8 @@ class TextForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = TextEditingController(text: initialText);
 
-    final double width =
-        MediaQuery.of(context).size.width * SettingsTheme.formDialogWidthRatio;
+    final double width = MediaQuery.of(context).size.width *
+        DimensionsTheme.formDialogWidthRatio;
 
     return AlertDialog(
       backgroundColor: ColorTheme.background1,

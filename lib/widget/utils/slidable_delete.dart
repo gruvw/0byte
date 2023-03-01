@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 
 class SlidableDelete extends StatelessWidget {
   final Widget child;
@@ -20,7 +21,7 @@ class SlidableDelete extends StatelessWidget {
       key: UniqueKey(),
       endActionPane: ActionPane(
         motion: const BehindMotion(),
-        extentRatio: SettingsTheme.slidableExtendRatio,
+        extentRatio: DimensionsTheme.slidableExtendRatio,
         children: [
           SlidableAction(
             icon: Icons.delete,

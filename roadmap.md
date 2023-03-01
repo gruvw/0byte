@@ -61,6 +61,7 @@ UI / WEB
 - [ ] Support Latin-1/ISO 8859-1
 - [ ] Support Octal conversion
 - [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy (features), local data/no server -> exports)
+- [ ] FIXMEs and TODOs
 
 ## Major release `v0.0.3`
 

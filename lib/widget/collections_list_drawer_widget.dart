@@ -1,17 +1,20 @@
 import 'dart:async';
 
-import 'package:app_0byte/utils/validation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/utils/import_export.dart';
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
+import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/utils/import_export.dart';
+import 'package:app_0byte/utils/validation.dart';
 
 class CollectionsListDrawer extends HookConsumerWidget {
   static const drawerTextStyle = TextStyle(
@@ -35,7 +38,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
     }
 
     return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      padding: const EdgeInsets.all(PaddingTheme.drawerAll),
       itemCount: collections.length + 3,
       separatorBuilder: (context, index) => const Divider(
         color: ColorTheme.text2,
@@ -114,7 +117,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
               }
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                duration: const Duration(seconds: 10),
+                duration: TimeTheme.exportMessageDuration,
                 action: SnackBarAction(
                   label: "Ok",
                   onPressed: () =>
@@ -150,7 +153,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
                   ),
                   onPressed: () {
                     // Workaround, fixes #3
-                    Future.delayed(const Duration(seconds: 0), () {
+                    Future.delayed(TimeTheme.zeroDuration, () {
                       collection.delete();
                     });
                     if (selectedCollection == collection) {

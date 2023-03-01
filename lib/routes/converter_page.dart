@@ -1,25 +1,28 @@
-import 'package:app_0byte/utils/import_export.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/widget/utils/text_icon.dart';
-import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
-import 'package:app_0byte/providers/updaters.dart';
-import 'package:app_0byte/widget/forms/text_form.dart';
-import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/global/styles/time.dart';
+import 'package:app_0byte/models/collection.dart';
+import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/providers/providers.dart';
-import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/providers/updaters.dart';
+import 'package:app_0byte/utils/import_export.dart';
+import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
 import 'package:app_0byte/widget/conversion_entry_widget.dart';
-import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
+import 'package:app_0byte/widget/forms/text_form.dart';
+import 'package:app_0byte/widget/utils/slidable_delete.dart';
+import 'package:app_0byte/widget/utils/text_icon.dart';
 
 class ConverterPage extends HookConsumerWidget {
   static const menuTextStyle = TextStyle(
@@ -78,7 +81,7 @@ class ConverterPage extends HookConsumerWidget {
                     return;
                   }
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    duration: const Duration(seconds: 10),
+                    duration: TimeTheme.exportMessageDuration,
                     action: SnackBarAction(
                       label: "Ok",
                       onPressed: () =>
@@ -101,26 +104,23 @@ class ConverterPage extends HookConsumerWidget {
                 ),
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: collection.toString()))
-                      .then(
-                    (_) => ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: RichText(
-                          text: TextSpan(
-                            children: [
-                              const TextSpan(text: "Copied "),
-                              TextSpan(
-                                text: collection.label,
-                                style: const TextStyle(
-                                  color: ColorTheme.textPrefix,
-                                ),
+                      .then((_) =>
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: RichText(
+                              text: TextSpan(
+                                children: [
+                                  const TextSpan(text: "Copied "),
+                                  TextSpan(
+                                    text: collection.label,
+                                    style: const TextStyle(
+                                      color: ColorTheme.textPrefix,
+                                    ),
+                                  ),
+                                  const TextSpan(text: " to clipboard."),
+                                ],
                               ),
-                              const TextSpan(text: " to clipboard."),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+                            ),
+                          )));
                 },
               )
             ],
@@ -152,8 +152,8 @@ class ConverterPage extends HookConsumerWidget {
         useRotationAnimation: false,
         renderOverlay: false,
         childrenButtonSize: const Size(
-          SettingsTheme.floatingActionChildrenSize,
-          SettingsTheme.floatingActionChildrenSize,
+          DimensionsTheme.floatingActionChildrenSize,
+          DimensionsTheme.floatingActionChildrenSize,
         ),
         spacing: 8,
         children: [
@@ -173,7 +173,7 @@ class ConverterPage extends HookConsumerWidget {
                   color: ColorTheme.textPrefix,
                   fontFamily: FontTheme.fontFamily2,
                   fontWeight: FontWeight.w600,
-                  fontSize: 20,
+                  fontSize: FontTheme.fontSize4,
                 ),
               ),
               onTap: () {

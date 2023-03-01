@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
+import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
-import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/providers/updaters.dart';
-import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
-import 'package:app_0byte/widget/number_widget.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/number_entry.dart';
-import 'package:app_0byte/utils/input_parsing.dart';
 import 'package:app_0byte/providers/providers.dart';
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/conversion.dart';
+import 'package:app_0byte/utils/input_parsing.dart';
+import 'package:app_0byte/utils/validation.dart';
+import 'package:app_0byte/widget/number_widget.dart';
+import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 
 class ConversionEntryWidget extends HookConsumerWidget {
   final NumberEntry entry;
@@ -31,24 +34,13 @@ class ConversionEntryWidget extends HookConsumerWidget {
     String? number = parseInput(entry.type, entry.input);
     final textNotifier = useValueNotifier(number ?? entry.input);
 
-    String applyInput(String input) {
-      // Trim number prefix
-      if (parseInput(entry.type, input) == null) {
-        if (input.startsWith(entry.type.prefix)) {
-          input = input.replaceFirst(entry.type.prefix, "");
-        }
-      }
-
-      // HEX to maj
-      if (entry.type == ConversionType.hexadecimal) {
-        input = input.toUpperCase();
-      }
-
-      return input;
-    }
+    final applyInput = applyInputFromType(entry.type);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        vertical: PaddingTheme.entryVertical,
+        horizontal: PaddingTheme.entryHorizontal,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -86,13 +78,14 @@ class ConversionEntryWidget extends HookConsumerWidget {
                   counterText: "",
                   border: InputBorder.none,
                   isDense: true,
-                  contentPadding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                  contentPadding:
+                      EdgeInsets.fromLTRB(0, PaddingTheme.entryLabelTop, 0, 0),
                 ),
               ),
             ],
           ),
           const SizedBox(
-            width: SettingsTheme.conversionSpacing,
+            width: DimensionsTheme.entryConversionHorizontalSpacing,
           ),
           // Result
           _ConvertedWidget(
@@ -141,8 +134,8 @@ class _ConvertedWidget extends HookConsumerWidget {
           if (!result.item2)
             const Divider(
               color: ColorTheme.warning,
-              thickness: 4,
-              height: 6,
+              thickness: DimensionsTheme.conversionUnderlineWarningThickness,
+              height: DimensionsTheme.conversionUnderlineWarningHeight,
             ),
         ],
       ),

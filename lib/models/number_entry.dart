@@ -1,11 +1,11 @@
-import 'package:app_0byte/global/data_fields.dart';
-import 'package:app_0byte/global/styles/settings.dart';
-import 'package:app_0byte/utils/conversion.dart';
 import 'package:flutter/material.dart';
 
+import 'package:app_0byte/global/data_fields.dart';
+import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/conversion_types.dart';
 import 'package:app_0byte/models/database.dart';
+import 'package:app_0byte/utils/conversion.dart';
 
 abstract class NumberEntry extends DatabaseObject {
   NumberEntry({required super.database});
