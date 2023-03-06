@@ -72,8 +72,10 @@ class ConversionEntryWidget extends HookConsumerWidget {
                   entry.label = newLabel;
                 },
                 cursorColor: ColorTheme.text2,
-                style: GoogleFonts.getFont(FontTheme.fontFamily1)
-                    .apply(color: ColorTheme.text2),
+                style: GoogleFonts.getFont(
+                  FontTheme.firaSans,
+                  fontSize: FontTheme.numberLabelSize,
+                ).apply(color: ColorTheme.text2),
                 decoration: const InputDecoration(
                   counterText: "",
                   border: InputBorder.none,

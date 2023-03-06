@@ -26,8 +26,8 @@ import 'package:app_0byte/widget/utils/text_icon.dart';
 
 class ConverterPage extends HookConsumerWidget {
   static const menuTextStyle = TextStyle(
-    fontFamily: FontTheme.fontFamily1,
-    fontSize: FontTheme.fontSize5,
+    fontFamily: FontTheme.firaSans,
+    fontSize: FontTheme.menuSize,
     color: ColorTheme.text1,
   );
 
@@ -44,7 +44,7 @@ class ConverterPage extends HookConsumerWidget {
         backgroundColor: ColorTheme.background3,
         title: Text(
           collection.label,
-          style: GoogleFonts.getFont(FontTheme.fontFamily1),
+          style: GoogleFonts.getFont(FontTheme.firaSans),
         ),
         actions: [
           IconButton(
@@ -164,16 +164,16 @@ class ConverterPage extends HookConsumerWidget {
               labelShadow: [],
               labelStyle: const TextStyle(
                 color: ColorTheme.text1,
-                fontFamily: FontTheme.fontFamily2,
+                fontFamily: FontTheme.firaCode,
               ),
               label: conversionType.label,
               child: Text(
                 conversionType.prefix,
                 style: const TextStyle(
                   color: ColorTheme.textPrefix,
-                  fontFamily: FontTheme.fontFamily2,
+                  fontFamily: FontTheme.firaCode,
                   fontWeight: FontWeight.w600,
-                  fontSize: FontTheme.fontSize4,
+                  fontSize: FontTheme.addEntryPrefixSize,
                 ),
               ),
               onTap: () {

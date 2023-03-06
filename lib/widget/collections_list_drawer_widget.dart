@@ -18,8 +18,8 @@ import 'package:app_0byte/utils/validation.dart';
 
 class CollectionsListDrawer extends HookConsumerWidget {
   static const drawerTextStyle = TextStyle(
-    fontFamily: FontTheme.fontFamily1,
-    fontSize: FontTheme.fontSize4,
+    fontFamily: FontTheme.firaSans,
+    fontSize: FontTheme.drawerSize,
     color: ColorTheme.text2,
   );
 
@@ -139,8 +139,8 @@ class CollectionsListDrawer extends HookConsumerWidget {
             collection.label,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontFamily: FontTheme.fontFamily1,
-              fontSize: FontTheme.fontSize4,
+              fontFamily: FontTheme.firaSans,
+              fontSize: FontTheme.drawerSize,
               color: ColorTheme.text1,
             ),
           ),

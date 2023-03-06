@@ -45,7 +45,10 @@ ApplyInput applyInputFromType(ConversionType type) => (String input) {
       // Trim number prefix
       if (parseInput(type, input) == null) {
         if (input.startsWith(type.prefix)) {
-          input = input.replaceFirst(type.prefix, "");
+          String inputWithoutPrefix = input.replaceFirst(type.prefix, "");
+          if (parseInput(type, inputWithoutPrefix) != null) {
+            input = inputWithoutPrefix;
+          }
         }
       }
 

@@ -1,6 +1,6 @@
 import 'package:app_0byte/models/conversion_types.dart';
 
-class SettingsTheme {
+abstract class SettingsTheme {
   static const ConversionType defaultTargetType = ConversionType.binary;
 
   static const String newCollectionButtonLabel = "New Collection";

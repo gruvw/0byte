@@ -13,8 +13,8 @@ import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 
 class ConversionTitleWidget extends StatelessWidget {
   static const _titleStyle = TextStyle(
-    fontSize: FontTheme.fontSize3,
-    fontFamily: FontTheme.fontFamily2,
+    fontSize: FontTheme.titleSize,
+    fontFamily: FontTheme.firaCode,
   );
 
   const ConversionTitleWidget({super.key});
@@ -49,8 +49,8 @@ class _ConversionTypeSelector extends ConsumerWidget {
   static const _targetTextStyle = TextStyle(
     color: ColorTheme.accent,
     fontWeight: FontWeight.w600,
-    fontFamily: FontTheme.fontFamily2,
-    fontSize: FontTheme.fontSize3,
+    fontFamily: FontTheme.firaCode,
+    fontSize: FontTheme.conversionSelectorSize,
   );
 
   const _ConversionTypeSelector();

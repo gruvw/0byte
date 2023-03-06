@@ -12,8 +12,8 @@ import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 
 class NumberWidget extends StatelessWidget {
   static const _displayTitleStyle = TextStyle(
-    fontFamily: FontTheme.fontFamily2,
-    fontSize: FontTheme.fontSize2,
+    fontFamily: FontTheme.firaCode,
+    fontSize: FontTheme.numberSize,
     fontWeight: FontWeight.w500,
     color: ColorTheme.text1,
   );
@@ -59,7 +59,7 @@ class NumberWidget extends StatelessWidget {
                 TextSpan(
                   text: copy,
                   style: const TextStyle(
-                    fontFamily: FontTheme.fontFamily2,
+                    fontFamily: FontTheme.firaCode,
                     color: ColorTheme.accent,
                   ),
                 ),

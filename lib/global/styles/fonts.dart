@@ -1,11 +1,13 @@
 abstract class FontTheme {
-  static const String fontFamily1 = "Fira Sans";
-  static const String fontFamily2 = "Fira Code";
+  static const String firaSans = "Fira Sans";
+  static const String firaCode = "Fira Code";
 
-  static const double fontSize1 = 30;
-  static const double fontSize2 = 27;
-  static const double fontSize3 = 23;
-  static const double fontSize4 = 20;
-  static const double fontSize5 = 18;
-  static const double fontSize6 = 16;
+  static const double numberSize = 25;
+  static const double numberLabelSize = 18;
+  static const double titleSize = 23;
+  static const double conversionSelectorSize = 22;
+  static const double addEntryPrefixSize = 22;
+  static const double drawerSize = 20;
+  static const double menuSize = 19;
+  static const double formSubmitSize = 16;
 }

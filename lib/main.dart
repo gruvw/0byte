@@ -23,7 +23,7 @@ void main() async {
         initialRoute: "/",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: FontTheme.fontFamily1,
+          fontFamily: FontTheme.firaSans,
           scaffoldBackgroundColor: ColorTheme.background1,
           appBarTheme: const AppBarTheme(
             backgroundColor: ColorTheme.background3,
