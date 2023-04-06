@@ -15,9 +15,9 @@ class FlutterNumberEntry extends NumberEntry {
 
   String flutterInput;
   @override
-  String get input => flutterInput;
+  String get text => flutterInput;
   @override
-  set input(String newInput) {
+  set text(String newInput) {
     flutterInput = newInput;
     notify(EventType.edit);
   }

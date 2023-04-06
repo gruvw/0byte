@@ -1,5 +1,3 @@
-import 'package:app_0byte/utils/conversion.dart';
-import 'package:app_0byte/widget/conversion_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,15 +16,15 @@ import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
+import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
 import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
+import 'package:app_0byte/widget/conversion_widget.dart';
 import 'package:app_0byte/widget/forms/text_form.dart';
 import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:app_0byte/widget/utils/text_icon.dart';
-
-import '../widget/conversion_chip.dart';
 
 class ConverterPage extends HookConsumerWidget {
   static const menuTextStyle = TextStyle(
@@ -229,28 +227,25 @@ class _NumberEntries extends StatelessWidget {
               ),
             ),
           // FIXME remove
-          Center(
+          Padding(
             key: UniqueKey(),
-            child: ConversionChip(
-              inputType: ConversionType.binary,
-              outputType: ConversionType.hexadecimal,
-              digits: Digits.fromInt(8)!,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              children: [
+                ConversionWidget(
+                  number: DartNumber.fromInput(
+                    type: ConversionType.binary,
+                    input: "0100100100011100101",
+                  )!,
+                  label: "My very cool label",
+                  target: ConversionTarget(
+                    type: ConversionType.hexadecimal,
+                    digits: Digits.fromInt(20)!,
+                  ),
+                ),
+              ],
             ),
           ),
-          Center(
-            key: UniqueKey(),
-            child: ConversionWidget(
-              number: Number.fromInput(
-                type: ConversionType.binary,
-                input: "0100100100011100101",
-              )!,
-              label: "My very cool label",
-              target: ConversionTarget(
-                type: ConversionType.hexadecimal,
-                digits: Digits.fromInt(4)!,
-              ),
-            ),
-          )
         ],
       ),
     );

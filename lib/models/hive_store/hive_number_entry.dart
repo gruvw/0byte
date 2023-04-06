@@ -61,9 +61,9 @@ class HiveNumberEntry extends NumberEntry {
   }
 
   @override
-  String get input => hiveStoreNumberEntry.hiveInput;
+  String get text => hiveStoreNumberEntry.hiveInput;
   @override
-  set input(String newInput) {
+  set text(String newInput) {
     hiveStoreNumberEntry.hiveInput = newInput;
     hiveStoreNumberEntry.save();
     notify(EventType.edit);

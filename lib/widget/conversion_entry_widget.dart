@@ -31,8 +31,8 @@ class ConversionEntryWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.subscribe(entryEditionUpdater(entry));
 
-    String? number = parseInput(entry.type, entry.input);
-    final textNotifier = useValueNotifier(number ?? entry.input);
+    String? number = parseInput(entry.type, entry.text);
+    final textNotifier = useValueNotifier(number ?? entry.text);
 
     final applyInput = applyInputFromType(entry.type);
 
@@ -58,7 +58,7 @@ class ConversionEntryWidget extends HookConsumerWidget {
                   if (newInput.isEmpty) {
                     return entry.delete();
                   }
-                  entry.input = applyInput(newInput);
+                  entry.text = applyInput(newInput);
                 },
               ),
               // Entry Label

@@ -7,16 +7,22 @@ import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
-abstract class NumberEntry extends DatabaseObject {
+abstract class NumberEntry extends DatabaseObject with Number {
   NumberEntry({required super.database});
 
   @protected
   abstract final int typeIndex;
+  @override
   late final ConversionType type = ConversionType.values[typeIndex];
+
+  @override
+  set type(ConversionType _) => throw UnimplementedError(); // TODO
 
   abstract final Collection collection;
 
-  abstract String input;
+  @override
+  abstract String text;
+
   abstract String label;
   abstract int position;
 
@@ -48,10 +54,10 @@ abstract class NumberEntry extends DatabaseObject {
 
   @override
   String toString() {
-    String res = "$label: ${type.prefix}$input";
+    String res = "$label: ${type.prefix}$text";
     final converted = convertEntry(
       type,
-      input,
+      text,
       collection.targetType,
       collection.targetSize,
     );
@@ -63,7 +69,7 @@ abstract class NumberEntry extends DatabaseObject {
   }
 
   Map<String, dynamic> toJson() => {
-        EntryFields.input: input,
+        EntryFields.input: text,
         EntryFields.label: label,
         EntryFields.typeIndex: typeIndex,
         EntryFields.position: position,

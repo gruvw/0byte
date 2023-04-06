@@ -138,19 +138,19 @@ class ConversionTarget {
   ConversionTarget({required this.type, required this.digits});
 }
 
-class ConvertedNumber {
+class Converted<N extends Number> {
   final Number convertedNumber;
   final Digits digits;
   final bool wasSymmetric;
 
-  ConvertedNumber._({
+  Converted._({
     required this.convertedNumber,
     required this.digits,
     required this.wasSymmetric,
   });
 
-  factory ConvertedNumber({
-    required Number number,
+  factory Converted({
+    required N number,
     required ConversionTarget target,
   }) {
     String result = converted(
@@ -166,8 +166,8 @@ class ConvertedNumber {
       result: result,
     );
 
-    return ConvertedNumber._(
-      convertedNumber: Number.fromInput(type: target.type, input: result)!,
+    return Converted._(
+      convertedNumber: DartNumber.fromInput(type: target.type, input: result)!,
       digits: target.digits,
       wasSymmetric: wasSymmetric,
     );

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
+import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/widget/conversion_chip.dart';
@@ -11,12 +14,14 @@ class ConversionWidget extends StatelessWidget {
   final Number number;
   final String label;
   final ConversionTarget target;
-  final ConvertedNumber converted;
+  final Converted<Number> converted;
+  final bool editable;
 
   ConversionWidget({
     required this.number,
     required this.label,
     required this.target,
+    this.editable = true,
     super.key,
   }) : converted = number.convertTo(target);
 
@@ -26,10 +31,13 @@ class ConversionWidget extends StatelessWidget {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ConversionLabel(label: label),
+                const SizedBox(height: 2),
                 NumberWidget(type: number.type, input: number.text),
               ],
             ),
@@ -45,6 +53,7 @@ class ConversionWidget extends StatelessWidget {
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Column(
               children: [
@@ -75,6 +84,12 @@ class ConversionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(label);
+    return Text(
+      label,
+      style: GoogleFonts.getFont(
+        FontTheme.firaSans,
+        fontSize: FontTheme.numberLabelSize,
+      ).apply(color: ColorTheme.text2),
+    );
   }
 }

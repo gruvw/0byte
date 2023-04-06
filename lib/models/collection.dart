@@ -50,9 +50,9 @@ abstract class Collection extends DatabaseObject {
     List<Tuple2<String, bool>?> converts = List.empty(growable: true);
     for (final entry in sortedEntries) {
       labels.add(entry.label);
-      inputs.add(entry.input);
+      inputs.add(entry.text);
       converts
-          .add(convertEntry(entry.type, entry.input, targetType, targetSize));
+          .add(convertEntry(entry.type, entry.text, targetType, targetSize));
     }
     int maxLabelLength = labels.map((e) => e.length).reduce(max);
     int maxInputLength = inputs.map((e) => e.length).reduce(max);

@@ -1,25 +1,39 @@
+// TODO use new types everywhere
+
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
 
-// TODO use new types everywhere
+abstract class Number {
+  abstract ConversionType type;
+  abstract String text;
 
-class Number {
-  final ConversionType type;
-  final String text;
+  Converted<Number> convertTo(ConversionTarget target) {
+    return Converted(number: this, target: target);
+  }
+}
 
-  Number._({required this.type, required this.text});
-
-  static Number? fromInput({
+class DartNumber extends Number {
+  static DartNumber? fromInput({
     required ConversionType type,
     required String input,
   }) {
     String? text = parseInput(type, input);
-    return text != null ? Number._(type: type, text: text) : null;
+    return text != null ? DartNumber._(type: type, text: text) : null;
   }
 
-  ConvertedNumber convertTo(ConversionTarget target) {
-    return ConvertedNumber(number: this, target: target);
-  }
+  @override
+  final ConversionType type;
+
+  @override
+  set type(ConversionType _) => throw UnimplementedError();
+
+  @override
+  final String text;
+
+  @override
+  set text(String _) => throw UnimplementedError();
+
+  DartNumber._({required this.type, required this.text});
 }
 
 const int _MIN_AMOUNT = 0;
