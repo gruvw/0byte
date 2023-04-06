@@ -1,4 +1,4 @@
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/types.dart';
 
 abstract class SettingsTheme {
   static const ConversionType defaultTargetType = ConversionType.binary;

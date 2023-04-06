@@ -4,7 +4,7 @@ import 'package:tuple/tuple.dart';
 
 import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/global/styles/settings.dart';
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/utils/conversion.dart';

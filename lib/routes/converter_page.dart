@@ -1,3 +1,5 @@
+import 'package:app_0byte/utils/conversion.dart';
+import 'package:app_0byte/widget/conversion_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +14,7 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
@@ -229,12 +231,26 @@ class _NumberEntries extends StatelessWidget {
           // FIXME remove
           Center(
             key: UniqueKey(),
-            child: const ConversionChip(
+            child: ConversionChip(
               inputType: ConversionType.binary,
               outputType: ConversionType.hexadecimal,
-              digits: 8,
+              digits: Digits.fromInt(8)!,
             ),
           ),
+          Center(
+            key: UniqueKey(),
+            child: ConversionWidget(
+              number: Number.fromInput(
+                type: ConversionType.binary,
+                input: "0100100100011100101",
+              )!,
+              label: "My very cool label",
+              target: ConversionTarget(
+                type: ConversionType.hexadecimal,
+                digits: Digits.fromInt(4)!,
+              ),
+            ),
+          )
         ],
       ),
     );

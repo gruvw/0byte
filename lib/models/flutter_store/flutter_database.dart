@@ -1,5 +1,5 @@
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_collection.dart';
 import 'package:app_0byte/models/flutter_store/flutter_number_entry.dart';

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/number_entry.dart';
 
 abstract class Database {

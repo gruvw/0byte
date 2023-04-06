@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/providers.dart';
 
 import 'input_parsing.dart';

@@ -1,6 +1,6 @@
 import 'package:tuple/tuple.dart';
 
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/types.dart';
 
 const String sign = "-";
 

@@ -8,7 +8,7 @@ import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
-import 'package:app_0byte/models/conversion_types.dart';
+import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
