@@ -51,6 +51,7 @@ Sharing
 
 UI / WEB
 
+- [ ] Full UX redesign (no more fix output per collection)
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
 - [ ] Fix #1

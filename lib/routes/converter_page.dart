@@ -24,6 +24,8 @@ import 'package:app_0byte/widget/forms/text_form.dart';
 import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:app_0byte/widget/utils/text_icon.dart';
 
+import '../widget/conversion_chip.dart';
+
 class ConverterPage extends HookConsumerWidget {
   static const menuTextStyle = TextStyle(
     fontFamily: FontTheme.firaSans,
@@ -224,6 +226,15 @@ class _NumberEntries extends StatelessWidget {
                 child: ConversionEntryWidget(entry: entry),
               ),
             ),
+          // FIXME remove
+          Center(
+            key: UniqueKey(),
+            child: const ConversionChip(
+              inputType: ConversionType.binary,
+              outputType: ConversionType.hexadecimal,
+              digits: 8,
+            ),
+          ),
         ],
       ),
     );
