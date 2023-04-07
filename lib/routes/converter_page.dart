@@ -12,14 +12,15 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
+import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
-import 'package:app_0byte/widget/conversion_title_widget.dart';
 import 'package:app_0byte/widget/conversion/number_conversion.dart';
+import 'package:app_0byte/widget/conversion_title_widget.dart';
 import 'package:app_0byte/widget/forms/text_form.dart';
 import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:app_0byte/widget/utils/text_icon.dart';
@@ -215,20 +216,38 @@ class _NumberEntries extends StatelessWidget {
           entries[oldIndex].move(newIndex);
         },
         children: [
-          // TODO dividers
           for (final entry in entries)
-            ReorderableDelayedDragStartListener(
-              key: UniqueKey(),
-              index: entry.position,
-              child: SlidableDelete(
-                  onDelete: (_) => entry.delete(),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: EntryNumberConversion(entry: entry),
-                  ) //ConversionEntryWidget(entry: entry),
-                  ),
+            _NumberEntry(entry: entry, key: UniqueKey())
+        ],
+      ),
+    );
+  }
+}
+
+// TODO split in other files ?
+class _NumberEntry extends StatelessWidget {
+  final NumberEntry entry;
+
+  const _NumberEntry({required this.entry, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ReorderableDelayedDragStartListener(
+      index: entry.position,
+      child: Column(
+        children: [
+          SlidableDelete(
+            onDelete: (_) => entry.delete(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: EntryNumberConversion(entry: entry),
             ),
+          ),
+          const Divider(
+            height: 10,
+            thickness: 2,
+            color: ColorTheme.background2,
+          ),
         ],
       ),
     );

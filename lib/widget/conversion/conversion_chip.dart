@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
+
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/conversion.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EntryConversionChip extends HookConsumerWidget {
   final NumberEntry entry;

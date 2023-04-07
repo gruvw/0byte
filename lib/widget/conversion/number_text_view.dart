@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:flutter_hooks/flutter_hooks.dart';
+
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/types.dart';
@@ -5,9 +10,6 @@ import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widget/utils/apply_text_formatter.dart';
 import 'package:app_0byte/widget/utils/editable_field.dart';
 import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class NumberTextView extends HookWidget {
 // TODO wrap number on new line (allign with prefix)
@@ -49,8 +51,11 @@ class NumberTextView extends HookWidget {
   Widget build(BuildContext context) {
     final initialNumber = this.initialNumber.object;
 
-    final controller =
-        useTextEditingController(text: numberTextField.getValue().text);
+    // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild)
+    final controller = numberTextField.isEditable
+        ? useTextEditingController(text: numberTextField.getValue().text)
+        : TextEditingController(text: initialNumber.text);
+
     final style = useState(styleFrom(initialNumber));
 
     void valueToClipboard() {

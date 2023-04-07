@@ -31,7 +31,7 @@ class FocusSubmittedTextField extends StatelessWidget {
     this.inputFormatters,
     this.onChanged,
     this.textInputAction = TextInputAction.go,
-    this.readOnly = true,
+    this.readOnly = false,
   });
 
   @override

@@ -1,10 +1,10 @@
-import 'package:app_0byte/global/styles/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widget/utils/editable_field.dart';
