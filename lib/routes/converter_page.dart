@@ -237,7 +237,7 @@ class _NumberEntries extends StatelessWidget {
                     label: "My very cool label",
                     type: ConversionType.binary,
                     text: "0100100100011100101",
-                  ).toEditable(false),
+                  ).toEditable(true),
                   target: ConversionTarget(
                     type: ConversionType.hexadecimal,
                     digits: Digits.fromInt(20)!,

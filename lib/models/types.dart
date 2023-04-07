@@ -18,6 +18,10 @@ abstract class Number {
   Editable<Number> toEditable([bool isEditable = true]) {
     return Editable(this, isEditable: isEditable);
   }
+
+  Number withText(String text) {
+    return DartNumber(type: type, text: text, label: label);
+  }
 }
 
 class DartNumber extends Number {

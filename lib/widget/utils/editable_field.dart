@@ -1,40 +1,46 @@
-import 'package:app_0byte/utils/validation.dart';
 import 'package:flutter/material.dart';
 
-class EditableField<T> extends Editable<T> {
-  late final ValueNotifier<T> notifier;
+import 'package:app_0byte/utils/validation.dart';
 
-  late T _value;
-  T get value => _value;
-  set value(T newValue) {
-    if (isEditable) {
-      _value = _applyOr(newValue);
-      notifier.value = value;
-    }
+class EditableField<Input, Output> extends Editable<Input> {
+  final Output Function(Input value) _getValue;
+
+  final Input Function(Input value)? applyInput;
+  Input _applyOr(Input value) {
+    return applyInput?.call(value) ?? value;
   }
 
-  final T Function(T value)? applyInput;
-  final void Function(T newValue)? onSubmitted;
-
-  void Function(T newValue) get onChanged => (newValue) {
-        value = newValue;
-      };
+  late final ValueNotifier<Output> notifier;
+  final void Function(Input newValue)? onSubmitted;
 
   EditableField(
     super.object, {
     super.isEditable = true,
-    this.applyInput,
-    this.onSubmitted,
-  }) {
-    _value = _applyOr(object);
-    notifier = ValueNotifier(value);
+    required Output Function(Input value) getValue,
+    Input Function(Input value)? applyInput,
+    void Function(Input newValue)? onSubmitted,
+  })  : _getValue = getValue,
+        // If not editable, discards applyInput and onSubmitted
+        applyInput = isEditable ? applyInput : null,
+        onSubmitted = isEditable ? onSubmitted : null {
+    object = _applyOr(object);
+    notifier = ValueNotifier(this.getValue());
   }
 
-  T _applyOr(T defaultValue) {
-    return applyInput?.call(object) ?? defaultValue;
+  Output getValue() => _getValue(object);
+
+  void setValue(Input newValue) {
+    if (isEditable) {
+      object = _applyOr(newValue);
+      notifier.value = getValue();
+    }
   }
+
+  void Function(Input newValue) get onChanged => (newValue) {
+        setValue(_applyOr(newValue));
+      };
 
   void submit() {
-    onSubmitted?.call(value);
+    onSubmitted?.call(object);
   }
 }

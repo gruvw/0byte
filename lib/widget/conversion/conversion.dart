@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_hooks/flutter_hooks.dart';
+
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/widget/number_widget.dart';
+import 'package:app_0byte/widget/utils/editable_field.dart';
 
-class Conversion extends StatelessWidget {
-  final Number number;
+class Conversion extends HookWidget {
+  final EditableField<String, Number> numberTextField;
   final ConversionTarget target;
-  final Converted<Number>? converted;
 
-  Conversion({
-    required this.number,
+  const Conversion({
+    required this.numberTextField,
     required this.target,
     super.key,
-  }) : converted = number.convertTo(target);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final converted = this.converted;
+    final number = useValueListenable(numberTextField.notifier);
+    final converted = number.convertTo(target);
 
     if (converted == null) {
       return const SizedBox();
