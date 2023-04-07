@@ -70,10 +70,10 @@ class HiveNumberEntry extends NumberEntry {
   }
 
   @override
-  String get label => hiveStoreNumberEntry.hiveLabel;
+  String get entryLabel => hiveStoreNumberEntry.hiveLabel;
   @override
-  set label(String newLabel) {
-    hiveStoreNumberEntry.hiveLabel = newLabel;
+  set entryLabel(String newEntryLabel) {
+    hiveStoreNumberEntry.hiveLabel = newEntryLabel;
     hiveStoreNumberEntry.save();
     notify(EventType.edit);
   }

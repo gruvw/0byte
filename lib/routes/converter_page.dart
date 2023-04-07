@@ -233,11 +233,11 @@ class _NumberEntries extends StatelessWidget {
             child: Column(
               children: [
                 ConversionWidget(
-                  number: DartNumber.fromInput(
+                  number: DartNumber(
+                    label: "My very cool label",
                     type: ConversionType.binary,
-                    input: "0100100100011100101",
-                  )!,
-                  label: "My very cool label",
+                    text: "0100100100011100101",
+                  ).toEditable(false),
                   target: ConversionTarget(
                     type: ConversionType.hexadecimal,
                     digits: Digits.fromInt(20)!,

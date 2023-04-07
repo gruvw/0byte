@@ -59,3 +59,10 @@ ApplyInput applyInputFromType(ConversionType type) => (String input) {
 
       return input;
     };
+
+class Editable<T> {
+  T object;
+  final bool isEditable;
+
+  Editable(this.object, [this.isEditable = true]);
+}

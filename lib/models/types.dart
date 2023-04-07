@@ -1,25 +1,28 @@
-// TODO use new types everywhere
-
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
+import 'package:app_0byte/utils/validation.dart';
+
+// TODO use new types everywhere
 
 abstract class Number {
   abstract ConversionType type;
   abstract String text;
+  String? label;
 
-  Converted<Number> convertTo(ConversionTarget target) {
-    return Converted(number: this, target: target);
+  String? parsed() => parseInput(type, text);
+
+  Converted<Number>? convertTo(ConversionTarget target) {
+    return Converted.from(number: this, target: target);
+  }
+
+  Editable<Number> toEditable([bool editable = true]) {
+    return Editable(this, editable);
   }
 }
 
 class DartNumber extends Number {
-  static DartNumber? fromInput({
-    required ConversionType type,
-    required String input,
-  }) {
-    String? text = parseInput(type, input);
-    return text != null ? DartNumber._(type: type, text: text) : null;
-  }
+  @override
+  String? label;
 
   @override
   final ConversionType type;
@@ -29,11 +32,10 @@ class DartNumber extends Number {
 
   @override
   final String text;
-
   @override
   set text(String _) => throw UnimplementedError();
 
-  DartNumber._({required this.type, required this.text});
+  DartNumber({required this.type, required this.text, this.label});
 }
 
 const int _MIN_AMOUNT = 0;

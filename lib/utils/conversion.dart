@@ -149,25 +149,31 @@ class Converted<N extends Number> {
     required this.wasSymmetric,
   });
 
-  factory Converted({
+  static Converted<N>? from<N extends Number>({
     required N number,
     required ConversionTarget target,
   }) {
+    final parsedNumber = number.parsed();
+
+    if (parsedNumber == null) {
+      return null;
+    }
+
     String result = converted(
       inputType: number.type,
-      number: number.text,
+      number: parsedNumber,
       targetType: target.type,
       targetSize: target.digits.amount,
     );
     bool wasSymmetric = isSymmetric(
       inputType: number.type,
-      number: number.text,
+      number: parsedNumber,
       targetType: target.type,
       result: result,
     );
 
     return Converted._(
-      convertedNumber: DartNumber.fromInput(type: target.type, input: result)!,
+      convertedNumber: DartNumber(type: target.type, text: result),
       digits: target.digits,
       wasSymmetric: wasSymmetric,
     );

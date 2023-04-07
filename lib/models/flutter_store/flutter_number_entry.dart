@@ -24,10 +24,10 @@ class FlutterNumberEntry extends NumberEntry {
 
   String flutterLabel;
   @override
-  String get label => flutterLabel;
+  String get entryLabel => flutterLabel;
   @override
-  set label(String newLabel) {
-    flutterLabel = newLabel;
+  set entryLabel(String newEntryLabel) {
+    flutterLabel = newEntryLabel;
     notify(EventType.edit);
   }
 

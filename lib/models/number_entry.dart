@@ -23,7 +23,21 @@ abstract class NumberEntry extends DatabaseObject with Number {
   @override
   abstract String text;
 
-  abstract String label;
+  @protected
+  abstract String entryLabel;
+
+  // Non-nullable label for number entries
+  @override
+  String get label => entryLabel;
+  @override
+  set label(String? newLabel) {
+    if (newLabel == null) {
+      return;
+    }
+
+    entryLabel = newLabel;
+  }
+
   abstract int position;
 
   void move(int newPosition) {
