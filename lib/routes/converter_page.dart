@@ -16,10 +16,8 @@ import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
-import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
-import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
 import 'package:app_0byte/widget/conversion/number_conversion.dart';
 import 'package:app_0byte/widget/forms/text_form.dart';
@@ -217,35 +215,20 @@ class _NumberEntries extends StatelessWidget {
           entries[oldIndex].move(newIndex);
         },
         children: [
+          // TODO dividers
           for (final entry in entries)
             ReorderableDelayedDragStartListener(
               key: UniqueKey(),
               index: entry.position,
               child: SlidableDelete(
-                onDelete: (_) => entry.delete(),
-                child: ConversionEntryWidget(entry: entry),
-              ),
-            ),
-          // FIXME remove
-          Padding(
-            key: UniqueKey(),
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              children: [
-                NumberConversion(
-                  number: DartNumber(
-                    label: "My very cool label",
-                    type: ConversionType.binary,
-                    text: "0100100100011100101",
-                  ).toEditable(true),
-                  target: ConversionTarget(
-                    type: ConversionType.hexadecimal,
-                    digits: Digits.fromInt(20)!,
+                  onDelete: (_) => entry.delete(),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: EntryNumberConversion(entry: entry),
+                  ) //ConversionEntryWidget(entry: entry),
                   ),
-                ),
-              ],
             ),
-          ),
         ],
       ),
     );

@@ -1,9 +1,9 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/widget/number_widget.dart';
@@ -31,19 +31,22 @@ class Conversion extends HookWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Column(
-          children: [
-            NumberWidget(
-              type: converted.convertedNumber.type,
-              input: converted.convertedNumber.text,
-            ),
-            if (!converted.wasSymmetric)
-              const Divider(
-                color: ColorTheme.warning,
-                thickness: DimensionsTheme.conversionUnderlineWarningThickness,
-                height: DimensionsTheme.conversionUnderlineWarningHeight,
+        IntrinsicWidth(
+          child: Column(
+            children: [
+              NumberWidget(
+                type: converted.convertedNumber.type,
+                input: converted.convertedNumber.text,
               ),
-          ],
+              if (!converted.wasSymmetric)
+                const Divider(
+                  color: ColorTheme.warning,
+                  thickness:
+                      DimensionsTheme.conversionUnderlineWarningThickness,
+                  height: DimensionsTheme.conversionUnderlineWarningHeight,
+                ),
+            ],
+          ),
         ),
       ],
     );

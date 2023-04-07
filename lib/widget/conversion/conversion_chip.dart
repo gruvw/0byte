@@ -4,6 +4,7 @@ import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
+import 'package:app_0byte/utils/conversion.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -19,26 +20,26 @@ class EntryConversionChip extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.subscribe(entryEditionUpdater(entry));
 
-    // FIXME outputType and digits on entry
+    // FIXME target from entry
     return ConversionChip(
       inputType: entry.type,
-      outputType: ConversionType.hexadecimal,
-      digits: Digits.fromInt(8)!,
+      target: ConversionTarget(
+        type: entry.collection.targetType,
+        digits: Digits.fromInt(entry.collection.targetSize)!,
+      ),
     );
   }
 }
 
 class ConversionChip extends StatelessWidget {
   final ConversionType inputType;
-  final ConversionType outputType;
-  final Digits digits;
+  final ConversionTarget target;
 
   final VoidCallback? onPressed;
 
   const ConversionChip({
     required this.inputType,
-    required this.outputType,
-    required this.digits,
+    required this.target,
     this.onPressed,
     super.key,
   });
@@ -59,7 +60,7 @@ class ConversionChip extends StatelessWidget {
           ),
         ),
         child: Text(
-          "${inputType.prefix} -> ${outputType.prefix} ${digits.amount}",
+          "${inputType.prefix} -> ${target.type.prefix} ${target.digits.amount}",
           style: const TextStyle(
             fontFamily: FontTheme.firaCode,
             fontWeight: FontWeight.bold,

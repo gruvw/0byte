@@ -1,3 +1,6 @@
+import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/providers/updaters.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/models/types.dart';
@@ -6,10 +9,34 @@ import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widget/conversion/conversion.dart';
 import 'package:app_0byte/widget/conversion/number_label.dart';
 import 'package:app_0byte/widget/conversion/number_text_view.dart';
-import 'package:app_0byte/widget/conversion_chip.dart';
+import 'package:app_0byte/widget/conversion/conversion_chip.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // TODO exctract magic numbers and clean constants
 // TODO reactive NumberConversionEntry
+
+class EntryNumberConversion extends HookConsumerWidget {
+  final NumberEntry entry;
+
+  const EntryNumberConversion({
+    required this.entry,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.subscribe(entryEditionUpdater(entry));
+
+    // FIXME target from entry
+    return NumberConversion(
+      number: entry.toEditable(),
+      target: ConversionTarget(
+        type: entry.collection.targetType,
+        digits: Digits.fromInt(entry.collection.targetSize)!,
+      ),
+    );
+  }
+}
 
 class NumberConversion extends StatelessWidget {
   // TODO live conversion change using EditableField
@@ -42,11 +69,7 @@ class NumberConversion extends StatelessWidget {
             ),
             Column(
               children: [
-                ConversionChip(
-                  inputType: number.object.type,
-                  outputType: target.type,
-                  digits: target.digits,
-                )
+                ConversionChip(inputType: number.object.type, target: target),
               ],
             ),
           ],
