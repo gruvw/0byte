@@ -1,8 +1,8 @@
-import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
@@ -15,7 +15,7 @@ import 'package:app_0byte/widget/conversion/number_label.dart';
 import 'package:app_0byte/widget/conversion/number_text_view.dart';
 
 class EntryNumberConversion extends HookConsumerWidget {
-  final NumberEntry entry;
+  final PotentiallyMutable<NumberEntry> entry;
 
   const EntryNumberConversion({
     required this.entry,
@@ -24,15 +24,23 @@ class EntryNumberConversion extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final entry = this.entry.object;
+
     ref.subscribe(entryEditionUpdater(entry));
 
     // FIXME target from entry
     return NumberConversion(
-      number: entry.toPotentiallyMutable(true),
+      number: this.entry,
       target: ConversionTarget(
         type: entry.collection.targetType,
         digits: Digits.fromInt(entry.collection.targetSize)!,
       ),
+      onChipPressed: () {
+        Navigator.of(context).pushNamed(
+          "/entry",
+          arguments: this.entry,
+        );
+      },
     );
   }
 }
@@ -40,10 +48,12 @@ class EntryNumberConversion extends HookConsumerWidget {
 class NumberConversion extends StatelessWidget {
   final PotentiallyMutable<Number> number;
   final ConversionTarget target;
+  final VoidCallback? onChipPressed;
 
   const NumberConversion({
     required this.number,
     required this.target,
+    this.onChipPressed,
     super.key,
   });
 
@@ -72,7 +82,11 @@ class NumberConversion extends StatelessWidget {
             ),
             Column(
               children: [
-                ConversionChip(inputType: number.object.type, target: target),
+                ConversionChip(
+                  inputType: number.object.type,
+                  target: target,
+                  onPressed: onChipPressed,
+                ),
               ],
             ),
           ],

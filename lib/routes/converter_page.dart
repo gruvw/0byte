@@ -1,3 +1,4 @@
+import 'package:app_0byte/utils/validation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -243,7 +244,7 @@ class _NumberEntry extends StatelessWidget {
                 horizontal: PaddingTheme.entryHorizontal,
                 vertical: PaddingTheme.entryVertical,
               ),
-              child: EntryNumberConversion(entry: entry),
+              child: EntryNumberConversion(entry: Mutable(entry)),
             ),
           ),
           const Divider(

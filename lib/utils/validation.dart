@@ -27,6 +27,14 @@ class PotentiallyMutable<T> {
   PotentiallyMutable(this.object, {this.isMutable = true});
 }
 
+class Mutable<T> extends PotentiallyMutable<T> {
+  Mutable(super.object) : super(isMutable: true);
+}
+
+class Immutable<T> extends PotentiallyMutable<T> {
+  Immutable(super.object) : super(isMutable: false);
+}
+
 Pattern occurrence = RegExp(r" \((\d+)\)");
 
 String uniqueLabel(List<String> labels, String label) {

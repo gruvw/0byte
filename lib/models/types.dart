@@ -29,15 +29,10 @@ class DartNumber extends Number {
   String? label;
 
   @override
-  final ConversionType type;
+  ConversionType type;
 
   @override
-  set type(ConversionType _) => throw UnimplementedError();
-
-  @override
-  final String text;
-  @override
-  set text(String _) => throw UnimplementedError();
+  String text;
 
   DartNumber({required this.type, required this.text, this.label});
 }
