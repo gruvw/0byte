@@ -1,3 +1,4 @@
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -53,11 +54,15 @@ class ConversionChip extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(ColorTheme.accent),
           foregroundColor: MaterialStateProperty.all(ColorTheme.background3),
-          padding: MaterialStateProperty.all(
-              const EdgeInsets.symmetric(vertical: 0, horizontal: 6)),
+          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
+            vertical: 0,
+            horizontal: PaddingTheme.conversionChipHorizontal,
+          )),
           shape: MaterialStateProperty.all(
             const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(DimensionsTheme.conversionChipRadius),
+              ),
             ),
           ),
         ),

@@ -239,13 +239,16 @@ class _NumberEntry extends StatelessWidget {
           SlidableDelete(
             onDelete: (_) => entry.delete(),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(
+                horizontal: PaddingTheme.entryHorizontal,
+                vertical: PaddingTheme.entryVertical,
+              ),
               child: EntryNumberConversion(entry: entry),
             ),
           ),
           const Divider(
-            height: 10,
-            thickness: 2,
+            height: DimensionsTheme.entryDividerHeight,
+            thickness: DimensionsTheme.entryDividerThickness,
             color: ColorTheme.background2,
           ),
         ],

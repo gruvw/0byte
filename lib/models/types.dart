@@ -15,8 +15,8 @@ abstract class Number {
     return Converted.from(number: this, target: target);
   }
 
-  Editable<Number> toEditable([bool isEditable = true]) {
-    return Editable(this, isEditable: isEditable);
+  PotentiallyMutable<Number> toPotentiallyMutable(bool isMutable) {
+    return PotentiallyMutable(this, isMutable: isMutable);
   }
 
   Number withText(String text) {

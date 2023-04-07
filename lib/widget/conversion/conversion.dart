@@ -7,10 +7,10 @@ import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/widget/conversion/number_text_view.dart';
-import 'package:app_0byte/widget/utils/editable_field.dart';
+import 'package:app_0byte/widget/utils/potentially_mutable_field.dart';
 
 class Conversion extends HookWidget {
-  final EditableField<String, Number> numberTextField;
+  final PotentiallyMutableField<String, Number> numberTextField;
   final ConversionTarget target;
 
   const Conversion({
@@ -34,8 +34,8 @@ class Conversion extends HookWidget {
         IntrinsicWidth(
           child: Column(
             children: [
-              NumberTextView(
-                initialNumber: converted.convertedNumber.toEditable(false),
+              PotentiallyMutableNumberText(
+                number: converted.convertedNumber.toPotentiallyMutable(false),
               ),
               if (!converted.wasSymmetric)
                 const Divider(

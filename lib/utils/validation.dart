@@ -20,6 +20,13 @@ extension FieldValidation on Map<String, dynamic> {
   }
 }
 
+class PotentiallyMutable<T> {
+  T object;
+  final bool isMutable;
+
+  PotentiallyMutable(this.object, {this.isMutable = true});
+}
+
 Pattern occurrence = RegExp(r" \((\d+)\)");
 
 String uniqueLabel(List<String> labels, String label) {
@@ -55,10 +62,3 @@ ApplyInput applyInputFromType(ConversionType type) => (String input) {
 
       return input;
     };
-
-class Editable<T> {
-  T object;
-  final bool isEditable;
-
-  Editable(this.object, {this.isEditable = true});
-}

@@ -1,3 +1,4 @@
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,9 +14,6 @@ import 'package:app_0byte/widget/conversion/conversion_chip.dart';
 import 'package:app_0byte/widget/conversion/number_label.dart';
 import 'package:app_0byte/widget/conversion/number_text_view.dart';
 
-// TODO exctract magic numbers and clean constants
-// TODO reactive NumberConversionEntry
-
 class EntryNumberConversion extends HookConsumerWidget {
   final NumberEntry entry;
 
@@ -30,7 +28,7 @@ class EntryNumberConversion extends HookConsumerWidget {
 
     // FIXME target from entry
     return NumberConversion(
-      number: entry.toEditable(),
+      number: entry.toPotentiallyMutable(true),
       target: ConversionTarget(
         type: entry.collection.targetType,
         digits: Digits.fromInt(entry.collection.targetSize)!,
@@ -40,8 +38,7 @@ class EntryNumberConversion extends HookConsumerWidget {
 }
 
 class NumberConversion extends StatelessWidget {
-  // TODO live conversion change using EditableField
-  final Editable<Number> number;
+  final PotentiallyMutable<Number> number;
   final ConversionTarget target;
 
   const NumberConversion({
@@ -53,7 +50,9 @@ class NumberConversion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO go to tripple row layout (move conversion chip on first row) when input close to overflow
-    final numberView = NumberTextView(initialNumber: number);
+
+    // PotentiallyMutableField holder
+    final numberView = PotentiallyMutableNumberText(number: number);
 
     return Column(
       children: [
@@ -64,7 +63,10 @@ class NumberConversion extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 NumberLabel(number: number),
-                if (number.object.label != null) const SizedBox(height: 2),
+                if (number.object.label != null)
+                  const SizedBox(
+                    height: DimensionsTheme.entryLabelNumberVerticalSpacing,
+                  ),
                 numberView
               ],
             ),

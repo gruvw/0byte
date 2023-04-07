@@ -7,20 +7,20 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widget/utils/editable_field.dart';
+import 'package:app_0byte/widget/utils/potentially_mutable_field.dart';
 import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 
 class NumberLabel extends StatelessWidget {
-  late final EditableField<String, String>? labelField;
+  late final PotentiallyMutableField<String, String>? labelField;
 
-  NumberLabel({required Editable<Number> number, super.key}) {
+  NumberLabel({required PotentiallyMutable<Number> number, super.key}) {
     final numberLabel = number.object.label;
 
     if (numberLabel != null) {
-      labelField = EditableField(
+      labelField = PotentiallyMutableField(
         numberLabel,
         getValue: (value) => value,
-        isEditable: number.isEditable,
+        isMutable: number.isMutable,
         onSubmitted: (newValue) {
           if (newValue.isEmpty) {
             newValue = SettingsTheme.defaultValueLabel;
@@ -41,7 +41,7 @@ class NumberLabel extends StatelessWidget {
 
     return FocusSubmittedTextField(
       controller: TextEditingController(text: labelField.getValue()),
-      readOnly: !labelField.isEditable,
+      readOnly: !labelField.isMutable,
       onSubmitted: labelField.onSubmitted,
       onChanged: labelField.onChanged,
       cursorColor: ColorTheme.text2,

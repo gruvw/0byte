@@ -8,11 +8,11 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widget/utils/apply_text_formatter.dart';
-import 'package:app_0byte/widget/utils/editable_field.dart';
+import 'package:app_0byte/widget/utils/potentially_mutable_field.dart';
 import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
 
-class NumberTextView extends HookWidget {
-// TODO wrap number on new line (allign with prefix)
+class PotentiallyMutableNumberText extends HookWidget {
+// TODO wrap number on new line (allign with prefix), maybe on sigle line (number, converted) when very small ?
 
   static const _displayTitleStyle = TextStyle(
     fontFamily: FontTheme.firaCode,
@@ -27,40 +27,41 @@ class NumberTextView extends HookWidget {
     );
   }
 
-  final Editable<Number> initialNumber;
+  final PotentiallyMutable<Number> number;
 
-  late final EditableField<String, Number> numberTextField = EditableField(
-    initialNumber.object.text,
-    getValue: (input) => initialNumber.object.withText(input),
-    isEditable: initialNumber.isEditable,
-    applyInput: applyInputFromType(initialNumber.object.type),
+  late final PotentiallyMutableField<String, Number> numberTextField =
+      PotentiallyMutableField(
+    number.object.text,
+    getValue: (input) => number.object.withText(input),
+    isMutable: number.isMutable,
+    applyInput: applyInputFromType(number.object.type),
     onSubmitted: (newValue) {
       if (newValue.isEmpty) {
-        newValue = initialNumber.object.text; // take previous value instead
+        newValue = number.object.text; // take previous value instead
       }
-      initialNumber.object.text = newValue;
+      number.object.text = newValue;
     },
   );
 
-  NumberTextView({
-    required this.initialNumber,
+  PotentiallyMutableNumberText({
+    required this.number,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final initialNumber = this.initialNumber.object;
+    final number = this.number.object;
 
     // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild)
-    final controller = numberTextField.isEditable
+    final controller = numberTextField.isMutable
         ? useTextEditingController(text: numberTextField.getValue().text)
-        : TextEditingController(text: initialNumber.text);
+        : TextEditingController(text: number.text);
 
-    final style = useState(styleFrom(initialNumber));
+    final style = useState(styleFrom(number));
 
     void valueToClipboard() {
       FocusScope.of(context).unfocus();
-      String copy = initialNumber.type.prefix + initialNumber.text;
+      String copy = number.type.prefix + number.text;
       Clipboard.setData(ClipboardData(text: copy)).then(
         (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: RichText(
@@ -90,13 +91,13 @@ class NumberTextView extends HookWidget {
         children: [
           // Prefix
           Text(
-            initialNumber.type.prefix,
+            number.type.prefix,
             style: _displayTitleStyle.apply(color: ColorTheme.textPrefix),
           ),
           FocusSubmittedTextField(
             controller: controller,
-            readOnly: !numberTextField.isEditable,
-            autofocus: initialNumber.text.isEmpty && numberTextField.isEditable,
+            readOnly: !numberTextField.isMutable,
+            autofocus: number.text.isEmpty && numberTextField.isMutable,
             inputFormatters: [
               ApplyTextFormatter(numberTextField.applyInput ?? (v) => v)
             ],
