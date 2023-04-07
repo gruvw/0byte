@@ -19,7 +19,7 @@ class EntryConversionChip extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.subscribe(entryEditionUpdater(entry));
 
-    // FIXME output and digits on entry
+    // FIXME outputType and digits on entry
     return ConversionChip(
       inputType: entry.type,
       outputType: ConversionType.hexadecimal,

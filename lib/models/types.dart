@@ -15,8 +15,8 @@ abstract class Number {
     return Converted.from(number: this, target: target);
   }
 
-  Editable<Number> toEditable([bool editable = true]) {
-    return Editable(this, editable);
+  Editable<Number> toEditable([bool isEditable = true]) {
+    return Editable(this, isEditable: isEditable);
   }
 }
 

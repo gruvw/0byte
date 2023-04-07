@@ -21,7 +21,7 @@ import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
 import 'package:app_0byte/widget/conversion_entry_widget.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
-import 'package:app_0byte/widget/conversion_widget.dart';
+import 'package:app_0byte/widget/conversion/number_conversion.dart';
 import 'package:app_0byte/widget/forms/text_form.dart';
 import 'package:app_0byte/widget/utils/slidable_delete.dart';
 import 'package:app_0byte/widget/utils/text_icon.dart';
@@ -232,7 +232,7 @@ class _NumberEntries extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               children: [
-                ConversionWidget(
+                NumberConversion(
                   number: DartNumber(
                     label: "My very cool label",
                     type: ConversionType.binary,

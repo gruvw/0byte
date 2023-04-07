@@ -90,7 +90,9 @@ bool _importCollection(Map<String, dynamic> collectionData) {
   }
 
   Collection collection = database.createCollection(
-    label: uniqueLabel(collectionData[CollectionFields.label]),
+    label: uniqueLabel(
+        container.read(collectionsProvider).map((c) => c.label).toList(),
+        collectionData[CollectionFields.label]),
     targetType:
         ConversionType.values[collectionData[CollectionFields.targetTypeIndex]],
     targetSize: collectionData[CollectionFields.targetSize],

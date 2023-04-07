@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:app_0byte/models/types.dart';
-import 'package:app_0byte/providers/providers.dart';
 
 import 'input_parsing.dart';
 
@@ -23,17 +22,14 @@ extension FieldValidation on Map<String, dynamic> {
 
 Pattern occurrence = RegExp(r" \((\d+)\)");
 
-String uniqueLabel(String label) {
+String uniqueLabel(List<String> labels, String label) {
   String withoutOccurrence(String l) => l.replaceFirst(
       occurrence, "", l.lastIndexOf(occurrence).clamp(0, l.length));
 
   label = withoutOccurrence(label);
 
-  List<int> numbers = container
-      .read(collectionsProvider)
-      .map((c) => c.label)
-      .where((l) => withoutOccurrence(l) == label)
-      .map((l) {
+  List<int> numbers =
+      labels.where((l) => withoutOccurrence(l) == label).map((l) {
     final matches = occurrence.allMatches(l);
     return (matches.isEmpty ? 0 : int.parse(matches.last.group(1)!)) + 1;
   }).toList();
@@ -64,5 +60,5 @@ class Editable<T> {
   T object;
   final bool isEditable;
 
-  Editable(this.object, [this.isEditable = true]);
+  Editable(this.object, {this.isEditable = true});
 }

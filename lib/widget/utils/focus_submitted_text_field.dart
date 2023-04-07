@@ -15,6 +15,7 @@ class FocusSubmittedTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChanged;
   final TextInputAction textInputAction;
+  final bool readOnly;
 
   const FocusSubmittedTextField({
     super.key,
@@ -30,6 +31,7 @@ class FocusSubmittedTextField extends StatelessWidget {
     this.inputFormatters,
     this.onChanged,
     this.textInputAction = TextInputAction.go,
+    this.readOnly = true,
   });
 
   @override
@@ -57,6 +59,7 @@ class FocusSubmittedTextField extends StatelessWidget {
           inputFormatters: inputFormatters,
           onChanged: onChanged,
           textInputAction: textInputAction,
+          readOnly: readOnly,
         ),
       ),
     );

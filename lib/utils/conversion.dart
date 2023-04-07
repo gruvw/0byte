@@ -5,6 +5,55 @@ import 'package:tuple/tuple.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/input_parsing.dart';
 
+class ConversionTarget {
+  final ConversionType type;
+  final Digits digits;
+
+  ConversionTarget({required this.type, required this.digits});
+}
+
+class Converted<N extends Number> {
+  final Number convertedNumber;
+  final Digits digits;
+  final bool wasSymmetric;
+
+  Converted._({
+    required this.convertedNumber,
+    required this.digits,
+    required this.wasSymmetric,
+  });
+
+  static Converted<N>? from<N extends Number>({
+    required N number,
+    required ConversionTarget target,
+  }) {
+    final parsedNumber = number.parsed();
+
+    if (parsedNumber == null) {
+      return null;
+    }
+
+    String result = converted(
+      inputType: number.type,
+      number: parsedNumber,
+      targetType: target.type,
+      targetSize: target.digits.amount,
+    );
+    bool wasSymmetric = isSymmetric(
+      inputType: number.type,
+      number: parsedNumber,
+      targetType: target.type,
+      result: result,
+    );
+
+    return Converted._(
+      convertedNumber: DartNumber(type: target.type, text: result),
+      digits: target.digits,
+      wasSymmetric: wasSymmetric,
+    );
+  }
+}
+
 String converted({
   required ConversionType inputType,
   required String number,
@@ -129,53 +178,4 @@ Tuple2<String, bool>? convertEntry(
     result: result,
   );
   return Tuple2(result, symmetric);
-}
-
-class ConversionTarget {
-  final ConversionType type;
-  final Digits digits;
-
-  ConversionTarget({required this.type, required this.digits});
-}
-
-class Converted<N extends Number> {
-  final Number convertedNumber;
-  final Digits digits;
-  final bool wasSymmetric;
-
-  Converted._({
-    required this.convertedNumber,
-    required this.digits,
-    required this.wasSymmetric,
-  });
-
-  static Converted<N>? from<N extends Number>({
-    required N number,
-    required ConversionTarget target,
-  }) {
-    final parsedNumber = number.parsed();
-
-    if (parsedNumber == null) {
-      return null;
-    }
-
-    String result = converted(
-      inputType: number.type,
-      number: parsedNumber,
-      targetType: target.type,
-      targetSize: target.digits.amount,
-    );
-    bool wasSymmetric = isSymmetric(
-      inputType: number.type,
-      number: parsedNumber,
-      targetType: target.type,
-      result: result,
-    );
-
-    return Converted._(
-      convertedNumber: DartNumber(type: target.type, text: result),
-      digits: target.digits,
-      wasSymmetric: wasSymmetric,
-    );
-  }
 }

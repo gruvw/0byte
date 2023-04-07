@@ -55,6 +55,7 @@ UI / WEB
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
 - [ ] Fix #1
+- [ ] Extract style from structure
 
 ## Beta release `v0.0.2-beta`
 
