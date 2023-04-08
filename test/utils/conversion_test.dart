@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:app_0byte/utils/input_parsing.dart';
+import 'package:app_0byte/utils/parsing.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 

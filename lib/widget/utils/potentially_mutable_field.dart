@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 class PotentiallyMutableField<T, View> extends PotentiallyMutable<T> {
+  static T _staticApplyOr<T>(T Function(T value)? applyInput, T value) {
+    return applyInput?.call(value) ?? value;
+  }
+
   final View Function(T value) _getValue;
 
   final T Function(T value)? applyInput;
   T _applyOr(T value) {
-    return applyInput?.call(value) ?? value;
+    return _staticApplyOr(applyInput, value);
   }
 
   late final ValueNotifier<View> notifier;
@@ -23,7 +27,7 @@ class PotentiallyMutableField<T, View> extends PotentiallyMutable<T> {
         // If not editable, discards applyInput and onSubmitted
         applyInput = isMutable ? applyInput : null,
         onSubmitted = isMutable ? onSubmitted : null {
-    object = _applyOr(object);
+    object = _staticApplyOr(applyInput, object); // apply input at least once
     notifier = ValueNotifier(this.getValue());
   }
 

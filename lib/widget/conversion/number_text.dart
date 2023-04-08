@@ -11,7 +11,7 @@ import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widget/utils/apply_text_formatter.dart';
 import 'package:app_0byte/widget/components/focus_submitted_text_field.dart';
 
-class PotentiallyMutableNumberText extends HookWidget {
+class NumberText extends HookWidget {
 // TODO wrap number on new line (allign with prefix), maybe on sigle line (number, converted) when very small ?
 
   static const _displayTitleStyle = TextStyle(
@@ -28,15 +28,14 @@ class PotentiallyMutableNumberText extends HookWidget {
   }
 
   final PotentiallyMutable<Number> number;
-
   final PotentiallyMutableField<String, Number> numberTextField;
 
-  PotentiallyMutableNumberText({
+  NumberText({
     required this.number,
     super.key,
   }) : numberTextField = PotentiallyMutableField(
           number.object.text,
-          getValue: (input) => number.object.withText(input),
+          getValue: (text) => number.object.withText(text),
           isMutable: number.isMutable,
           applyInput: applyInputFromType(number.object.type),
           onSubmitted: (newValue) {
@@ -49,16 +48,18 @@ class PotentiallyMutableNumberText extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final number = this.number.object;
+    final number = numberTextField.getValue();
 
     // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild)
     final controller = numberTextField.isMutable
-        ? useTextEditingController(text: numberTextField.getValue().text)
+        ? useTextEditingController(text: number.text)
         : TextEditingController(text: number.text);
 
     final style = useState(styleFrom(number));
 
     void valueToClipboard() {
+      final number = this.number.object;
+
       FocusScope.of(context).unfocus();
       String copy = number.type.prefix + number.text;
       Clipboard.setData(ClipboardData(text: copy)).then(
@@ -97,9 +98,7 @@ class PotentiallyMutableNumberText extends HookWidget {
             controller: controller,
             readOnly: !numberTextField.isMutable,
             autofocus: number.text.isEmpty && numberTextField.isMutable,
-            inputFormatters: [
-              ApplyTextFormatter(numberTextField.applyInput ?? (v) => v)
-            ],
+            inputFormatters: [ApplyTextFormatter(numberTextField.applyInput)],
             onSubmitted: numberTextField.onSubmitted,
             onChanged: (value) {
               numberTextField.onChanged(value);

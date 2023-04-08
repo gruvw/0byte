@@ -12,7 +12,7 @@ import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widget/conversion/conversion.dart';
 import 'package:app_0byte/widget/conversion/conversion_chip.dart';
 import 'package:app_0byte/widget/conversion/number_label.dart';
-import 'package:app_0byte/widget/conversion/number_text_view.dart';
+import 'package:app_0byte/widget/conversion/number_text.dart';
 
 class EntryNumberConversion extends HookConsumerWidget {
   final PotentiallyMutable<NumberEntry> entry;
@@ -64,10 +64,10 @@ class NumberConversion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO go to tripple row layout (move conversion chip on first row) when input close to overflow
+    // TODO go to triple row layout (move conversion chip on first row) when input close to overflow
 
     // PotentiallyMutableField holder
-    final numberView = PotentiallyMutableNumberText(number: number);
+    final numberView = NumberText(number: number);
 
     return Column(
       children: [

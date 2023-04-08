@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:app_0byte/models/types.dart';
 
-import 'input_parsing.dart';
+import 'parsing.dart';
 
 typedef ApplyInput = String Function(String);
 
@@ -53,11 +53,13 @@ String uniqueLabel(List<String> labels, String label) {
 }
 
 ApplyInput applyInputFromType(ConversionType type) => (String input) {
+      input = withoutSeparator(type, input);
+
       // Trim number prefix
-      if (parseInput(type, input) == null) {
+      if (!isValidText(type, input)) {
         if (input.startsWith(type.prefix)) {
           String inputWithoutPrefix = input.replaceFirst(type.prefix, "");
-          if (parseInput(type, inputWithoutPrefix) != null) {
+          if (isValidText(type, inputWithoutPrefix)) {
             input = inputWithoutPrefix;
           }
         }
@@ -68,5 +70,34 @@ ApplyInput applyInputFromType(ConversionType type) => (String input) {
         input = input.toUpperCase();
       }
 
+      input = separatorTransform(type, input, true);
+
       return input;
     };
+
+String separatorTransform(
+  ConversionType type,
+  String text,
+  bool displaySeparator, // TODO use app/collection based setting
+) {
+  if (!displaySeparator || !type.isSeparated() || !isValidText(type, text)) {
+    // Don't use separators
+    return text;
+  }
+
+  // Prevents sign separation (ex.: -_100)
+  final signSplit = splitSign(type, text);
+  final unsignedText = signSplit.item2;
+
+  // Add separator while enough chars left (backward walk)
+  String unsignedSeparatedText = "";
+  int i = unsignedText.length;
+  for (; i > type.blockLength; i -= type.blockLength) {
+    unsignedSeparatedText = separator +
+        unsignedText.substring(i - type.blockLength, i) +
+        unsignedSeparatedText;
+  }
+  final left = unsignedText.substring(0, i);
+
+  return signSplit.item1 + left + unsignedSeparatedText;
+}

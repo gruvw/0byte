@@ -124,7 +124,7 @@ class EntryPage extends ConsumerWidget {
                   ),
                 ),
                 _barFromText("Input"),
-                // LEFT HERE
+                // LEFT HERE 2
                 _barFromText("Output"),
               ],
             ),

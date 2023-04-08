@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:tuple/tuple.dart';
 
 import 'package:app_0byte/models/types.dart';
-import 'package:app_0byte/utils/input_parsing.dart';
+import 'package:app_0byte/utils/parsing.dart';
 
 class ConversionTarget {
   final ConversionType type;

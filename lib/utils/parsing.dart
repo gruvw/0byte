@@ -2,7 +2,8 @@ import 'package:tuple/tuple.dart';
 
 import 'package:app_0byte/models/types.dart';
 
-const String sign = "-";
+const sign = "-";
+const separator = "_";
 
 String leftTrimmed(ConversionType type, String value) {
   // Left trim 0s for decimal and ascii
@@ -27,6 +28,8 @@ Tuple2<String, String> splitSign(ConversionType type, String data) {
 String? parseInput(ConversionType type, String input) {
   String toCheck = splitSign(type, input).item2;
 
+  toCheck = withoutSeparator(type, toCheck);
+
   // Empty check
   if (toCheck.isEmpty) {
     return null;
@@ -40,4 +43,16 @@ String? parseInput(ConversionType type, String input) {
 
   String number = leftTrimmed(type, input);
   return number;
+}
+
+bool isValidText(ConversionType type, String text) {
+  return parseInput(type, text) != null;
+}
+
+String withoutSeparator(ConversionType type, String text) {
+  if (type.isSeparated()) {
+    return text.replaceAll(separator, "");
+  }
+
+  return text;
 }
