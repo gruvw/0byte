@@ -1,4 +1,3 @@
-import 'package:app_0byte/utils/validation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,12 +18,13 @@ import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/import_export.dart';
+import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
+import 'package:app_0byte/widget/components/slidable_delete.dart';
+import 'package:app_0byte/widget/components/text_icon.dart';
 import 'package:app_0byte/widget/conversion/number_conversion.dart';
 import 'package:app_0byte/widget/conversion_title_widget.dart';
 import 'package:app_0byte/widget/forms/text_form.dart';
-import 'package:app_0byte/widget/utils/slidable_delete.dart';
-import 'package:app_0byte/widget/utils/text_icon.dart';
 
 class ConverterPage extends HookConsumerWidget {
   static const menuTextStyle = TextStyle(

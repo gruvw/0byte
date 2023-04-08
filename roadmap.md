@@ -51,6 +51,7 @@ Sharing
 
 UI / WEB
 
+<!-- TODO put phone ideas on roadmap -->
 - [ ] Full UX redesign (no more fix output per collection)
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)

@@ -16,11 +16,13 @@ import 'package:app_0byte/widget/conversion/number_text_view.dart';
 
 class EntryNumberConversion extends HookConsumerWidget {
   final PotentiallyMutable<NumberEntry> entry;
+  final NumberLabel? label;
   final bool chipEnabled;
 
   const EntryNumberConversion({
     required this.entry,
     this.chipEnabled = true,
+    this.label,
     super.key,
   });
 
@@ -33,16 +35,15 @@ class EntryNumberConversion extends HookConsumerWidget {
       key: UniqueKey(), // Fixes non-updating number value
       number: this.entry,
       target: entry.target,
-      onChipPressed: () {
-        if (!chipEnabled) {
-          return;
-        }
-
-        Navigator.of(context).pushNamed(
-          "/entry",
-          arguments: entry,
-        );
-      },
+      label: label,
+      onChipPressed: chipEnabled
+          ? () {
+              Navigator.of(context).pushNamed(
+                "/entry",
+                arguments: entry,
+              );
+            }
+          : null,
     );
   }
 }
@@ -51,11 +52,13 @@ class NumberConversion extends StatelessWidget {
   final PotentiallyMutable<Number> number;
   final ConversionTarget target;
   final VoidCallback? onChipPressed;
+  final NumberLabel? label;
 
   const NumberConversion({
     required this.number,
     required this.target,
     this.onChipPressed,
+    required this.label,
     super.key,
   });
 
@@ -74,7 +77,10 @@ class NumberConversion extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NumberLabel(number: number),
+                label ??
+                    NumberLabel(
+                      number: number,
+                    ),
                 if (number.object.label != null)
                   const SizedBox(
                     height: DimensionsTheme.entryLabelNumberVerticalSpacing,

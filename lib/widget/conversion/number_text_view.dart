@@ -1,3 +1,4 @@
+import 'package:app_0byte/widget/utils/potentially_mutable_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,8 +9,7 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widget/utils/apply_text_formatter.dart';
-import 'package:app_0byte/widget/utils/potentially_mutable_field.dart';
-import 'package:app_0byte/widget/utils/focus_submitted_text_field.dart';
+import 'package:app_0byte/widget/components/focus_submitted_text_field.dart';
 
 class PotentiallyMutableNumberText extends HookWidget {
 // TODO wrap number on new line (allign with prefix), maybe on sigle line (number, converted) when very small ?
@@ -29,24 +29,23 @@ class PotentiallyMutableNumberText extends HookWidget {
 
   final PotentiallyMutable<Number> number;
 
-  late final PotentiallyMutableField<String, Number> numberTextField =
-      PotentiallyMutableField(
-    number.object.text,
-    getValue: (input) => number.object.withText(input),
-    isMutable: number.isMutable,
-    applyInput: applyInputFromType(number.object.type),
-    onSubmitted: (newValue) {
-      if (newValue.isEmpty) {
-        newValue = number.object.text; // take previous value instead
-      }
-      number.object.text = newValue;
-    },
-  );
+  final PotentiallyMutableField<String, Number> numberTextField;
 
   PotentiallyMutableNumberText({
     required this.number,
     super.key,
-  });
+  }) : numberTextField = PotentiallyMutableField(
+          number.object.text,
+          getValue: (input) => number.object.withText(input),
+          isMutable: number.isMutable,
+          applyInput: applyInputFromType(number.object.type),
+          onSubmitted: (newValue) {
+            if (newValue.isEmpty) {
+              newValue = number.object.text; // take previous value instead
+            }
+            number.object.text = newValue;
+          },
+        );
 
   @override
   Widget build(BuildContext context) {

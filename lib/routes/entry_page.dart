@@ -1,37 +1,76 @@
-import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/providers/updaters.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/conversion.dart';
+import 'package:app_0byte/utils/validation.dart';
+import 'package:app_0byte/widget/components/border_button.dart';
+import 'package:app_0byte/widget/components/secondary_bar.dart';
 import 'package:app_0byte/widget/conversion/conversion_chip.dart';
-import 'package:app_0byte/widget/utils/border_button.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:app_0byte/widget/conversion/number_conversion.dart';
+import 'package:app_0byte/widget/conversion/number_label.dart';
 
 // TODO extract constants
 
 class EntryPage extends ConsumerWidget {
+  static Widget _barFromText(String text) => SecondaryBar(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Center(
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: ColorTheme.text1,
+                fontFamily: FontTheme.firaCode,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ),
+      );
+
   final NumberEntry entry;
   final bool deleteOnCancel;
 
-  late final DartNumber initialEntry =
-      DartNumber(type: entry.type, text: entry.text, label: entry.label);
-  late final ConversionTarget initialTarget = entry.target;
+  final DartNumber initialEntry;
+  final ConversionTarget initialTarget;
 
   EntryPage({
     required this.entry,
     this.deleteOnCancel = false,
     super.key,
-  });
+  })  : initialEntry =
+            DartNumber(type: entry.type, text: entry.text, label: entry.label),
+        initialTarget = entry.target;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.subscribe(entryEditionUpdater(entry));
+
+    // Cross subscribed label fields (between title and preview)
+    final entryPreviewLabelField =
+        NumberLabel.labelFieldFromNumber(Mutable(entry));
+    final mutableEntry = Mutable(entry);
+    final entryLabelTitle = NumberLabel(
+      number: mutableEntry,
+      subscribedLabelField: entryPreviewLabelField,
+      style: NumberLabel.defaultStyle.copyWith(
+        color: ColorTheme.text1,
+        fontSize: 24,
+      ),
+    );
+    final entryPreviewLabel = NumberLabel.fromLabelField(
+      labelField: entryPreviewLabelField,
+      subscribedLabelField: entryLabelTitle.labelField,
+    );
 
     void onCancel() {
       // FIXME set entry type and target
@@ -65,7 +104,30 @@ class EntryPage extends ConsumerWidget {
       body: Column(
         children: [
           Expanded(
-            child: Column(), // LEFT HERE
+            child: Column(
+              children: [
+                SecondaryBar(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Center(child: entryLabelTitle),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: PaddingTheme.entryHorizontal,
+                  ),
+                  child: EntryNumberConversion(
+                    entry: Mutable(entry),
+                    chipEnabled: false,
+                    label: entryPreviewLabel,
+                  ),
+                ),
+                _barFromText("Input"),
+                // LEFT HERE
+                _barFromText("Output"),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
