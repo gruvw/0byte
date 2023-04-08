@@ -1,9 +1,9 @@
-import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_entry.dart';
 import 'package:app_0byte/models/types.dart';
@@ -23,13 +23,9 @@ class EntryConversionChip extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.subscribe(entryEditionUpdater(entry));
 
-    // FIXME target from entry
     return ConversionChip(
       inputType: entry.type,
-      target: ConversionTarget(
-        type: entry.collection.targetType,
-        digits: Digits.fromInt(entry.collection.targetSize)!,
-      ),
+      target: entry.target,
     );
   }
 }

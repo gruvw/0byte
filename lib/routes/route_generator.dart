@@ -1,5 +1,4 @@
 import 'package:app_0byte/models/number_entry.dart';
-import 'package:app_0byte/utils/validation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/routes/converter_page.dart';
@@ -18,7 +17,7 @@ class RouteGenerator {
           builder: (context) => const ConverterPage(),
         );
       case routeEntry:
-        if (args is Mutable<NumberEntry>) {
+        if (args is NumberEntry) {
           return MaterialPageRoute(
             builder: (context) => EntryPage(entry: args),
           );

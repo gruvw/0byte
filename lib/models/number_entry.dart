@@ -20,9 +20,6 @@ abstract class NumberEntry extends DatabaseObject with Number {
 
   abstract final Collection collection;
 
-  @override
-  abstract String text;
-
   @protected
   abstract String entryLabel;
 
@@ -52,6 +49,21 @@ abstract class NumberEntry extends DatabaseObject with Number {
     position = newPosition;
 
     collection.notify(EventType.edit);
+  }
+
+  ConversionTarget get target {
+    // FIXME digits + type from entry
+    final digits = Digits.fromInt(collection.targetSize)!;
+
+    return ConversionTarget(
+      type: collection.targetType,
+      digits: digits,
+    );
+  }
+
+  set target(ConversionTarget newTarget) {
+    // Validate digits
+    throw UnimplementedError(); // TODO
   }
 
   void notify(EventType type) =>

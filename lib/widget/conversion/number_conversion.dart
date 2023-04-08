@@ -16,29 +16,31 @@ import 'package:app_0byte/widget/conversion/number_text_view.dart';
 
 class EntryNumberConversion extends HookConsumerWidget {
   final PotentiallyMutable<NumberEntry> entry;
+  final bool chipEnabled;
 
   const EntryNumberConversion({
     required this.entry,
+    this.chipEnabled = true,
     super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final entry = this.entry.object;
-
     ref.subscribe(entryEditionUpdater(entry));
 
-    // FIXME target from entry
     return NumberConversion(
+      key: UniqueKey(), // Fixes non-updating number value
       number: this.entry,
-      target: ConversionTarget(
-        type: entry.collection.targetType,
-        digits: Digits.fromInt(entry.collection.targetSize)!,
-      ),
+      target: entry.target,
       onChipPressed: () {
+        if (!chipEnabled) {
+          return;
+        }
+
         Navigator.of(context).pushNamed(
           "/entry",
-          arguments: this.entry,
+          arguments: entry,
         );
       },
     );
@@ -91,7 +93,10 @@ class NumberConversion extends StatelessWidget {
             ),
           ],
         ),
-        Conversion(numberTextField: numberView.numberTextField, target: target),
+        Conversion(
+          numberTextField: numberView.numberTextField,
+          target: target,
+        ),
       ],
     );
   }

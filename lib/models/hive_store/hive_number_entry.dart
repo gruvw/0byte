@@ -7,6 +7,8 @@ import 'package:app_0byte/models/number_entry.dart';
 
 part 'hive_number_entry.g.dart';
 
+// TODO rename input to text
+
 @HiveType(typeId: 1)
 class HiveStoreNumberEntry with HiveObjectMixin {
   @HiveField(0)
