@@ -10,6 +10,7 @@ abstract class DimensionsTheme {
   static const double titleConversionSizeHorizontalSpacing = 10;
   static const double targetSizeInputHorizontalSpacing = 5;
   static const double entryLabelNumberVerticalSpacing = 3;
+  static const double converterPageEndScrollingSpacing = 100;
 
   // Size
   static const double floatingActionChildrenSize = 62;

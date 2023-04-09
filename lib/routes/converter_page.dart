@@ -216,9 +216,12 @@ class _NumberEntries extends StatelessWidget {
           }
           entries[oldIndex].move(newIndex);
         },
+        footer: const SizedBox(
+          height: DimensionsTheme.converterPageEndScrollingSpacing,
+        ),
         children: [
           for (final entry in entries)
-            _NumberEntry(entry: entry, key: UniqueKey())
+            _NumberEntry(key: UniqueKey(), entry: entry),
         ],
       ),
     );

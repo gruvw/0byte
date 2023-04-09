@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:app_0byte/utils/conversion.dart';
-import 'package:app_0byte/utils/parsing.dart';
+import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 // TODO use new types everywhere
@@ -97,5 +97,5 @@ enum ConversionType {
     this.blockLength,
   ) : base = alphabet.length;
 
-  bool isSeparated() => blockLength >= 1;
+  bool get isSeparated => blockLength >= 1;
 }

@@ -26,9 +26,9 @@ Tuple2<String, String> splitSign(ConversionType type, String data) {
 }
 
 String? parseInput(ConversionType type, String input) {
-  String toCheck = splitSign(type, input).item2;
+  input = withoutSeparator(type, input);
 
-  toCheck = withoutSeparator(type, toCheck);
+  String toCheck = splitSign(type, input).item2;
 
   // Empty check
   if (toCheck.isEmpty) {
@@ -50,7 +50,7 @@ bool isValidText(ConversionType type, String text) {
 }
 
 String withoutSeparator(ConversionType type, String text) {
-  if (type.isSeparated()) {
+  if (type.isSeparated) {
     return text.replaceAll(separator, "");
   }
 

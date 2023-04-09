@@ -14,6 +14,9 @@ import 'package:app_0byte/widget/components/focus_submitted_text_field.dart';
 class NumberText extends HookWidget {
 // TODO wrap number on new line (allign with prefix), maybe on sigle line (number, converted) when very small ?
 
+  static const bool displaySeparator =
+      true; // TODO use app/collection based setting
+
   static const _displayTitleStyle = TextStyle(
     fontFamily: FontTheme.firaCode,
     fontSize: FontTheme.numberSize,
@@ -34,11 +37,13 @@ class NumberText extends HookWidget {
     required this.number,
     super.key,
   }) : numberTextField = PotentiallyMutableField(
-          number.object.text,
+          applySimpleText(
+            number.object.type,
+            number.object.text,
+            displaySeparator,
+          ),
           getValue: (text) => number.object.withText(text),
           isMutable: number.isMutable,
-          applyInput: applyInputFromType(number.object.type,
-              true), // TODO use app/collection based setting
           onSubmitted: (newValue) {
             if (newValue.isEmpty) {
               newValue = number.object.text; // take previous value instead
@@ -99,7 +104,12 @@ class NumberText extends HookWidget {
             controller: controller,
             readOnly: !numberTextField.isMutable,
             autofocus: number.text.isEmpty && numberTextField.isMutable,
-            inputFormatters: [ApplyTextFormatter(numberTextField.applyInput)],
+            inputFormatters: [
+              ApplyTextFormatter(
+                type: number.type,
+                displaySeparator: displaySeparator,
+              )
+            ],
             onSubmitted: numberTextField.onSubmitted,
             onChanged: (value) {
               numberTextField.onChanged(value);

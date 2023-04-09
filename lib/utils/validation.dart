@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:app_0byte/models/types.dart';
 
-import 'parsing.dart';
+import 'parser.dart';
 
 typedef ApplyInput = String Function(String);
 
@@ -61,7 +61,7 @@ String separatorTransform(
   String text,
   bool displaySeparator,
 ) {
-  if (!displaySeparator || !type.isSeparated() || !isValidText(type, text)) {
+  if (!displaySeparator || !type.isSeparated || !isValidText(type, text)) {
     // Don't use separators
     return text;
   }
@@ -124,9 +124,11 @@ class PositionedText {
 
   @override
   String toString() {
+    final clampedPosition = position.clamp(0, text.length);
     final readable =
-        "${text.substring(0, position)}|${text.substring(position)}";
-    return "PositionedText[text: $text, position: $position] = $readable";
+        "${text.substring(0, clampedPosition)}|${text.substring(clampedPosition)}";
+
+    return "PositionedText[$readable = text: $text, position: $position]";
   }
 
   @override
@@ -140,11 +142,10 @@ class PositionedText {
 PositionedText applyPositionedText(
   PositionedText oldValue,
   PositionedText newValue,
-  ApplyInput? applyText,
+  ConversionType type,
+  bool displaySeparator,
 ) {
-  if (applyText == null) {
-    return newValue;
-  }
+  ApplyInput applyText = applyInputFromType(type, displaySeparator);
 
   final appliedNewAfterPosition = applyText(newValue.textAfterPosition);
   int newAfterPositionDelta =
@@ -153,28 +154,46 @@ PositionedText applyPositionedText(
   final appliedNewFull = applyText(newValue.text);
   final newFullDelta = appliedNewFull.length - newValue.text.length;
 
-  // Check addition of separator right after position (not detected when textAfterPosition isolated)
-  final newRealAfterPositonCharIndex =
-      appliedNewFull.length - appliedNewAfterPosition.length - 1;
-  if (newRealAfterPositonCharIndex >= 0 &&
-      appliedNewFull[newRealAfterPositonCharIndex] == separator) {
-    newAfterPositionDelta += 1;
+  final appliedOldFull = applyText(oldValue.text);
 
-    // Separator (addition) deletion correction (move over separator instead)
-    final appliedOldFull = applyText(oldValue.text);
-    final oldNewFullDelta = appliedNewFull.length - appliedOldFull.length;
-    final appliedOldAfterPosition = applyText(oldValue.textAfterPosition);
+  // If both old and new are invalid, don't carry on
+  if (!isValidText(type, appliedOldFull) &&
+      !isValidText(type, appliedNewFull)) {
+    return newValue;
+  }
 
-    final oldRealAfterPositionCharIndex =
-        appliedOldFull.length - appliedOldAfterPosition.length - 1;
-    if (oldNewFullDelta == 0 &&
-            oldRealAfterPositionCharIndex >= 0 &&
-            appliedOldFull[oldRealAfterPositionCharIndex] == separator &&
-            oldValue.textAfterPosition.isNotEmpty &&
-            (oldValue.textAfterPosition[0] == separator || // over separator
-                oldValue.position < newValue.position) // new separator
-        ) {
-      newAfterPositionDelta -= 1;
+  // newFull is invalid but newAfterPosition is valid (added separators)
+  if (!isValidText(type, appliedNewFull) &&
+      isValidText(type, appliedNewAfterPosition)) {
+    final newSeparatorsCountBeforePosition = separator
+        .allMatches(newValue.text.substring(0, newValue.position))
+        .length;
+    newAfterPositionDelta = newFullDelta + newSeparatorsCountBeforePosition;
+  }
+
+  if (type.isSeparated && isValidText(type, appliedNewFull)) {
+    // Check addition of separator right after position (not detected when textAfterPosition isolated)
+    final newRealAfterPositonCharIndex =
+        appliedNewFull.length - appliedNewAfterPosition.length - 1;
+    if (newRealAfterPositonCharIndex >= 0 &&
+        appliedNewFull[newRealAfterPositonCharIndex] == separator) {
+      newAfterPositionDelta += 1;
+
+      // Separator (addition) deletion correction (move over separator instead)
+      final oldNewFullDelta = appliedNewFull.length - appliedOldFull.length;
+      final appliedOldAfterPosition = applyText(oldValue.textAfterPosition);
+
+      final oldRealAfterPositionCharIndex =
+          appliedOldFull.length - appliedOldAfterPosition.length - 1;
+      if (oldNewFullDelta == 0 &&
+              oldRealAfterPositionCharIndex >= 0 &&
+              appliedOldFull[oldRealAfterPositionCharIndex] == separator &&
+              oldValue.textAfterPosition.isNotEmpty &&
+              (oldValue.textAfterPosition[0] == separator || // over separator
+                  oldValue.position < newValue.position) // new separator
+          ) {
+        newAfterPositionDelta -= 1;
+      }
     }
   }
 
@@ -183,3 +202,15 @@ PositionedText applyPositionedText(
     newValue.position + newFullDelta - newAfterPositionDelta,
   );
 }
+
+String applySimpleText(
+  ConversionType type,
+  String text,
+  bool displaySeparator,
+) =>
+    applyPositionedText(
+      PositionedText(text, 0),
+      PositionedText(text, 0),
+      type,
+      displaySeparator,
+    ).text;

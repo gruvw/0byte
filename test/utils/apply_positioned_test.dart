@@ -27,7 +27,8 @@ void testApplyPositioned(
   PositionedText actual = applyPositionedText(
     oldValue.item2,
     _positionedFromReadable(newReadable).item2,
-    applyInputFromType(oldValue.item1, displaySeparator),
+    oldValue.item1,
+    displaySeparator,
   );
   expect(actual, _positionedFromReadable(expectedReadable).item2);
 }
@@ -97,6 +98,9 @@ void main() {
       testApplyPositioned(displaySeparator, "0aabc|defghijklmnop...",
           "0aabcz|defghijklmnop...", "0aabcz|defghijklmnop...");
     });
+    test("ASCII don't use separator", () {
+      testApplyPositioned(displaySeparator, "0a|", "0a_|", "0a_|");
+    });
     test("Decimal separation (unsigned)", () {
       testApplyPositioned(
           displaySeparator, "0d1234|6789", "0d12345|6789", "0d123_45|6_789");
@@ -115,10 +119,10 @@ void main() {
       testApplyPositioned(displaySeparator, "0s-1|12", "0s-11|12", "0s-1_1|12");
     });
     test("Alone separator addition", () {
-      testApplyPositioned(displaySeparator, "0s|", "0s_|", "0s|");
+      testApplyPositioned(displaySeparator, "0s|", "0s_|", "0s_|");
     });
     test("Alone separator addition (signed)", () {
-      testApplyPositioned(displaySeparator, "0s-|", "0s-_|", "0s-|");
+      testApplyPositioned(displaySeparator, "0s-|", "0s-_|", "0s-_|");
     });
   });
 
@@ -134,6 +138,48 @@ void main() {
     test("Middle word deletion should respect separator groups reduction", () {
       testApplyPositioned(
           displaySeparator, "0x0_11|_11", "0x0_1|_11", "0x01|_11");
+    });
+    test("Invalid letter addition", () {
+      testApplyPositioned(
+          displaySeparator, "0x0z|FF1", "0x0zF|FF1", "0x0zF|FF1");
+    });
+    test("Invalid letter addition with separators after position", () {
+      testApplyPositioned(
+          displaySeparator, "0x0z|FF__1", "0x0zF|FF__1", "0x0zF|FF__1");
+    });
+    test("Invalid letter deletion", () {
+      testApplyPositioned(
+          displaySeparator, "0x0zF|FF1", "0x0z|FF1", "0x0z|FF1");
+    });
+    test("Made invalid at position 1", () {
+      testApplyPositioned(
+          displaySeparator, "0x0|0_FF_F1", "0x0z|0_FF_F1", "0x0z|0FFF1");
+    });
+    test("Made valid again (after)", () {
+      testApplyPositioned(displaySeparator, "0x0z|FF1", "0x0|FF1", "0x0|F_F1");
+    });
+    test("Made valid again (before)", () {
+      testApplyPositioned(displaySeparator, "0x0|zFF1", "0x0|FF1", "0x0|F_F1");
+    });
+    test("Added digit correct separator side (after)", () {
+      testApplyPositioned(
+          displaySeparator, "0x0|_FF_01", "0x0F|_FF_01", "0x0F|_FF_01");
+    });
+    test("Added digit correct separator side (after)", () {
+      testApplyPositioned(
+          displaySeparator, "0x0_|FF_01", "0x0_F|FF_01", "0x0F|_FF_01");
+    });
+    test("Added digit correct separator side (lower)", () {
+      testApplyPositioned(displaySeparator, "0x0_11|_11_11", "0x0_11a|_11_11",
+          "0x01_1A|_11_11");
+    });
+    test("Added digit correct separator side (lower)", () {
+      testApplyPositioned(displaySeparator, "0x0_11|_11_11", "0x0_11a|_11_11",
+          "0x01_1A|_11_11");
+    });
+    test("Added digit correct separator side (upper)", () {
+      testApplyPositioned(displaySeparator, "0x0_11|_11_11", "0x0_11A|_11_11",
+          "0x01_1A|_11_11");
     });
   });
 

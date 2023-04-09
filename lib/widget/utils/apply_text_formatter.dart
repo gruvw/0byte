@@ -1,11 +1,16 @@
 import 'package:flutter/services.dart';
 
+import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 class ApplyTextFormatter extends TextInputFormatter {
-  final String Function(String value)? applyValue;
+  final ConversionType type;
+  final bool displaySeparator;
 
-  ApplyTextFormatter(this.applyValue);
+  ApplyTextFormatter({
+    required this.type,
+    required this.displaySeparator,
+  });
 
   @override
   TextEditingValue formatEditUpdate(
@@ -15,12 +20,14 @@ class ApplyTextFormatter extends TextInputFormatter {
     final newBase = applyPositionedText(
       PositionedText(oldValue.text, oldValue.selection.baseOffset),
       PositionedText(newValue.text, newValue.selection.baseOffset),
-      applyValue,
+      type,
+      displaySeparator,
     );
     final newExtend = applyPositionedText(
       PositionedText(oldValue.text, oldValue.selection.extentOffset),
       PositionedText(newValue.text, newValue.selection.extentOffset),
-      applyValue,
+      type,
+      displaySeparator,
     );
 
     return TextEditingValue(

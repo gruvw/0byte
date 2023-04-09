@@ -52,8 +52,8 @@ Sharing
 UI / WEB
 
 <!-- TODO put phone ideas + code todos on roadmap -->
-- [ ] Full UX redesign (no more fix output per collection)
 - [ ] Support number separator
+- [ ] Full UX redesign (no more fix output per collection)
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
 - [ ] Fix #1
@@ -81,3 +81,4 @@ UI / WEB
 - Custom keyboard for data input
 - Light theme support
 - Key-maps for keyboard only use (on web)
+- Enable application wide undo
