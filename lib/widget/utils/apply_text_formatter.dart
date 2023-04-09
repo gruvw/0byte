@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 
+import 'package:app_0byte/utils/validation.dart';
+
 class ApplyTextFormatter extends TextInputFormatter {
   final String Function(String value)? applyValue;
 
@@ -7,19 +9,25 @@ class ApplyTextFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    String updatedText = applyValue?.call(newValue.text) ?? newValue.text;
-    int sizeDiff = updatedText.length - newValue.text.length;
-    print(sizeDiff);
-    if (newValue.selection.baseOffset + sizeDiff < 0) {
-      sizeDiff = 0;
-    }
-    // LEFT HERE 1 find a way to make it work smoothly
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final newBase = applyPositionedText(
+      PositionedText(oldValue.text, oldValue.selection.baseOffset),
+      PositionedText(newValue.text, newValue.selection.baseOffset),
+      applyValue,
+    );
+    final newExtend = applyPositionedText(
+      PositionedText(oldValue.text, oldValue.selection.extentOffset),
+      PositionedText(newValue.text, newValue.selection.extentOffset),
+      applyValue,
+    );
+
     return TextEditingValue(
-      text: updatedText,
+      text: newBase.text,
       selection: TextSelection(
-        baseOffset: newValue.selection.baseOffset + sizeDiff,
-        extentOffset: newValue.selection.extentOffset + sizeDiff,
+        baseOffset: newBase.position,
+        extentOffset: newExtend.position,
       ),
     );
   }

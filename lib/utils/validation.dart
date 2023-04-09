@@ -52,6 +52,10 @@ String uniqueLabel(List<String> labels, String label) {
   return numbers.isEmpty ? label : "$label (${numbers.reduce(max)})";
 }
 
+T applyOr<T>(T Function(T value)? applyInput, T value) {
+  return applyInput?.call(value) ?? value;
+}
+
 ApplyInput applyInputFromType(ConversionType type) => (String input) {
       input = withoutSeparator(type, input);
 
@@ -100,4 +104,42 @@ String separatorTransform(
   final left = unsignedText.substring(0, i);
 
   return signSplit.item1 + left + unsignedSeparatedText;
+}
+
+class PositionedText {
+  String text;
+  int position;
+
+  PositionedText(this.text, this.position);
+
+  @override
+  String toString() {
+    return "PositionedText[text: $text, position: $position]";
+  }
+
+  @override
+  bool operator ==(covariant PositionedText other) =>
+      text == other.text && position == other.position;
+
+  @override
+  int get hashCode => Object.hash(text, position);
+}
+
+PositionedText applyPositionedText(
+  PositionedText oldValue,
+  PositionedText newValue,
+  ApplyInput? applyText,
+) {
+  if (applyText == null) {
+    return newValue;
+  }
+
+  // LEFT HERE 1 make it pass unit tests
+  String updatedText = applyText(newValue.text);
+  int sizeDiff = updatedText.length - newValue.text.length;
+  if (newValue.position + sizeDiff < 0) {
+    sizeDiff = 0;
+  }
+
+  return PositionedText(updatedText, newValue.position + sizeDiff);
 }
