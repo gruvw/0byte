@@ -1,262 +1,152 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:tuple/tuple.dart';
+
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:flutter_test/flutter_test.dart';
+
+const _positionChar = "|";
+
+Tuple2<ConversionType, PositionedText> _positionedFromReadable(
+    String readable) {
+  String positionText = readable.substring(2);
+  return Tuple2(
+      ConversionType.fromPrefix(readable.substring(0, 2))!,
+      PositionedText(
+        positionText.replaceAll(_positionChar, ""),
+        positionText.indexOf(_positionChar),
+      ));
+}
 
 void testApplyPositioned(
-  ConversionType type,
-  PositionedText oldValue,
-  PositionedText newValue,
-  PositionedText expected,
   bool displaySeparator,
+  String oldReadable,
+  String newReadable,
+  String expectedReadable,
 ) {
+  final oldValue = _positionedFromReadable(oldReadable);
   PositionedText actual = applyPositionedText(
-    oldValue,
-    newValue,
-    applyInputFromType(type, displaySeparator),
+    oldValue.item2,
+    _positionedFromReadable(newReadable).item2,
+    applyInputFromType(oldValue.item1, displaySeparator),
   );
-  expect(actual, expected);
+  expect(actual, _positionedFromReadable(expectedReadable).item2);
 }
 
 void main() {
   group("Display separator enabled", () {
     const displaySeparator = true;
     test("Remove binary prefix", () {
-      testApplyPositioned(
-        ConversionType.binary,
-        PositionedText("01", 1),
-        PositionedText("0b1", 2),
-        PositionedText("1", 0),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0b0|1", "0b0b|1", "0b|1");
     });
     test("Digit deletion moves separator before position", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 5),
-        PositionedText("00_1", 4),
-        PositionedText("0_01", 4),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x00_11|", "0x00_1|", "0x0_01|");
     });
     test("Separator deletion just moves position (after separator)", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 3),
-        PositionedText("0011", 2),
-        PositionedText("00_11", 2),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x00_|11", "0x00|11", "0x00|_11");
     });
     test("Separator deletion just moves position (before separator)", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 2),
-        PositionedText("0011", 2),
-        PositionedText("00_11", 3),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x00|_11", "0x00|11", "0x00_|11");
     });
     test("Digit addition creates correct separator before position", () {
       testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("01_11", 2),
-        PositionedText("011_11", 3),
-        PositionedText("0_11_11", 4),
-        displaySeparator,
-      );
+          displaySeparator, "0x01|_11", "0x011|_11", "0x0_11|_11");
     });
     test("Digit deletion before separator (after digit)", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 2),
-        PositionedText("0_11", 1),
-        PositionedText("0_11", 1),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x00|_11", "0x0|_11", "0x0|_11");
     });
     test("Digit deletion before separator (before digit)", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 1),
-        PositionedText("0_11", 1),
-        PositionedText("0_11", 1),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x0|0_11", "0x0|_11", "0x0|_11");
     });
     test("Digit deletion at start of word", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 1),
-        PositionedText("0_11", 0),
-        PositionedText("0_11", 0),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x0|0_11", "0x|0_11", "0x|0_11");
     });
     test("Digit deletion at start of word removes separator after cursor", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("0_11", 1),
-        PositionedText("_11", 0),
-        PositionedText("11", 0),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x0|_11", "0x|_11", "0x|11");
     });
     test("Text made invalid removes separator after cursor", () {
       testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 2),
-        PositionedText("00z_11", 3),
-        PositionedText("00z11", 3),
-        displaySeparator,
-      );
+          displaySeparator, "0x00|_11", "0x00z|_11", "0x00z|11");
     });
     test("Text made invalid removes every separator", () {
       testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11_22", 5),
-        PositionedText("00_11z_22", 6),
-        PositionedText("0011z22", 5),
-        displaySeparator,
-      );
+          displaySeparator, "0x00_11|_22", "0x00_11z|_22", "0x0011z|22");
     });
     test("Text made invalid removes every separator (binary)", () {
-      testApplyPositioned(
-        ConversionType.binary,
-        PositionedText("10_10_10_11_00", 8),
-        PositionedText("10_10_10a_11_00", 9),
-        PositionedText("101010a1100", 7),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0b10_10_10|_11_00",
+          "0b10_10_10a|_11_00", "0b101010a|1100");
     });
     test("Paste full hex number", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("", 0),
-        PositionedText("0xff_00", 7),
-        PositionedText("FF_00", 5),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x|", "0x0xff_00|", "0xFF_00|");
     });
     test("Add hex prefix at start", () {
-      testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("ff0", 0),
-        PositionedText("0xff00", 2),
-        PositionedText("FF_00", 0),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0x|ff00", "0x0x|ff00", "0x|FF_00");
     });
     test("Input separator in middle of word", () {
       testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 1),
-        PositionedText("0_0_11", 2),
-        PositionedText("00_11", 1),
-        displaySeparator,
-      );
+          displaySeparator, "0x0|0_11", "0x0_|0_11", "0x0|0_11");
     });
     test("Input separator at start of word", () {
       testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 0),
-        PositionedText("_00_11", 1),
-        PositionedText("00_11", 0),
-        displaySeparator,
-      );
+          displaySeparator, "0x|00_11", "0x_|00_11", "0x|00_11");
     });
     test("Input separator next to separator", () {
       testApplyPositioned(
-        ConversionType.hexadecimal,
-        PositionedText("00_11", 3),
-        PositionedText("00__11", 4),
-        PositionedText("00_11", 3),
-        displaySeparator,
-      );
+          displaySeparator, "0x00_|11", "0x00__|11", "0x00_|11");
     });
     test("ASCII don't separate", () {
-      testApplyPositioned(
-        ConversionType.ascii,
-        PositionedText("abcdefghijklmnop...", 3),
-        PositionedText("abczdefghijklmnop...", 4),
-        PositionedText("abczdefghijklmnop...", 4),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0aabc|defghijklmnop...",
+          "0aabcz|defghijklmnop...", "0aabcz|defghijklmnop...");
     });
     test("Decimal separation (unsigned)", () {
       testApplyPositioned(
-        ConversionType.unsignedDecimal,
-        PositionedText("12346789", 4),
-        PositionedText("123456789", 5),
-        PositionedText("123_456_789", 6),
-        displaySeparator,
-      );
+          displaySeparator, "0d1234|6789", "0d12345|6789", "0d123_45|6_789");
     });
     test("Decimal separation (signed)", () {
       testApplyPositioned(
-        ConversionType.signedDecimal,
-        PositionedText("-12346789", 5),
-        PositionedText("-123456789", 6),
-        PositionedText("-123_456_789", 7),
-        displaySeparator,
-      );
+          displaySeparator, "0s-1234|6789", "0s-12345|6789", "0s-123_45|6_789");
     });
     test("Small signed decimal", () {
-      testApplyPositioned(
-        ConversionType.signedDecimal,
-        PositionedText("-1", 2),
-        PositionedText("-12", 3),
-        PositionedText("-12", 3),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0s-1|", "0s-12|", "0s-12|");
     });
     test("Medium signed decimal", () {
-      testApplyPositioned(
-        ConversionType.signedDecimal,
-        PositionedText("-12", 2),
-        PositionedText("-112", 3),
-        PositionedText("-112", 3),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0s-1|2", "0s-11|2", "0s-11|2");
     });
     test("Separated first signed decimal", () {
+      testApplyPositioned(displaySeparator, "0s-1|12", "0s-11|12", "0s-1_1|12");
+    });
+    test("Alone separator addition", () {
+      testApplyPositioned(displaySeparator, "0s|", "0s_|", "0s|");
+    });
+    test("Alone separator addition (signed)", () {
+      testApplyPositioned(displaySeparator, "0s-|", "0s-_|", "0s-|");
+    });
+  });
+
+  group("Additional usage tests", () {
+    const displaySeparator = true;
+    test("Prepend moves position before separator", () {
+      testApplyPositioned(displaySeparator, "0x|11", "0x0|11", "0x0|_11");
+    });
+    test("Middle word deletion should stay between separators", () {
       testApplyPositioned(
-        ConversionType.signedDecimal,
-        PositionedText("-112", 2),
-        PositionedText("-1112", 3),
-        PositionedText("-1_112", 4),
-        displaySeparator,
-      );
+          displaySeparator, "0x01_11|_11", "0x01_1|_11", "0x0_11|_11");
+    });
+    test("Middle word deletion should respect separator groups reduction", () {
+      testApplyPositioned(
+          displaySeparator, "0x0_11|_11", "0x0_1|_11", "0x01|_11");
     });
   });
 
   group("Display Separator disabled", () {
     const displaySeparator = false;
     test("Binary identity", () {
-      testApplyPositioned(
-        ConversionType.binary,
-        PositionedText("0011", 2),
-        PositionedText("0011", 2),
-        PositionedText("0011", 2),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0b00|11", "0b00|11", "0b00|11");
     });
     test("Remove unused separator", () {
-      testApplyPositioned(
-        ConversionType.binary,
-        PositionedText("00_11", 3),
-        PositionedText("00_11", 3),
-        PositionedText("0011", 2),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0b00_|11", "0b00_|11", "0b00|11");
     });
     test("Full binary paste", () {
-      testApplyPositioned(
-        ConversionType.binary,
-        PositionedText("", 0),
-        PositionedText("0b00_11", 7),
-        PositionedText("0011", 4),
-        displaySeparator,
-      );
+      testApplyPositioned(displaySeparator, "0b|", "0b0b00_11|", "0b0011|");
     });
   });
 }

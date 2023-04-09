@@ -124,7 +124,9 @@ class PositionedText {
 
   @override
   String toString() {
-    return "PositionedText[text: $text, position: $position]";
+    final readable =
+        "${text.substring(0, position)}|${text.substring(position)}";
+    return "PositionedText[text: $text, position: $position] = $readable";
   }
 
   @override
@@ -144,8 +146,6 @@ PositionedText applyPositionedText(
     return newValue;
   }
 
-  // (newFullDelta >= 0) is not perfect check but should be enough for human usage of application
-
   final appliedNewAfterPosition = applyText(newValue.textAfterPosition);
   int newAfterPositionDelta =
       appliedNewAfterPosition.length - newValue.textAfterPosition.length;
@@ -153,21 +153,33 @@ PositionedText applyPositionedText(
   final appliedNewFull = applyText(newValue.text);
   final newFullDelta = appliedNewFull.length - newValue.text.length;
 
-  if (newValue.textAfterPosition.startsWith(separator) && newFullDelta >= 0) {
+  // Check addition of separator right after position (not detected when textAfterPosition isolated)
+  final newRealAfterPositonCharIndex =
+      appliedNewFull.length - appliedNewAfterPosition.length - 1;
+  if (newRealAfterPositonCharIndex >= 0 &&
+      appliedNewFull[newRealAfterPositonCharIndex] == separator) {
     newAfterPositionDelta += 1;
+
+    // Separator (addition) deletion correction (move over separator instead)
+    final appliedOldFull = applyText(oldValue.text);
+    final oldNewFullDelta = appliedNewFull.length - appliedOldFull.length;
+    final appliedOldAfterPosition = applyText(oldValue.textAfterPosition);
+
+    final oldRealAfterPositionCharIndex =
+        appliedOldFull.length - appliedOldAfterPosition.length - 1;
+    if (oldNewFullDelta == 0 &&
+            oldRealAfterPositionCharIndex >= 0 &&
+            appliedOldFull[oldRealAfterPositionCharIndex] == separator &&
+            oldValue.textAfterPosition.isNotEmpty &&
+            (oldValue.textAfterPosition[0] == separator || // over separator
+                oldValue.position < newValue.position) // new separator
+        ) {
+      newAfterPositionDelta -= 1;
+    }
   }
-
-  final newBeforePositionDelta = newFullDelta - newAfterPositionDelta;
-
-  // Separator deletion correction (move over separator instead)
-  final appliedOldFull = applyText(oldValue.text);
-  final oldNewFullDelta = appliedNewFull.length - appliedOldFull.length;
-  final displacement = oldNewFullDelta == 0 && newFullDelta >= 0
-      ? newValue.position - oldValue.position
-      : 0;
 
   return PositionedText(
     applyText(newValue.text),
-    newValue.position + newBeforePositionDelta + displacement,
+    newValue.position + newFullDelta - newAfterPositionDelta,
   );
 }
