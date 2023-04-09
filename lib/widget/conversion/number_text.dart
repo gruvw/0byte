@@ -37,7 +37,8 @@ class NumberText extends HookWidget {
           number.object.text,
           getValue: (text) => number.object.withText(text),
           isMutable: number.isMutable,
-          applyInput: applyInputFromType(number.object.type),
+          applyInput: applyInputFromType(number.object.type,
+              true), // TODO use app/collection based setting
           onSubmitted: (newValue) {
             if (newValue.isEmpty) {
               newValue = number.object.text; // take previous value instead

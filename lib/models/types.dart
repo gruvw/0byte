@@ -97,7 +97,5 @@ enum ConversionType {
     this.blockLength,
   ) : base = alphabet.length;
 
-  bool isSeparated() {
-    return blockLength >= 1;
-  }
+  bool isSeparated() => blockLength >= 1;
 }

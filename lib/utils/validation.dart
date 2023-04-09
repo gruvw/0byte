@@ -56,33 +56,10 @@ T applyOr<T>(T Function(T value)? applyInput, T value) {
   return applyInput?.call(value) ?? value;
 }
 
-ApplyInput applyInputFromType(ConversionType type) => (String input) {
-      input = withoutSeparator(type, input);
-
-      // Trim number prefix
-      if (!isValidText(type, input)) {
-        if (input.startsWith(type.prefix)) {
-          String inputWithoutPrefix = input.replaceFirst(type.prefix, "");
-          if (isValidText(type, inputWithoutPrefix)) {
-            input = inputWithoutPrefix;
-          }
-        }
-      }
-
-      // HEX to maj
-      if (type == ConversionType.hexadecimal) {
-        input = input.toUpperCase();
-      }
-
-      input = separatorTransform(type, input, true);
-
-      return input;
-    };
-
 String separatorTransform(
   ConversionType type,
   String text,
-  bool displaySeparator, // TODO use app/collection based setting
+  bool displaySeparator,
 ) {
   if (!displaySeparator || !type.isSeparated() || !isValidText(type, text)) {
     // Don't use separators
@@ -106,11 +83,44 @@ String separatorTransform(
   return signSplit.item1 + left + unsignedSeparatedText;
 }
 
+ApplyInput applyInputFromType(ConversionType type, bool displaySeparator) =>
+    (String input) {
+      input = withoutSeparator(type, input);
+
+      // HEX to maj
+      if (type == ConversionType.hexadecimal) {
+        // Modify only valid lowercase hex char to uppercase
+        final upperInput = input.toUpperCase();
+        String hexUpper = "";
+        for (int i = 0; i < input.length; i++) {
+          hexUpper +=
+              type.alphabet.contains(upperInput[i]) ? upperInput[i] : input[i];
+        }
+        input = hexUpper;
+      }
+
+      // Trim number prefix (must be invalid at first)
+      if (!isValidText(type, input)) {
+        if (input.startsWith(type.prefix)) {
+          String inputWithoutPrefix = input.substring(type.prefix.length);
+          if (isValidText(type, inputWithoutPrefix)) {
+            input = inputWithoutPrefix;
+          }
+        }
+      }
+
+      input = separatorTransform(type, input, displaySeparator);
+
+      return input;
+    };
+
 class PositionedText {
-  String text;
-  int position;
+  final String text;
+  final int position;
 
   PositionedText(this.text, this.position);
+
+  String get textAfterPosition => text.substring(position);
 
   @override
   String toString() {
@@ -134,12 +144,30 @@ PositionedText applyPositionedText(
     return newValue;
   }
 
-  // LEFT HERE 1 make it pass unit tests
-  String updatedText = applyText(newValue.text);
-  int sizeDiff = updatedText.length - newValue.text.length;
-  if (newValue.position + sizeDiff < 0) {
-    sizeDiff = 0;
+  // (newFullDelta >= 0) is not perfect check but should be enough for human usage of application
+
+  final appliedNewAfterPosition = applyText(newValue.textAfterPosition);
+  int newAfterPositionDelta =
+      appliedNewAfterPosition.length - newValue.textAfterPosition.length;
+
+  final appliedNewFull = applyText(newValue.text);
+  final newFullDelta = appliedNewFull.length - newValue.text.length;
+
+  if (newValue.textAfterPosition.startsWith(separator) && newFullDelta >= 0) {
+    newAfterPositionDelta += 1;
   }
 
-  return PositionedText(updatedText, newValue.position + sizeDiff);
+  final newBeforePositionDelta = newFullDelta - newAfterPositionDelta;
+
+  // Separator deletion correction (move over separator instead)
+  final appliedOldFull = applyText(oldValue.text);
+  final oldNewFullDelta = appliedNewFull.length - appliedOldFull.length;
+  final displacement = oldNewFullDelta == 0 && newFullDelta >= 0
+      ? newValue.position - oldValue.position
+      : 0;
+
+  return PositionedText(
+    applyText(newValue.text),
+    newValue.position + newBeforePositionDelta + displacement,
+  );
 }

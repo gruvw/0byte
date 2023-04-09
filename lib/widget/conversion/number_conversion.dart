@@ -66,7 +66,7 @@ class NumberConversion extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO go to triple row layout (move conversion chip on first row) when input close to overflow
 
-    // PotentiallyMutableField holder
+    // PotentiallyMutableField holder (used for live conversion)
     final numberView = NumberText(number: number);
 
     return Column(
