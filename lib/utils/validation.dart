@@ -4,7 +4,7 @@ import 'package:app_0byte/models/types.dart';
 
 import 'parser.dart';
 
-typedef ApplyInput = String Function(String);
+typedef ApplyText = String Function(String);
 
 extension FieldValidation on Map<String, dynamic> {
   bool hasField<T>(String name) {
@@ -52,8 +52,8 @@ String uniqueLabel(List<String> labels, String label) {
   return numbers.isEmpty ? label : "$label (${numbers.reduce(max)})";
 }
 
-T applyOr<T>(T Function(T value)? applyInput, T value) {
-  return applyInput?.call(value) ?? value;
+T applyOr<T>(T Function(T value)? applyText, T value) {
+  return applyText?.call(value) ?? value;
 }
 
 String separatorTransform(
@@ -83,35 +83,35 @@ String separatorTransform(
   return signSplit.item1 + left + unsignedSeparatedText;
 }
 
-ApplyInput applyInputFromType(ConversionType type, bool displaySeparator) =>
-    (String input) {
-      input = withoutSeparator(type, input);
+ApplyText applyTextFromType(ConversionType type, bool displaySeparator) =>
+    (String text) {
+      text = withoutSeparator(type, text);
 
       // HEX to maj
       if (type == ConversionType.hexadecimal) {
         // Modify only valid lowercase hex char to uppercase
-        final upperInput = input.toUpperCase();
+        final upperText = text.toUpperCase();
         String hexUpper = "";
-        for (int i = 0; i < input.length; i++) {
+        for (int i = 0; i < text.length; i++) {
           hexUpper +=
-              type.alphabet.contains(upperInput[i]) ? upperInput[i] : input[i];
+              type.alphabet.contains(upperText[i]) ? upperText[i] : text[i];
         }
-        input = hexUpper;
+        text = hexUpper;
       }
 
       // Trim number prefix (must be invalid at first)
-      if (!isValidText(type, input)) {
-        if (input.startsWith(type.prefix)) {
-          String inputWithoutPrefix = input.substring(type.prefix.length);
-          if (isValidText(type, inputWithoutPrefix)) {
-            input = inputWithoutPrefix;
+      if (!isValidText(type, text)) {
+        if (text.startsWith(type.prefix)) {
+          String textWithoutPrefix = text.substring(type.prefix.length);
+          if (isValidText(type, textWithoutPrefix)) {
+            text = textWithoutPrefix;
           }
         }
       }
 
-      input = separatorTransform(type, input, displaySeparator);
+      text = separatorTransform(type, text, displaySeparator);
 
-      return input;
+      return text;
     };
 
 class PositionedText {
@@ -145,7 +145,7 @@ PositionedText applyPositionedText(
   ConversionType type,
   bool displaySeparator,
 ) {
-  ApplyInput applyText = applyInputFromType(type, displaySeparator);
+  ApplyText applyText = applyTextFromType(type, displaySeparator);
 
   final appliedNewAfterPosition = applyText(newValue.textAfterPosition);
   int newAfterPositionDelta =

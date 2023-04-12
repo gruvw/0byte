@@ -1,20 +1,20 @@
 import 'dart:math';
 
+import 'package:app_0byte/utils/parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/conversion.dart';
-import 'package:app_0byte/utils/parser.dart';
 
 void testConvert({
   required ConversionType inputType,
-  required String input,
+  required String text,
   required ConversionType targetType,
   required int targetSize,
   required String expectedOutput,
   bool shouldBeSymmetric = true,
 }) {
-  String number = parseInput(inputType, input)!;
+  String number = parseText(inputType, text)!;
   String res = converted(
     inputType: inputType,
     number: number,
@@ -23,7 +23,7 @@ void testConvert({
   );
 
   String reason =
-      "value:${inputType.prefix}$input, targetType:${targetType.label}, targetSize:$targetSize";
+      "value:${inputType.prefix}$text, targetType:${targetType.label}, targetSize:$targetSize";
   expect(res, equals(expectedOutput), reason: reason);
   expect(
     isSymmetric(
@@ -41,7 +41,7 @@ void main() {
   test("Binary to signed", () {
     testConvert(
       inputType: ConversionType.binary,
-      input: "100110",
+      text: "100110",
       targetType: ConversionType.signedDecimal,
       targetSize: 10,
       expectedOutput: "-26",
@@ -50,7 +50,7 @@ void main() {
   test("Large signed negative identity", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-9999990",
+      text: "-9999990",
       targetType: ConversionType.signedDecimal,
       targetSize: 10,
       expectedOutput: "-9999990",
@@ -59,7 +59,7 @@ void main() {
   test("Binary to ASCII", () {
     testConvert(
       inputType: ConversionType.binary,
-      input: "11111101111101",
+      text: "11111101111101",
       targetType: ConversionType.ascii,
       targetSize: 3,
       expectedOutput: "~}",
@@ -68,7 +68,7 @@ void main() {
   test("Hexadecimal to ASCII", () {
     testConvert(
       inputType: ConversionType.hexadecimal,
-      input: "7D",
+      text: "7D",
       targetType: ConversionType.ascii,
       targetSize: 3,
       expectedOutput: "}",
@@ -77,7 +77,7 @@ void main() {
   test("ASCII as signed", () {
     testConvert(
       inputType: ConversionType.ascii,
-      input: "~",
+      text: "~",
       targetType: ConversionType.signedDecimal,
       targetSize: 3,
       expectedOutput: "-2",
@@ -86,7 +86,7 @@ void main() {
   test("Small hexadecimal from signed", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "10",
+      text: "10",
       targetType: ConversionType.hexadecimal,
       targetSize: 2,
       expectedOutput: "0A",
@@ -95,7 +95,7 @@ void main() {
   test("Signed to binary", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-10",
+      text: "-10",
       targetType: ConversionType.binary,
       targetSize: 10,
       expectedOutput: "1111110110",
@@ -104,7 +104,7 @@ void main() {
   test("Signed to hexadecimal", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-10",
+      text: "-10",
       targetType: ConversionType.hexadecimal,
       targetSize: 8,
       expectedOutput: "FFFFFFF6",
@@ -113,7 +113,7 @@ void main() {
   test("-1 to hexadecimal", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-1",
+      text: "-1",
       targetType: ConversionType.hexadecimal,
       targetSize: 8,
       expectedOutput: "FFFFFFFF",
@@ -122,7 +122,7 @@ void main() {
   test("Hexadecimal to unsigned", () {
     testConvert(
       inputType: ConversionType.hexadecimal,
-      input: "25",
+      text: "25",
       targetType: ConversionType.unsignedDecimal,
       targetSize: 3,
       expectedOutput: "37",
@@ -131,7 +131,7 @@ void main() {
   test("Hexadecimal to signed", () {
     testConvert(
       inputType: ConversionType.hexadecimal,
-      input: "25",
+      text: "25",
       targetType: ConversionType.signedDecimal,
       targetSize: 3,
       expectedOutput: "37",
@@ -140,7 +140,7 @@ void main() {
   test("Signed to hexadecimal padded", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "37",
+      text: "37",
       targetType: ConversionType.hexadecimal,
       targetSize: 3,
       expectedOutput: "025",
@@ -149,7 +149,7 @@ void main() {
   test("Unsigned to hexadecimal padded", () {
     testConvert(
       inputType: ConversionType.unsignedDecimal,
-      input: "37",
+      text: "37",
       targetType: ConversionType.hexadecimal,
       targetSize: 3,
       expectedOutput: "025",
@@ -158,7 +158,7 @@ void main() {
   test("Signed negative to hexadecimal", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-37",
+      text: "-37",
       targetType: ConversionType.hexadecimal,
       targetSize: 4,
       expectedOutput: "FFDB",
@@ -167,7 +167,7 @@ void main() {
   test("Signed identity", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "9",
+      text: "9",
       targetType: ConversionType.signedDecimal,
       targetSize: 3,
       expectedOutput: "9",
@@ -176,7 +176,7 @@ void main() {
   test("Unsigned to signed ?", () {
     testConvert(
       inputType: ConversionType.unsignedDecimal,
-      input: "9",
+      text: "9",
       targetType: ConversionType.signedDecimal,
       targetSize: 3,
       expectedOutput: "-7",
@@ -185,7 +185,7 @@ void main() {
   test("Signed to unsigned ?", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-7",
+      text: "-7",
       targetType: ConversionType.unsignedDecimal,
       targetSize: 1,
       expectedOutput: "9",
@@ -194,7 +194,7 @@ void main() {
   test("Large signed to hexadecimal", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "9999999999",
+      text: "9999999999",
       targetType: ConversionType.hexadecimal,
       targetSize: 8,
       expectedOutput: "540BE3FF",
@@ -204,7 +204,7 @@ void main() {
   test("Padded signed identity", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "0001",
+      text: "0001",
       targetType: ConversionType.signedDecimal,
       targetSize: 8,
       expectedOutput: "1",
@@ -213,7 +213,7 @@ void main() {
   test("-1 to unsigned", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-1",
+      text: "-1",
       targetType: ConversionType.unsignedDecimal,
       targetSize: 2,
       expectedOutput: "27",
@@ -223,7 +223,7 @@ void main() {
   test("Padded -1 to unsigned", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-00001",
+      text: "-00001",
       targetType: ConversionType.unsignedDecimal,
       targetSize: 2,
       expectedOutput: "27",
@@ -233,7 +233,7 @@ void main() {
   test("ASCII not using sign", () {
     testConvert(
       inputType: ConversionType.ascii,
-      input: "-0",
+      text: "-0",
       targetType: ConversionType.binary,
       targetSize: 14,
       expectedOutput: "01011010110000",
@@ -242,7 +242,7 @@ void main() {
   test("-8 to bin", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-8",
+      text: "-8",
       targetType: ConversionType.binary,
       targetSize: 6,
       expectedOutput: "111000",
@@ -251,7 +251,7 @@ void main() {
   test("-64 to bin", () {
     testConvert(
       inputType: ConversionType.signedDecimal,
-      input: "-64",
+      text: "-64",
       targetType: ConversionType.binary,
       targetSize: 8,
       expectedOutput: "11000000",
@@ -267,15 +267,15 @@ void main() {
       test("on ${conversionType.name}", () {
         for (var i = 0; i < iterations; i++) {
           int length = random.nextInt(maxSize - minSize + 1) + minSize;
-          String input = "";
+          String text = "";
           for (int i = 0; i < length; i++) {
-            input += conversionType
+            text += conversionType
                 .alphabet[random.nextInt(conversionType.alphabet.length)];
           }
-          String number = parseInput(conversionType, input)!;
+          String number = parseText(conversionType, text)!;
           testConvert(
             inputType: conversionType,
-            input: input,
+            text: text,
             targetType: conversionType,
             targetSize: length,
             expectedOutput: number,

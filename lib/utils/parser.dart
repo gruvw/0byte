@@ -25,10 +25,10 @@ Tuple2<String, String> splitSign(ConversionType type, String data) {
   return Tuple2(sign, data.replaceFirst(sign, ""));
 }
 
-String? parseInput(ConversionType type, String input) {
-  input = withoutSeparator(type, input);
+String? parseText(ConversionType type, String text) {
+  text = withoutSeparator(type, text);
 
-  String toCheck = splitSign(type, input).item2;
+  String toCheck = splitSign(type, text).item2;
 
   // Empty check
   if (toCheck.isEmpty) {
@@ -41,12 +41,12 @@ String? parseInput(ConversionType type, String input) {
     }
   }
 
-  String number = leftTrimmed(type, input);
+  String number = leftTrimmed(type, text);
   return number;
 }
 
 bool isValidText(ConversionType type, String text) {
-  return parseInput(type, text) != null;
+  return parseText(type, text) != null;
 }
 
 String withoutSeparator(ConversionType type, String text) {

@@ -6,7 +6,7 @@ abstract class CollectionFields {
 }
 
 abstract class EntryFields {
-  static const String input = "input";
+  static const String text = "text";
   static const String label = "label";
   static const String typeIndex = "typeIndex";
   static const String position = "position";

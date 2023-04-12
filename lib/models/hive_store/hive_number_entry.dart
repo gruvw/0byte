@@ -7,8 +7,6 @@ import 'package:app_0byte/models/number_entry.dart';
 
 part 'hive_number_entry.g.dart';
 
-// TODO rename input to text
-
 @HiveType(typeId: 1)
 class HiveStoreNumberEntry with HiveObjectMixin {
   @HiveField(0)
@@ -18,7 +16,7 @@ class HiveStoreNumberEntry with HiveObjectMixin {
   final int hiveTypeIndex;
 
   @HiveField(2)
-  String hiveInput;
+  String hiveText;
 
   @HiveField(3)
   int hivePosition;
@@ -29,7 +27,7 @@ class HiveStoreNumberEntry with HiveObjectMixin {
   HiveStoreNumberEntry({
     required this.hiveLabel,
     required this.hiveTypeIndex,
-    required this.hiveInput,
+    required this.hiveText,
     required this.hivePosition,
     required this.hiveCollectionKey,
   });
@@ -63,10 +61,10 @@ class HiveNumberEntry extends NumberEntry {
   }
 
   @override
-  String get text => hiveStoreNumberEntry.hiveInput;
+  String get text => hiveStoreNumberEntry.hiveText;
   @override
-  set text(String newInput) {
-    hiveStoreNumberEntry.hiveInput = newInput;
+  set text(String newText) {
+    hiveStoreNumberEntry.hiveText = newText;
     hiveStoreNumberEntry.save();
     notify(EventType.edit);
   }

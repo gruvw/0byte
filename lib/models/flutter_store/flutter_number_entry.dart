@@ -13,12 +13,12 @@ class FlutterNumberEntry extends NumberEntry {
   @override
   int position;
 
-  String flutterInput;
+  String flutterText;
   @override
-  String get text => flutterInput;
+  String get text => flutterText;
   @override
-  set text(String newInput) {
-    flutterInput = newInput;
+  set text(String newText) {
+    flutterText = newText;
     notify(EventType.edit);
   }
 
@@ -36,7 +36,7 @@ class FlutterNumberEntry extends NumberEntry {
     required this.collection,
     required this.position,
     required this.typeIndex,
-    required this.flutterInput,
+    required this.flutterText,
     required this.flutterLabel,
   });
 

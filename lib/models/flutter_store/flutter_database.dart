@@ -15,7 +15,7 @@ class FlutterDatabase extends Database {
     required Collection collection,
     required int position,
     required ConversionType type,
-    required String input,
+    required String text,
     required String label,
   }) {
     FlutterNumberEntry entry = FlutterNumberEntry(
@@ -23,7 +23,7 @@ class FlutterDatabase extends Database {
       collection: collection,
       position: position,
       typeIndex: type.index,
-      flutterInput: input,
+      flutterText: text,
       flutterLabel: label,
     );
     collection.entries.add(entry);

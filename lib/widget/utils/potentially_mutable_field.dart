@@ -5,7 +5,7 @@ import 'package:app_0byte/utils/validation.dart';
 class PotentiallyMutableField<T, View> extends PotentiallyMutable<T> {
   final View Function(T value) _getValue;
 
-  final T Function(T value)? applyInput;
+  final T Function(T value)? applyText;
 
   late final ValueNotifier<View> notifier;
   final void Function(T newValue)? onSubmitted;
@@ -14,13 +14,13 @@ class PotentiallyMutableField<T, View> extends PotentiallyMutable<T> {
     super.object, {
     super.isMutable = true,
     required View Function(T value) getValue,
-    T Function(T value)? applyInput,
+    T Function(T value)? applyText,
     void Function(T newValue)? onSubmitted,
   })  : _getValue = getValue,
-        // If not editable, discards applyInput and onSubmitted
-        applyInput = isMutable ? applyInput : null,
+        // If not editable, discards applyText and onSubmitted
+        applyText = isMutable ? applyText : null,
         onSubmitted = isMutable ? onSubmitted : null {
-    object = applyOr(applyInput, object); // apply input at least once
+    object = applyOr(applyText, object); // apply text at least once
     notifier = ValueNotifier(this.getValue());
   }
 
@@ -28,13 +28,13 @@ class PotentiallyMutableField<T, View> extends PotentiallyMutable<T> {
 
   void setValue(T newValue) {
     if (isMutable) {
-      object = applyOr(applyInput, newValue);
+      object = applyOr(applyText, newValue);
       notifier.value = getValue();
     }
   }
 
   void Function(T newValue) get onChanged => (newValue) {
-        setValue(applyOr(applyInput, newValue));
+        setValue(applyOr(applyText, newValue));
       };
 
   void submit() {

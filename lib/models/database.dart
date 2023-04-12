@@ -19,7 +19,7 @@ abstract class Database {
     required Collection collection,
     required int position,
     required ConversionType type,
-    required String input,
+    required String text,
     required String label,
   });
 

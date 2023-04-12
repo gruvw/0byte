@@ -51,8 +51,9 @@ Sharing
 
 UI / WEB
 
-<!-- TODO put phone ideas + code todos on roadmap -->
-- [ ] Support number separator
+<!-- TODO 0 put phone ideas + code todos on roadmap -->
+
+- [X] Support number separator
 - [ ] Full UX redesign (no more fix output per collection)
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)

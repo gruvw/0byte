@@ -185,7 +185,7 @@ class ConverterPage extends HookConsumerWidget {
                   collection: collection,
                   position: nbEntries,
                   type: conversionType,
-                  input: "",
+                  text: "",
                   label: "Value ${nbEntries + 1}",
                 );
               },

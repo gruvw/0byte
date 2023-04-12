@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:tuple/tuple.dart';
-
 import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/types.dart';
@@ -46,24 +44,28 @@ abstract class Collection extends DatabaseObject {
       return res;
     }
     List<String> labels = List.empty(growable: true);
-    List<String> inputs = List.empty(growable: true);
-    List<Tuple2<String, bool>?> converts = List.empty(growable: true);
+    List<String> texts = List.empty(growable: true);
+    List<Converted<Number>?> converts = List.empty(growable: true);
     for (final entry in sortedEntries) {
       labels.add(entry.label);
-      inputs.add(entry.text);
-      converts
-          .add(convertEntry(entry.type, entry.text, targetType, targetSize));
+      texts.add(entry.text);
+      converts.add(entry.convertTo(
+        ConversionTarget(
+          type: targetType,
+          digits: Digits.fromInt(targetSize)!,
+        ),
+      ));
     }
     int maxLabelLength = labels.map((e) => e.length).reduce(max);
-    int maxInputLength = inputs.map((e) => e.length).reduce(max);
+    int maxTextLength = texts.map((e) => e.length).reduce(max);
     int maxConvertLength =
-        converts.map((e) => e?.item1.length ?? 0).reduce(max);
-    for (var i = 0; i < inputs.length; i++) {
+        converts.map((e) => e?.toString().length ?? 0).reduce(max);
+    for (var i = 0; i < texts.length; i++) {
       res +=
-          "\n${entries[i].label.padRight(maxLabelLength)}: ${(entries[i].type.prefix + inputs[i]).padLeft(maxInputLength + entries[i].type.prefix.length)}";
+          "\n${entries[i].label.padRight(maxLabelLength)}: ${(entries[i].type.prefix + texts[i]).padLeft(maxTextLength + entries[i].type.prefix.length)}";
       if (converts[i] != null) {
         res +=
-            " ${converts[i]!.item2 ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${targetType.prefix}${converts[i]!.item1.padRight(maxConvertLength)}";
+            " ${converts[i]!.wasSymmetric ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${targetType.prefix}${converts[i]!.toString().padRight(maxConvertLength)}";
       }
     }
     return res;

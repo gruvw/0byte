@@ -81,21 +81,24 @@ abstract class NumberEntry extends DatabaseObject with Number {
   @override
   String toString() {
     String res = "$label: ${type.prefix}$text";
-    final converted = convertEntry(
-      type,
-      text,
-      collection.targetType,
-      collection.targetSize,
+
+    final converted = convertTo(
+      ConversionTarget(
+        type: collection.targetType,
+        digits: Digits.fromInt(collection.targetSize)!,
+      ),
     );
+
     if (converted != null) {
       res +=
-          " ${converted.item2 ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${converted.item1}";
+          " ${converted.wasSymmetric ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${converted.convertedNumber}";
     }
+
     return res;
   }
 
   Map<String, dynamic> toJson() => {
-        EntryFields.input: text,
+        EntryFields.text: text,
         EntryFields.label: label,
         EntryFields.typeIndex: typeIndex,
         EntryFields.position: position,

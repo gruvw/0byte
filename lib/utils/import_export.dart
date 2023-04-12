@@ -111,7 +111,7 @@ bool _importCollection(Map<String, dynamic> collectionData) {
 }
 
 bool _importEntry(Collection collection, Map<String, dynamic> entryData) {
-  if (!(entryData.hasField<String>(EntryFields.input) &&
+  if (!(entryData.hasField<String>(EntryFields.text) &&
       entryData.hasField<String>(EntryFields.label) &&
       entryData.hasField<int>(EntryFields.typeIndex) &&
       ConversionType.isValidTypeIndex(entryData[EntryFields.typeIndex]) &&
@@ -124,7 +124,7 @@ bool _importEntry(Collection collection, Map<String, dynamic> entryData) {
       collection: collection,
       position: entryData[EntryFields.position],
       type: ConversionType.values[entryData[EntryFields.typeIndex]],
-      input: entryData[EntryFields.input],
+      text: entryData[EntryFields.text],
       label: entryData[EntryFields.label]);
 
   return true;

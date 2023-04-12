@@ -35,13 +35,13 @@ class HiveDatabase extends Database {
     required Collection collection,
     required int position,
     required ConversionType type,
-    required String input,
+    required String text,
     required String label,
   }) {
     HiveStoreNumberEntry hiveStoreNumberEntry = HiveStoreNumberEntry(
       hiveLabel: label,
       hiveTypeIndex: type.index,
-      hiveInput: input,
+      hiveText: text,
       hivePosition: position,
       hiveCollectionKey: (collection as HiveCollection).hiveStoreCollection.key,
     );

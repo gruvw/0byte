@@ -19,7 +19,7 @@ class HiveStoreNumberEntryAdapter extends TypeAdapter<HiveStoreNumberEntry> {
     return HiveStoreNumberEntry(
       hiveLabel: fields[0] as String,
       hiveTypeIndex: fields[1] as int,
-      hiveInput: fields[2] as String,
+      hiveText: fields[2] as String,
       hivePosition: fields[3] as int,
       hiveCollectionKey: fields[4] as String,
     );
@@ -34,7 +34,7 @@ class HiveStoreNumberEntryAdapter extends TypeAdapter<HiveStoreNumberEntry> {
       ..writeByte(1)
       ..write(obj.hiveTypeIndex)
       ..writeByte(2)
-      ..write(obj.hiveInput)
+      ..write(obj.hiveText)
       ..writeByte(3)
       ..write(obj.hivePosition)
       ..writeByte(4)

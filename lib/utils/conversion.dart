@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:tuple/tuple.dart';
-
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/parser.dart';
 
@@ -51,6 +49,11 @@ class Converted<N extends Number> {
       digits: target.digits,
       wasSymmetric: wasSymmetric,
     );
+  }
+
+  @override
+  String toString() {
+    return convertedNumber.type.prefix + convertedNumber.text;
   }
 }
 
@@ -152,30 +155,4 @@ void _twoComplement(List<bool> binary) {
     carry = tmp & carry;
     i--;
   }
-}
-
-// (result, isSymmetric) or null if parsing error
-Tuple2<String, bool>? convertEntry(
-  ConversionType inputType,
-  String input,
-  ConversionType targetType,
-  int targetSize,
-) {
-  String? number = parseInput(inputType, input);
-
-  if (number == null) return null;
-
-  String result = converted(
-    inputType: inputType,
-    number: number,
-    targetType: targetType,
-    targetSize: targetSize,
-  );
-  bool symmetric = isSymmetric(
-    inputType: inputType,
-    number: number,
-    targetType: targetType,
-    result: result,
-  );
-  return Tuple2(result, symmetric);
 }
