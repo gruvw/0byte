@@ -51,10 +51,12 @@ Sharing
 
 UI / WEB
 
-<!-- TODO 0 put phone ideas + code todos on roadmap -->
-
 - [X] Support number separator
-- [ ] Full UX redesign (no more fix output per collection)
+  - [ ] Display separator + Clipboard separator to settings (settings page)
+- [ ] Full UX redesign (no more fixed output per collection)
+  - [ ] Finish entry page
+  - [ ] Patch entry and collections to support new features (+ needed corrections)
+  - [ ] Finish refactor (pages, no longer used classes, new types, ...)
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
 - [ ] Fix #1
@@ -67,6 +69,7 @@ UI / WEB
 - [ ] Support Octal conversion
 - [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy (features), local data/no server -> exports)
 - [ ] FIXMEs and TODOs
+- [ ] Features + screenshots to README
 
 ## Major release `v0.0.3`
 
@@ -74,7 +77,7 @@ UI / WEB
 - [ ] Test android
 - [ ] Test Linux
 - [ ] Test Windows
-- [ ] Test WEB
+- [ ] Test WEB (all browsers, mobile)
 - [ ] (Test IOS, MAC ?)
 
 ## Ideas
@@ -83,3 +86,4 @@ UI / WEB
 - Light theme support
 - Key-maps for keyboard only use (on web)
 - Enable application wide undo
+- Multiple conversion targets per entry
