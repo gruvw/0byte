@@ -8,8 +8,8 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widget/components/focus_submitted_text_field.dart';
-import 'package:app_0byte/widget/utils/potentially_mutable_field.dart';
+import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
+import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
 
 typedef LabelField = PotentiallyMutableField<String, String>;
 

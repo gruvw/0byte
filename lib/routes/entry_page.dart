@@ -12,11 +12,11 @@ import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widget/components/border_button.dart';
-import 'package:app_0byte/widget/components/secondary_bar.dart';
-import 'package:app_0byte/widget/conversion/conversion_chip.dart';
-import 'package:app_0byte/widget/conversion/number_conversion.dart';
-import 'package:app_0byte/widget/conversion/number_label.dart';
+import 'package:app_0byte/widgets/components/border_button.dart';
+import 'package:app_0byte/widgets/components/secondary_bar.dart';
+import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
+import 'package:app_0byte/widgets/conversion/number_conversion.dart';
+import 'package:app_0byte/widgets/conversion/number_label.dart';
 
 // TODO extract constants
 

@@ -28,6 +28,7 @@ abstract class Number {
 
 class DartNumber extends Number {
   @override
+  // ignore: overridden_fields
   String? label;
 
   @override

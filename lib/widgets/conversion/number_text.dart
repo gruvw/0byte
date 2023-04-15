@@ -1,4 +1,4 @@
-import 'package:app_0byte/widget/utils/potentially_mutable_field.dart';
+import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,8 +8,8 @@ import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widget/utils/apply_text_formatter.dart';
-import 'package:app_0byte/widget/components/focus_submitted_text_field.dart';
+import 'package:app_0byte/widgets/utils/apply_text_formatter.dart';
+import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 
 class NumberText extends HookWidget {
 // TODO wrap number on new line (allign with prefix), maybe on sigle line (number, converted) when very small ?

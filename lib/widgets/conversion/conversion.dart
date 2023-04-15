@@ -7,8 +7,8 @@ import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widget/conversion/number_text.dart';
-import 'package:app_0byte/widget/utils/potentially_mutable_field.dart';
+import 'package:app_0byte/widgets/conversion/number_text.dart';
+import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
 
 class Conversion extends HookWidget {
   final PotentiallyMutableField<String, Number> numberTextField;

@@ -19,12 +19,12 @@ import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widget/collections_list_drawer_widget.dart';
-import 'package:app_0byte/widget/components/slidable_delete.dart';
-import 'package:app_0byte/widget/components/text_icon.dart';
-import 'package:app_0byte/widget/conversion/number_conversion.dart';
-import 'package:app_0byte/widget/conversion_title_widget.dart';
-import 'package:app_0byte/widget/forms/text_form.dart';
+import 'package:app_0byte/widgets/collections_list_drawer_widget.dart';
+import 'package:app_0byte/widgets/components/slidable_delete.dart';
+import 'package:app_0byte/widgets/components/text_icon.dart';
+import 'package:app_0byte/widgets/conversion/number_conversion.dart';
+import 'package:app_0byte/widgets/conversion_title_widget.dart';
+import 'package:app_0byte/widgets/forms/text_form.dart';
 
 class ConverterPage extends HookConsumerWidget {
   static const menuTextStyle = TextStyle(

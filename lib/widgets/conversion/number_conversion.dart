@@ -9,10 +9,10 @@ import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widget/conversion/conversion.dart';
-import 'package:app_0byte/widget/conversion/conversion_chip.dart';
-import 'package:app_0byte/widget/conversion/number_label.dart';
-import 'package:app_0byte/widget/conversion/number_text.dart';
+import 'package:app_0byte/widgets/conversion/conversion.dart';
+import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
+import 'package:app_0byte/widgets/conversion/number_label.dart';
+import 'package:app_0byte/widgets/conversion/number_text.dart';
 
 class EntryNumberConversion extends HookConsumerWidget {
   final PotentiallyMutable<NumberEntry> entry;
