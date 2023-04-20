@@ -24,7 +24,6 @@ class Conversion extends HookWidget {
   Widget build(BuildContext context) {
     final number = useValueListenable(numberTextField.notifier);
     final converted = number.convertTo(target);
-    print("${number.text} ${converted?.convertedNumber.text}");
 
     if (converted == null) {
       return const SizedBox();

@@ -1,4 +1,3 @@
-import 'package:app_0byte/widgets/components/secondary_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,6 +10,7 @@ import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
+import 'package:app_0byte/widgets/components/secondary_bar.dart';
 
 class ConversionTitleWidget extends StatelessWidget {
   static const _titleStyle = TextStyle(

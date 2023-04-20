@@ -15,6 +15,7 @@ import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/border_button.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
+import 'package:app_0byte/widgets/conversion/conversion_type_selector.dart';
 import 'package:app_0byte/widgets/conversion/number_conversion.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 
@@ -124,6 +125,17 @@ class EntryPage extends ConsumerWidget {
                   ),
                 ),
                 _barFromText("Input"),
+                const ConversionTypeSelector(
+                  type: ConversionType.binary,
+                  isSelected: false,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const ConversionTypeSelector(
+                  type: ConversionType.hexadecimal,
+                  isSelected: true,
+                ),
                 // LEFT HERE 1
                 _barFromText("Output"),
               ],
