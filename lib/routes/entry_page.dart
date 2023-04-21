@@ -15,9 +15,9 @@ import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/border_button.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
-import 'package:app_0byte/widgets/conversion/conversion_type_selector.dart';
 import 'package:app_0byte/widgets/conversion/number_conversion.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
+import 'package:app_0byte/widgets/conversion/type_selector/conversion_types_selectors.dart';
 
 // TODO extract constants
 
@@ -115,7 +115,7 @@ class EntryPage extends ConsumerWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 10,
+                    vertical: 15,
                     horizontal: PaddingTheme.entryHorizontal,
                   ),
                   child: EntryNumberConversion(
@@ -125,19 +125,16 @@ class EntryPage extends ConsumerWidget {
                   ),
                 ),
                 _barFromText("Input"),
-                const ConversionTypeSelector(
-                  type: ConversionType.binary,
-                  isSelected: false,
+                ConversionTypesSelectors(
+                  selected: entry.type,
+                  onSelected: (selectedType) => entry.type = selectedType,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const ConversionTypeSelector(
-                  type: ConversionType.hexadecimal,
-                  isSelected: true,
-                ),
-                // LEFT HERE 1
                 _barFromText("Output"),
+                ConversionTypesSelectors(
+                  selected: entry.collection.targetType, // CHANGE
+                  onSelected: (selectedType) {}, // TODO
+                ),
+                // TODO digits changer
               ],
             ),
           ),

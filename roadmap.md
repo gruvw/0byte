@@ -56,7 +56,8 @@ UI / WEB
 - [ ] Full UX redesign (no more fixed output per collection)
   - [ ] Finish entry page
   - [ ] Patch entry and collections to support new features (+ needed corrections)
-  - [ ] Finish refactor (pages, no longer used classes, new types, ...)
+  - [ ] Finish refactor (pages, no longer used classes, new types, new entry, ...)
+  - [ ] Fix outlined buttons hover color
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
 - [ ] Fix #1
