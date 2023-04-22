@@ -1,38 +1,38 @@
 import 'dart:async';
 
+import 'package:app_0byte/utils/conversion.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/types.dart';
-import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 
 abstract class Database {
-  final StreamController<EntryEvent> entryEventsController =
-      StreamController<EntryEvent>.broadcast();
+  final StreamController<Event<NumberConversionEntry>> entryEventsController =
+      StreamController<Event<NumberConversionEntry>>.broadcast();
 
-  final StreamController<CollectionEvent> collectionEventsController =
-      StreamController<CollectionEvent>.broadcast();
+  final StreamController<Event<Collection>> collectionEventsController =
+      StreamController<Event<Collection>>.broadcast();
 
   Future<void> init() async {}
 
-  NumberEntry createNumberEntry({
+  NumberConversionEntry createNumberConversionEntry({
     required Collection collection,
     required int position,
-    required ConversionType type,
-    required String text,
     required String label,
+    required Number number,
+    required ConversionTarget target,
   });
 
   Collection createCollection({
     required String label,
-    required ConversionType targetType,
-    required int targetSize,
   });
 
   List<Collection> getCollections();
 
-  Stream<EntryEvent> watchEntries() => entryEventsController.stream;
-  Stream<CollectionEvent> watchCollections() =>
+  Stream<Event<NumberConversionEntry>> watchEntries() =>
+      entryEventsController.stream;
+  Stream<Event<Collection>> watchCollections() =>
       collectionEventsController.stream;
 }
 
@@ -47,26 +47,9 @@ abstract class DatabaseObject {
 
 enum EventType { delete, edit, create }
 
-class DatabaseEvent {
+class Event<T> {
   final EventType type;
+  final T object;
 
-  DatabaseEvent({required this.type});
-}
-
-class EntryEvent extends DatabaseEvent {
-  final NumberEntry entry;
-
-  EntryEvent({
-    required this.entry,
-    required super.type,
-  });
-}
-
-class CollectionEvent extends DatabaseEvent {
-  final Collection collection;
-
-  CollectionEvent({
-    required this.collection,
-    required super.type,
-  });
+  Event({required this.object, required this.type});
 }

@@ -6,11 +6,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
-import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/border_button.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
@@ -38,19 +37,15 @@ class EntryPage extends ConsumerWidget {
         ),
       );
 
-  final NumberEntry entry;
+  final NumberConversion initial;
+  final NumberConversionEntry entry;
   final bool deleteOnCancel;
-
-  final DartNumber initialEntry;
-  final ConversionTarget initialTarget;
 
   EntryPage({
     required this.entry,
     this.deleteOnCancel = false,
     super.key,
-  })  : initialEntry =
-            DartNumber(type: entry.type, text: entry.text, label: entry.label),
-        initialTarget = entry.target;
+  }) : initial = DartConversion.from(entry);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,14 +69,10 @@ class EntryPage extends ConsumerWidget {
     );
 
     void onCancel() {
-      // FIXME set entry type and target
-      // entry.type = initialEntry.type;
-      entry.text = initialEntry.text;
-      entry.label = initialEntry.label;
-      // entry.target = initialTarget;
-
       if (deleteOnCancel) {
         entry.delete();
+      } else {
+        entry.setAllLike(initial);
       }
 
       Navigator.pop(context);
@@ -131,8 +122,9 @@ class EntryPage extends ConsumerWidget {
                 ),
                 _barFromText("Output"),
                 ConversionTypesSelectors(
-                  selected: entry.collection.targetType, // CHANGE
-                  onSelected: (selectedType) {}, // TODO
+                  selected: entry.target.type,
+                  onSelected: (selectedType) =>
+                      entry.target = selectedType.defaultTarget,
                 ),
                 // TODO digits changer
               ],

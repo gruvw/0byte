@@ -9,7 +9,7 @@ abstract class SettingsTheme {
   static const String exportCollectionsButtonLabel = "Export Collections";
   static const String copyCollectionButtonLabel = "Copy Collection";
   static const String defaultCollectionLabel = "My Collection";
-  static const String defaultValueLabel = "Value";
+  static const String defaultNumberLabel = "Value";
   static const String symmetricArrow = "<->";
   static const String nonSymmetricArrow = "-->";
 }

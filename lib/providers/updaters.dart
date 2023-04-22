@@ -1,5 +1,5 @@
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 
@@ -13,6 +13,7 @@ final collectionEditionUpdater = FamilyUpdater.family<Collection>(
   },
 );
 
-final entryEditionUpdater = FamilyUpdater.family<NumberEntry>((ref, element) {
+final entryEditionUpdater =
+    FamilyUpdater.family<NumberConversionEntry>((ref, element) {
   ref.watch(entryEditionEventProvider(element));
 });

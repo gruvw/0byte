@@ -1,43 +1,66 @@
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_database.dart';
-import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
+import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/utils/conversion.dart';
 
-class FlutterNumberEntry extends NumberEntry {
-  @override
-  final int typeIndex;
-
+class FlutterNumberConversionEntry extends NumberConversionEntry {
   @override
   final Collection collection;
 
+  int flutterPosition;
   @override
-  int position;
-
-  String flutterText;
+  int get position => flutterPosition;
   @override
-  String get text => flutterText;
-  @override
-  set text(String newText) {
-    flutterText = newText;
+  set position(int newPosition) {
+    flutterPosition = newPosition;
     notify(EventType.edit);
   }
 
   String flutterLabel;
   @override
-  String get entryLabel => flutterLabel;
+  String get label => flutterLabel;
   @override
-  set entryLabel(String newEntryLabel) {
-    flutterLabel = newEntryLabel;
+  set label(String newLabel) {
+    flutterLabel = newLabel;
     notify(EventType.edit);
   }
 
-  FlutterNumberEntry({
+  Number flutterNumber;
+
+  @override
+  ConversionType get type => flutterNumber.type;
+  @override
+  set type(ConversionType newType) {
+    flutterNumber.type = newType;
+    notify(EventType.edit);
+  }
+
+  @override
+  String get text => flutterNumber.text;
+  @override
+  set text(String newText) {
+    flutterNumber.text = newText;
+    notify(EventType.edit);
+  }
+
+  ConversionTarget flutterTarget;
+  @override
+  ConversionTarget get target => flutterTarget;
+  @override
+  set target(ConversionTarget newTarget) {
+    flutterTarget = newTarget;
+    notify(EventType.edit);
+  }
+
+  FlutterNumberConversionEntry({
     required super.database,
     required this.collection,
-    required this.position,
-    required this.typeIndex,
-    required this.flutterText,
+    required this.flutterPosition,
     required this.flutterLabel,
+    required this.flutterNumber,
+    required this.flutterTarget,
   });
 
   @override

@@ -1,15 +1,11 @@
-// ignore_for_file: constant_identifier_names
-
+import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/validation.dart';
 
-// TODO 0 use new types everywhere
-
-abstract class Number {
+mixin Number {
   abstract ConversionType type;
   abstract String text;
-  String? label;
 
   String? parsed() => parseText(type, text);
 
@@ -22,55 +18,98 @@ abstract class Number {
   }
 
   Number withText(String text) {
-    return DartNumber(type: type, text: text, label: label);
+    return DartNumber(type: type, text: text);
   }
 }
 
-class DartNumber extends Number {
-  @override
-  // ignore: overridden_fields
-  String? label;
+mixin NumberConversion on Number {
+  abstract String label;
+  abstract ConversionTarget target;
 
+  void setAllLike(NumberConversion other) {
+    label = other.label;
+    type = other.type;
+    text = other.text;
+    target = other.target;
+  }
+
+  @override
+  String toString() {
+    String res = "$label: ${type.prefix}$text";
+
+    final converted = convertTo(target);
+
+    if (converted != null) {
+      res +=
+          " ${converted.wasSymmetric ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${converted.convertedNumber}";
+    }
+
+    return res;
+  }
+}
+
+class DartNumber with Number {
   @override
   ConversionType type;
 
   @override
   String text;
 
-  DartNumber({required this.type, required this.text, this.label});
+  DartNumber({required this.type, required this.text});
 }
 
-const int _MIN_AMOUNT = 0;
-const int _MAX_AMOUNT = 64;
+class DartConversion with Number, NumberConversion {
+  @override
+  late String label;
+  @override
+  late ConversionType type;
+  @override
+  late String text;
+  @override
+  late ConversionTarget target;
+
+  DartConversion.from(NumberConversion entry) {
+    setAllLike(entry);
+  }
+}
 
 class Digits {
-  final int amount;
+  // ignore: constant_identifier_names
+  static const int _MIN_AMOUNT = 0;
+  // ignore: constant_identifier_names
+  static const int _MAX_AMOUNT = 64;
 
-  Digits._({required this.amount});
+  static bool isValidAmount(int amount) {
+    return amount >= _MIN_AMOUNT && amount <= _MAX_AMOUNT;
+  }
 
   static Digits? fromInt(int amount) {
-    if (!(amount >= _MIN_AMOUNT && amount <= _MAX_AMOUNT)) {
+    if (!isValidAmount(amount)) {
       return null;
     }
 
     return Digits._(amount: amount);
   }
+
+  final int amount;
+
+  const Digits._({required this.amount});
 }
 
 final Map<String, ConversionType> _typeFromPrefix =
     Map.fromEntries(ConversionType.values.map((e) => MapEntry(e.prefix, e)));
 
 enum ConversionType {
-  hexadecimal("HEX", "0123456789ABCDEF", 8, "0x", 2),
-  binary("BIN", "01", 16, "0b", 4),
-  unsignedDecimal("DEC", "0123456789", 10, "0d", 3),
-  signedDecimal("±DEC", "0123456789", 10, "0s", 3),
+  binary("0b", "BIN", "01", 4, 16),
+  hexadecimal("0x", "HEX", "0123456789ABCDEF", 2, 8),
+  unsignedDecimal("0d", "DEC", "0123456789", 3, 10),
+  signedDecimal("0s", "±DEC", "0123456789", 3, 10),
   ascii(
+    "0a",
     "ASCII",
     "�······························· !\"#\$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·",
-    10,
-    "0a",
     -1,
+    10,
   );
 
   static bool isValidTypeIndex(int typeIndex) {
@@ -81,22 +120,25 @@ enum ConversionType {
     return _typeFromPrefix[prefix];
   }
 
+  final String prefix;
   final String label;
   final String alphabet;
   final int base;
-  final String prefix;
-  final int defaultTargetSize;
-
-  // used for placing _ at correct places (-1 means disabled)
-  final int blockLength;
+  final int blockLength; // used for placing _ at correct places (-1: disabled)
+  final bool isSeparated;
+  final int _defaultDigitsAmount;
 
   const ConversionType(
+    this.prefix,
     this.label,
     this.alphabet,
-    this.defaultTargetSize,
-    this.prefix,
     this.blockLength,
-  ) : base = alphabet.length;
+    this._defaultDigitsAmount,
+  )   : base = alphabet.length,
+        isSeparated = blockLength >= 1;
 
-  bool get isSeparated => blockLength >= 1;
+  ConversionTarget get defaultTarget => ConversionTarget(
+        type: this,
+        digits: Digits.fromInt(_defaultDigitsAmount)!,
+      );
 }

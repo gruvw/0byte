@@ -5,9 +5,10 @@ import 'package:app_0byte/models/flutter_store/flutter_number_entry.dart';
 import 'package:app_0byte/utils/reorderable_list.dart';
 
 class FlutterCollection extends Collection {
-  final List<FlutterNumberEntry> flutterEntries = [];
+  final List<FlutterNumberConversionEntry> flutterEntries = [];
   @override
-  List<FlutterNumberEntry> get entries => ReorderableListView(flutterEntries);
+  List<FlutterNumberConversionEntry> get entries =>
+      ReorderableListView(flutterEntries);
 
   String flutterLabel;
   @override
@@ -18,29 +19,9 @@ class FlutterCollection extends Collection {
     notify(EventType.edit);
   }
 
-  int flutterTargetTypeIndex;
-  @override
-  int get targetTypeIndex => flutterTargetTypeIndex;
-  @override
-  set targetTypeIndex(int newTypeIndex) {
-    flutterTargetTypeIndex = newTypeIndex;
-    notify(EventType.edit);
-  }
-
-  int flutterTargetSize;
-  @override
-  int get targetSize => flutterTargetSize;
-  @override
-  set targetSize(int newN) {
-    flutterTargetSize = newN;
-    notify(EventType.edit);
-  }
-
   FlutterCollection({
     required super.database,
     required this.flutterLabel,
-    required this.flutterTargetTypeIndex,
-    required this.flutterTargetSize,
   });
 
   @override

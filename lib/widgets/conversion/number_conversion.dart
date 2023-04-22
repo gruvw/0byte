@@ -1,21 +1,20 @@
+import 'package:app_0byte/widgets/conversion/conversion.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
-import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widgets/conversion/conversion.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 
 class EntryNumberConversion extends HookConsumerWidget {
-  final PotentiallyMutable<NumberEntry> entry;
+  final PotentiallyMutable<NumberConversionEntry> entry;
   final NumberLabel? label;
   final bool chipEnabled;
 
@@ -31,11 +30,9 @@ class EntryNumberConversion extends HookConsumerWidget {
     final entry = this.entry.object;
     ref.subscribe(entryEditionUpdater(entry));
 
-    return NumberConversion(
+    return NumberConversionView(
       key: UniqueKey(), // Fixes non-updating number value
       number: this.entry,
-      target: entry.target,
-      label: label,
       onChipPressed: chipEnabled
           ? () {
               Navigator.of(context).pushNamed(
@@ -48,17 +45,13 @@ class EntryNumberConversion extends HookConsumerWidget {
   }
 }
 
-class NumberConversion extends StatelessWidget {
-  final PotentiallyMutable<Number> number;
-  final ConversionTarget target;
+class NumberConversionView extends StatelessWidget {
+  final PotentiallyMutable<NumberConversion> number;
   final VoidCallback? onChipPressed;
-  final NumberLabel? label;
 
-  const NumberConversion({
+  const NumberConversionView({
     required this.number,
-    required this.target,
     this.onChipPressed,
-    required this.label,
     super.key,
   });
 
@@ -77,14 +70,12 @@ class NumberConversion extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                label ??
-                    NumberLabel(
-                      number: number,
-                    ),
-                if (number.object.label != null)
-                  const SizedBox(
-                    height: DimensionsTheme.entryLabelNumberVerticalSpacing,
-                  ),
+                NumberLabel(
+                  number: number,
+                ),
+                const SizedBox(
+                  height: DimensionsTheme.entryLabelNumberVerticalSpacing,
+                ),
                 numberView
               ],
             ),
@@ -92,7 +83,7 @@ class NumberConversion extends StatelessWidget {
               children: [
                 ConversionChip(
                   inputType: number.object.type,
-                  target: target,
+                  target: number.object.target,
                   onPressed: onChipPressed,
                 ),
               ],
@@ -101,7 +92,7 @@ class NumberConversion extends StatelessWidget {
         ),
         Conversion(
           numberTextField: numberView.numberTextField,
-          target: target,
+          target: number.object.target,
         ),
       ],
     );

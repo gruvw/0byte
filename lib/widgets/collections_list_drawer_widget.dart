@@ -63,8 +63,6 @@ class CollectionsListDrawer extends HookConsumerWidget {
                     ref.read(collectionsProvider).map((c) => c.label).toList(),
                     SettingsTheme.defaultCollectionLabel,
                   ),
-                  targetType: SettingsTheme.defaultTargetType,
-                  targetSize: SettingsTheme.defaultTargetType.defaultTargetSize,
                 ),
               );
             },

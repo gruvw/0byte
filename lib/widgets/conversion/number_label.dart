@@ -19,14 +19,10 @@ class NumberLabel extends HookWidget {
     fontSize: FontTheme.numberLabelSize,
   ).apply(color: ColorTheme.text2);
 
-  static LabelField? labelFieldFromNumber(
-    PotentiallyMutable<Number> number,
+  static LabelField labelFieldFromNumber(
+    PotentiallyMutable<NumberConversion> number,
   ) {
     final numberLabel = number.object.label;
-
-    if (numberLabel == null) {
-      return null;
-    }
 
     return PotentiallyMutableField(
       numberLabel,
@@ -34,7 +30,7 @@ class NumberLabel extends HookWidget {
       isMutable: number.isMutable,
       onSubmitted: (newValue) {
         if (newValue.isEmpty) {
-          newValue = SettingsTheme.defaultValueLabel;
+          newValue = SettingsTheme.defaultNumberLabel;
         }
         number.object.label = newValue;
       },
@@ -46,7 +42,7 @@ class NumberLabel extends HookWidget {
   final TextStyle style;
 
   NumberLabel({
-    required PotentiallyMutable<Number> number,
+    required PotentiallyMutable<NumberConversion> number,
     this.subscribedLabelField,
     TextStyle? style,
     super.key,

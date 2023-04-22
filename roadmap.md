@@ -54,9 +54,9 @@ UI / WEB
 - [X] Support number separator
   - [ ] Display separator + Clipboard separator to settings (settings page)
 - [ ] Full UX redesign (no more fixed output per collection)
+  - [X] Patch entry and collections to support new features (+ needed corrections)
   - [ ] Finish entry page
-  - [ ] Patch entry and collections to support new features (+ needed corrections)
-  - [ ] Finish refactor (pages, no longer used classes, new types, new entry, ...)
+  - [ ] Finish refactor (pages, no longer used classes, new types, new entry, extract constants, ...)
   - [ ] Fix outlined buttons hover color
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)

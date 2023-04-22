@@ -12,11 +12,12 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
+import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/collections_list_drawer_widget.dart';
@@ -180,13 +181,16 @@ class ConverterPage extends HookConsumerWidget {
               ),
               onTap: () {
                 final nbEntries = collection.entries.length;
-
-                database.createNumberEntry(
+                // TODO entry creation to entry page
+                database.createNumberConversionEntry(
                   collection: collection,
                   position: nbEntries,
-                  type: conversionType,
-                  text: "",
                   label: "Value ${nbEntries + 1}",
+                  number: DartNumber(type: conversionType, text: ""),
+                  target: ConversionTarget(
+                    type: ConversionType.binary,
+                    digits: Digits.fromInt(16)!,
+                  ),
                 );
               },
             ),
@@ -230,7 +234,7 @@ class _NumberEntries extends StatelessWidget {
 
 // TODO split in other files ?
 class _NumberEntry extends StatelessWidget {
-  final NumberEntry entry;
+  final NumberConversionEntry entry;
 
   const _NumberEntry({required this.entry, super.key});
 

@@ -11,6 +11,7 @@ import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/providers.dart';
+import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 Future<String?> exportCollections() => _saveJson(jsonEncode(
@@ -80,12 +81,7 @@ Future<bool?> import() async {
 }
 
 bool _importCollection(Map<String, dynamic> collectionData) {
-  if (!(collectionData.hasField<String>(CollectionFields.label) &&
-      collectionData.hasField<int>(CollectionFields.targetTypeIndex) &&
-      ConversionType.isValidTypeIndex(
-          collectionData[CollectionFields.targetTypeIndex]) &&
-      collectionData.hasField<int>(CollectionFields.targetSize) &&
-      0 < collectionData[CollectionFields.targetSize])) {
+  if (!collectionData.hasField<String>(CollectionFields.label)) {
     return false;
   }
 
@@ -93,9 +89,6 @@ bool _importCollection(Map<String, dynamic> collectionData) {
     label: uniqueLabel(
         container.read(collectionsProvider).map((c) => c.label).toList(),
         collectionData[CollectionFields.label]),
-    targetType:
-        ConversionType.values[collectionData[CollectionFields.targetTypeIndex]],
-    targetSize: collectionData[CollectionFields.targetSize],
   );
   if (!collectionData.hasField<Iterable>(CollectionFields.entries)) {
     return true;
@@ -111,21 +104,32 @@ bool _importCollection(Map<String, dynamic> collectionData) {
 }
 
 bool _importEntry(Collection collection, Map<String, dynamic> entryData) {
-  if (!(entryData.hasField<String>(EntryFields.text) &&
+  if (!(entryData.hasField<int>(EntryFields.position) &&
+      entryData[EntryFields.position] >= 0 &&
       entryData.hasField<String>(EntryFields.label) &&
       entryData.hasField<int>(EntryFields.typeIndex) &&
       ConversionType.isValidTypeIndex(entryData[EntryFields.typeIndex]) &&
-      entryData.hasField<int>(EntryFields.position) &&
-      entryData[EntryFields.position] >= 0)) {
+      entryData.hasField<String>(EntryFields.text) &&
+      entryData.hasField<int>(EntryFields.targetTypeIndex) &&
+      ConversionType.isValidTypeIndex(entryData[EntryFields.targetTypeIndex]) &&
+      entryData.hasField<String>(EntryFields.targetDigitsAmount) &&
+      Digits.isValidAmount(entryData[EntryFields.targetDigitsAmount]))) {
     return false;
   }
 
-  database.createNumberEntry(
-      collection: collection,
-      position: entryData[EntryFields.position],
+  database.createNumberConversionEntry(
+    collection: collection,
+    position: entryData[EntryFields.position],
+    label: entryData[EntryFields.label],
+    number: DartNumber(
       type: ConversionType.values[entryData[EntryFields.typeIndex]],
       text: entryData[EntryFields.text],
-      label: entryData[EntryFields.label]);
+    ),
+    target: ConversionTarget(
+      type: ConversionType.values[entryData[EntryFields.targetTypeIndex]],
+      digits: Digits.fromInt(entryData[EntryFields.targetDigitsAmount])!,
+    ),
+  );
 
   return true;
 }

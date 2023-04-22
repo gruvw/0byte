@@ -45,6 +45,7 @@ class NumberText extends HookWidget {
           getValue: (text) => number.object.withText(text),
           isMutable: number.isMutable,
           onSubmitted: (newValue) {
+            // TODO change type if invalid but valid without prefix for some type
             if (newValue.isEmpty) {
               newValue = number.object.text; // take previous value instead
             }

@@ -1,9 +1,10 @@
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_collection.dart';
 import 'package:app_0byte/models/flutter_store/flutter_number_entry.dart';
-import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
+import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/utils/conversion.dart';
 
 class FlutterDatabase extends Database {
   final List<FlutterCollection> _collections = [];
@@ -11,20 +12,20 @@ class FlutterDatabase extends Database {
   FlutterDatabase();
 
   @override
-  NumberEntry createNumberEntry({
+  NumberConversionEntry createNumberConversionEntry({
     required Collection collection,
     required int position,
-    required ConversionType type,
-    required String text,
     required String label,
+    required Number number,
+    required ConversionTarget target,
   }) {
-    FlutterNumberEntry entry = FlutterNumberEntry(
+    FlutterNumberConversionEntry entry = FlutterNumberConversionEntry(
       database: this,
       collection: collection,
-      position: position,
-      typeIndex: type.index,
-      flutterText: text,
+      flutterPosition: position,
       flutterLabel: label,
+      flutterNumber: number,
+      flutterTarget: target,
     );
     collection.entries.add(entry);
     collection.notify(EventType.edit);
@@ -34,21 +35,17 @@ class FlutterDatabase extends Database {
   @override
   Collection createCollection({
     required String label,
-    required ConversionType targetType,
-    required int targetSize,
   }) {
     FlutterCollection collection = FlutterCollection(
       database: this,
       flutterLabel: label,
-      flutterTargetTypeIndex: targetType.index,
-      flutterTargetSize: targetSize,
     );
     _collections.add(collection);
     collection.notify(EventType.create);
     return collection;
   }
 
-  void deleteNumberEntry({required NumberEntry entry}) {
+  void deleteNumberEntry({required NumberConversionEntry entry}) {
     entry.collection.entries.remove(entry);
     entry.collection.notify(EventType.delete);
   }

@@ -7,7 +7,7 @@ class ConversionTarget {
   final ConversionType type;
   final Digits digits;
 
-  ConversionTarget({required this.type, required this.digits});
+  const ConversionTarget({required this.type, required this.digits});
 }
 
 class Converted<N extends Number> {

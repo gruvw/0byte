@@ -19,23 +19,17 @@ class HiveStoreCollectionAdapter extends TypeAdapter<HiveStoreCollection> {
     return HiveStoreCollection(
       entriesKeys: (fields[0] as List).cast<String>(),
       hiveLabel: fields[1] as String,
-      hiveTypeIndex: fields[2] as int,
-      hiveTargetSize: fields[3] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, HiveStoreCollection obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.entriesKeys)
       ..writeByte(1)
-      ..write(obj.hiveLabel)
-      ..writeByte(2)
-      ..write(obj.hiveTypeIndex)
-      ..writeByte(3)
-      ..write(obj.hiveTargetSize);
+      ..write(obj.hiveLabel);
   }
 
   @override

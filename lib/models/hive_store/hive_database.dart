@@ -2,18 +2,19 @@ import 'package:hive_flutter/hive_flutter.dart' hide HiveCollection;
 import 'package:nanoid/nanoid.dart';
 
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/hive_store/hive_collection.dart';
-import 'package:app_0byte/models/hive_store/hive_number_entry.dart';
-import 'package:app_0byte/models/number_entry.dart';
+import 'package:app_0byte/models/hive_store/hive_number_conversion_entry.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
+import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/utils/conversion.dart';
 
 class HiveDatabase extends Database {
-  static const String entriesBoxName = "entries";
-  static const String collectionsBoxName = "collections";
+  static const String _collectionsBoxName = "collections";
+  static const String _entriesBoxName = "entries";
 
-  late final Box<HiveStoreNumberEntry> entriesBox;
   late final Box<HiveStoreCollection> collectionsBox;
+  late final Box<HiveStoreNumberConversionEntry> entriesBox;
 
   HiveDatabase();
 
@@ -21,31 +22,34 @@ class HiveDatabase extends Database {
   Future<void> init() async {
     await Hive.initFlutter();
 
-    Hive.registerAdapter(HiveStoreNumberEntryAdapter());
     Hive.registerAdapter(HiveStoreCollectionAdapter());
+    Hive.registerAdapter(HiveStoreNumberConversionEntryAdapter());
 
-    entriesBox =
-        await Hive.openBox<HiveStoreNumberEntry>(HiveDatabase.entriesBoxName);
     collectionsBox = await Hive.openBox<HiveStoreCollection>(
-        HiveDatabase.collectionsBoxName);
+        HiveDatabase._collectionsBoxName);
+    entriesBox = await Hive.openBox<HiveStoreNumberConversionEntry>(
+        HiveDatabase._entriesBoxName);
   }
 
   @override
-  NumberEntry createNumberEntry({
+  NumberConversionEntry createNumberConversionEntry({
     required Collection collection,
     required int position,
-    required ConversionType type,
-    required String text,
     required String label,
+    required Number number,
+    required ConversionTarget target,
   }) {
-    HiveStoreNumberEntry hiveStoreNumberEntry = HiveStoreNumberEntry(
-      hiveLabel: label,
-      hiveTypeIndex: type.index,
-      hiveText: text,
-      hivePosition: position,
+    HiveStoreNumberConversionEntry hiveStoreNumberEntry =
+        HiveStoreNumberConversionEntry(
       hiveCollectionKey: (collection as HiveCollection).hiveStoreCollection.key,
+      hivePosition: position,
+      hiveLabel: label,
+      hiveTypeIndex: number.type.index,
+      hiveText: number.text,
+      hiveTargetTypeIndex: target.type.index,
+      hiveTargetDigitsAmount: target.digits.amount,
     );
-    HiveNumberEntry hiveEntry = HiveNumberEntry(
+    HiveNumberConversionEntry hiveEntry = HiveNumberConversionEntry(
       database: this,
       hiveStoreNumberEntry: hiveStoreNumberEntry,
     );
@@ -59,14 +63,10 @@ class HiveDatabase extends Database {
   @override
   Collection createCollection({
     required String label,
-    required ConversionType targetType,
-    required int targetSize,
   }) {
     HiveStoreCollection hiveStoreCollection = HiveStoreCollection(
       entriesKeys: [],
       hiveLabel: label,
-      hiveTypeIndex: targetType.index,
-      hiveTargetSize: targetSize,
     );
     HiveCollection hiveCollection = HiveCollection(
       database: this,
