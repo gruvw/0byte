@@ -31,7 +31,7 @@ abstract class Collection extends DatabaseObject {
 
   @override
   String toString() {
-    // TODO collection to string
+    // TODO 0 collection to string
     String res = label;
     if (entries.isEmpty) {
       // Prevent reduce on empty list error

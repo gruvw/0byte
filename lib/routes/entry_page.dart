@@ -126,7 +126,7 @@ class EntryPage extends ConsumerWidget {
                   onSelected: (selectedType) =>
                       entry.target = selectedType.defaultTarget,
                 ),
-                // TODO digits changer
+                // TODO 1 digits changer
               ],
             ),
           ),

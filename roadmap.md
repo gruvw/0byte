@@ -47,9 +47,9 @@ Sharing
 - [X] Collection to clipboard
 - [X] Invalid inputs starting with correct prefix (case insensitive) are automatically converted (easier copy paste)
 
-## Alpha release `v0.02-alpha.3`
+## Alpha release `v0.0.2-alpha.3`
 
-UI / WEB
+New UX + WEB
 
 - [X] Support number separator
   - [ ] Display separator + Clipboard separator to settings (settings page)
