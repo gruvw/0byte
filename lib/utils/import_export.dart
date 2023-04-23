@@ -9,7 +9,7 @@ import 'package:universal_html/html.dart' as html;
 
 import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';

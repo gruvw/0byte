@@ -1,4 +1,4 @@
-import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
 abstract class SettingsTheme {

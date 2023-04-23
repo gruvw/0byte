@@ -2,7 +2,7 @@ import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_database.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
-import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
 class FlutterNumberConversionEntry extends NumberConversionEntry {

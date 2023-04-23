@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
 void testConvert({

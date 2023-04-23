@@ -6,7 +6,7 @@ import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/hive_store/hive_collection.dart';
 import 'package:app_0byte/models/hive_store/hive_number_conversion_entry.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
-import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
 class HiveDatabase extends Database {

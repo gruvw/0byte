@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/widgets/conversion/type_selector/conversion_type_selector.dart';
 
 class ConversionTypesSelectors extends StatelessWidget {

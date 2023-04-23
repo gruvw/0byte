@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/transforms.dart';
 
 class NumberInputFormatter extends TextInputFormatter {
