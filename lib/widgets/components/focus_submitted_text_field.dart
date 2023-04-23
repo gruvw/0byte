@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class FocusSubmittedTextField extends StatelessWidget {
+import 'package:flutter_hooks/flutter_hooks.dart';
+
+class FocusSubmittedTextField extends HookWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onSubmitted;
 
+  // TextField mirrors
   final Color? cursorColor;
   final TextStyle? style;
   final InputDecoration? decoration;
@@ -36,18 +39,28 @@ class FocusSubmittedTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller =
-        this.controller ?? TextEditingController(text: "");
+    final controller = this.controller ?? useTextEditingController(text: "");
+
+    // Prevents double submission (https://github.com/gruvw/0byte/issues/4)
+    final wasSubmitted = useState(false);
+
+    void onSubmitted(value) {
+      this.onSubmitted?.call(value);
+      wasSubmitted.value = true;
+    }
 
     return IntrinsicWidth(
       child: Focus(
         onFocusChange: (hasFocus) {
-          if (!hasFocus && onSubmitted != null) {
-            onSubmitted!(controller.text);
+          if (hasFocus) {
+            wasSubmitted.value = false;
+          } else if (!wasSubmitted.value) {
+            onSubmitted.call(controller.text);
           }
         },
         child: TextField(
           controller: controller,
+          onChanged: onChanged,
           onSubmitted: onSubmitted,
           cursorColor: cursorColor,
           style: style,
@@ -57,7 +70,6 @@ class FocusSubmittedTextField extends StatelessWidget {
           enableSuggestions: enableSuggestions,
           autofocus: autofocus,
           inputFormatters: inputFormatters,
-          onChanged: onChanged,
           textInputAction: textInputAction,
           readOnly: readOnly,
         ),

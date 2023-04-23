@@ -15,9 +15,9 @@ class Conversion extends HookWidget {
   final ConversionTarget target;
 
   const Conversion({
+    super.key,
     required this.numberTextField,
     required this.target,
-    super.key,
   });
 
   @override

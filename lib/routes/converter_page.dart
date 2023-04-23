@@ -205,7 +205,7 @@ class _NumberEntries extends StatelessWidget {
 class _NumberEntry extends StatelessWidget {
   final NumberConversionEntry entry;
 
-  const _NumberEntry({required this.entry, super.key});
+  const _NumberEntry({super.key, required this.entry});
 
   @override
   Widget build(BuildContext context) {

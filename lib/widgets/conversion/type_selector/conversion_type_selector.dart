@@ -14,10 +14,10 @@ class ConversionTypeSelector extends StatelessWidget {
   final VoidCallback? onSelected;
 
   const ConversionTypeSelector({
+    super.key,
     required this.type,
     required this.isSelected,
     this.onSelected,
-    super.key,
   });
 
   @override

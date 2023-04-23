@@ -35,18 +35,18 @@ class NumberLabel extends HookWidget {
   final TextStyle style;
 
   NumberLabel({
+    super.key,
     required PotentiallyMutable<NumberConversion> number,
     this.subscribedLabelField,
     TextStyle? style,
-    super.key,
   })  : style = style ?? defaultStyle,
         labelField = labelFieldFromNumber(number);
 
   NumberLabel.fromLabelField({
+    super.key,
     required this.labelField,
     this.subscribedLabelField,
     TextStyle? style,
-    super.key,
   }) : style = style ?? defaultStyle;
 
   @override
@@ -56,9 +56,10 @@ class NumberLabel extends HookWidget {
     final value = subscribedLabelField == null
         ? labelField.view()
         : useValueListenable(subscribedLabelField.notifier);
+    final controller = useTextEditingController(text: value);
 
     return FocusSubmittedTextField(
-      controller: TextEditingController(text: value),
+      controller: controller,
       readOnly: !labelField.isMutable,
       onSubmitted: labelField.submit,
       onChanged: labelField.set,

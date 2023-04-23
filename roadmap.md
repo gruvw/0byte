@@ -63,7 +63,7 @@ New UX + WEB
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
 - [ ] Fix https://github.com/gruvw/0byte/issues/1
-- [ ] Fix https://github.com/gruvw/0byte/issues/4
+- [X] Fix https://github.com/gruvw/0byte/issues/4
 - [ ] Extract style from structure
 
 ## Beta release `v0.0.2-beta`

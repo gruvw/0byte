@@ -42,7 +42,7 @@ mixin NumberConversion on Number {
 
   void setAllLike(NumberConversion other) {
     label = other.label;
-    innerType = other.type; // ok to use setter here (as we also set text)
+    type = other.type; // ok to use setter here (as we set text again after)
     text = other.text;
     target = other.target;
   }
@@ -77,17 +77,19 @@ class DartNumber with Number {
 
 class DartConversion with Number, NumberConversion {
   @override
-  late String label;
+  String label;
   @override
-  late ConversionType innerType;
+  ConversionType innerType;
   @override
-  late String text;
+  String text;
   @override
-  late ConversionTarget target;
+  ConversionTarget target;
 
-  DartConversion.from(NumberConversion entry) {
-    setAllLike(entry);
-  }
+  DartConversion.from(NumberConversion entry)
+      : label = entry.label,
+        innerType = entry.innerType,
+        text = entry.text,
+        target = entry.target;
 }
 
 class Digits {

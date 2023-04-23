@@ -8,9 +8,9 @@ class ConversionTypesSelectors extends StatelessWidget {
   final void Function(ConversionType selectedType)? onSelected;
 
   const ConversionTypesSelectors({
+    super.key,
     this.selected,
     this.onSelected,
-    super.key,
   });
 
   @override

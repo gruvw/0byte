@@ -19,10 +19,10 @@ class NumberConversionEntryView extends HookConsumerWidget {
   final bool chipEnabled;
 
   const NumberConversionEntryView({
+    super.key,
     required this.entry,
     this.chipEnabled = true,
     this.label,
-    super.key,
   });
 
   @override
@@ -52,10 +52,10 @@ class NumberConversionView extends StatelessWidget {
   final NumberLabel? label;
 
   const NumberConversionView({
+    super.key,
     required this.number,
     this.label,
     this.onChipPressed,
-    super.key,
   });
 
   @override

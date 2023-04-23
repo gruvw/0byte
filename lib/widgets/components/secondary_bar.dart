@@ -6,8 +6,8 @@ class SecondaryBar extends StatelessWidget {
   final Widget? child;
 
   const SecondaryBar({
-    this.child,
     super.key,
+    this.child,
   });
 
   @override

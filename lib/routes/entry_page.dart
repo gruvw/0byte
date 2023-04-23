@@ -42,9 +42,9 @@ class EntryPage extends ConsumerWidget {
   final bool deleteOnCancel;
 
   EntryPage({
+    super.key,
     required this.entry,
     this.deleteOnCancel = false,
-    super.key,
   }) : initial = DartConversion.from(entry);
 
   @override

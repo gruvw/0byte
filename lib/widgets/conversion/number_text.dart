@@ -35,8 +35,8 @@ class NumberText extends HookWidget {
   final PotentiallyMutableField<String, Number> numberTextField;
 
   NumberText({
-    required this.number,
     super.key,
+    required this.number,
   }) : numberTextField = PotentiallyMutableField(
           applyNumberText(number.object, displaySeparator),
           view: (text) => number.object.withText(text),
@@ -48,7 +48,7 @@ class NumberText extends HookWidget {
   Widget build(BuildContext context) {
     final number = numberTextField.view();
 
-    // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild)
+    // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild, must create new TextEditingController)
     final controller = numberTextField.isMutable
         ? useTextEditingController(text: number.text)
         : TextEditingController(text: number.text);

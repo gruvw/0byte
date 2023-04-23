@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_hooks/flutter_hooks.dart';
+
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 
-class TextForm extends StatelessWidget {
+class TextForm extends HookWidget {
   final String title;
   final String initialText;
   final void Function(String) callback;
@@ -18,7 +20,7 @@ class TextForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = TextEditingController(text: initialText);
+    final controller = useTextEditingController(text: initialText);
 
     final double width = MediaQuery.of(context).size.width *
         DimensionsTheme.formDialogWidthRatio;

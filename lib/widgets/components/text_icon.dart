@@ -5,7 +5,12 @@ class TextIcon extends StatelessWidget {
   final Text text;
   final Icon? trailing;
 
-  const TextIcon({required this.text, this.leading, this.trailing, super.key});
+  const TextIcon({
+    super.key,
+    required this.text,
+    this.leading,
+    this.trailing,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -15,8 +15,8 @@ class EntryConversionChip extends HookConsumerWidget {
   final NumberConversionEntry entry;
 
   const EntryConversionChip({
-    required this.entry,
     super.key,
+    required this.entry,
   });
 
   @override
@@ -37,10 +37,10 @@ class ConversionChip extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const ConversionChip({
+    super.key,
     required this.inputType,
     required this.target,
     this.onPressed,
-    super.key,
   });
 
   @override

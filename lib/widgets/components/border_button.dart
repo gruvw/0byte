@@ -13,11 +13,11 @@ class BorderButton extends StatelessWidget {
   final Widget? child;
 
   const BorderButton({
+    super.key,
     required this.text,
     required this.color,
     this.onPressed,
     this.child,
-    super.key,
   });
 
   @override
