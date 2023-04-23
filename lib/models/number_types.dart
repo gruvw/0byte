@@ -1,11 +1,25 @@
+import 'package:app_0byte/utils/transforms.dart';
+
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/validation.dart';
+import 'package:flutter/foundation.dart';
 
 mixin Number {
-  abstract ConversionType type;
+  @protected
+  abstract ConversionType innerType;
   abstract String text;
+
+  @nonVirtual
+  ConversionType get type => innerType;
+
+  @nonVirtual
+  // Setter should not be used internally!
+  set type(ConversionType newType) {
+    text = applyNumberTextOnTypeChange(type, newType, text);
+    innerType = newType;
+  }
 
   String? parsed() => parseText(type, text);
 
@@ -28,14 +42,14 @@ mixin NumberConversion on Number {
 
   void setAllLike(NumberConversion other) {
     label = other.label;
-    type = other.type;
+    innerType = other.type; // ok to use setter here (as we also set text)
     text = other.text;
     target = other.target;
   }
 
   @override
   String toString() {
-    String res = "$label: ${type.prefix}$text";
+    String res = "$label: ${innerType.prefix}$text";
 
     final converted = convertTo(target);
 
@@ -50,19 +64,22 @@ mixin NumberConversion on Number {
 
 class DartNumber with Number {
   @override
-  ConversionType type;
+  ConversionType innerType;
 
   @override
   String text;
 
-  DartNumber({required this.type, required this.text});
+  DartNumber({
+    required type,
+    required this.text,
+  }) : innerType = type;
 }
 
 class DartConversion with Number, NumberConversion {
   @override
   late String label;
   @override
-  late ConversionType type;
+  late ConversionType innerType;
   @override
   late String text;
   @override
@@ -75,12 +92,12 @@ class DartConversion with Number, NumberConversion {
 
 class Digits {
   // ignore: constant_identifier_names
-  static const int _MIN_AMOUNT = 0;
+  static const int MIN_AMOUNT = 1;
   // ignore: constant_identifier_names
-  static const int _MAX_AMOUNT = 64;
+  static const int MAX_AMOUNT = 64;
 
   static bool isValidAmount(int amount) {
-    return amount >= _MIN_AMOUNT && amount <= _MAX_AMOUNT;
+    return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
   }
 
   static Digits? fromInt(int amount) {
@@ -100,14 +117,14 @@ final Map<String, ConversionType> _typeFromPrefix =
     Map.fromEntries(ConversionType.values.map((e) => MapEntry(e.prefix, e)));
 
 enum ConversionType {
-  binary("0b", "BIN", "01", 4, 16),
-  hexadecimal("0x", "HEX", "0123456789ABCDEF", 2, 8),
-  unsignedDecimal("0d", "DEC", "0123456789", 3, 10),
-  signedDecimal("0s", "±DEC", "0123456789", 3, 10),
+  binary("0b", "Binary", "01", 4, 16),
+  hexadecimal("0x", "Hexadecimal", "0123456789ABCDEF", 2, 8),
+  unsignedDecimal("0d", "Unsigned Decimal", "0123456789", 3, 10),
+  signedDecimal("0s", "Signed Decimal", "0123456789", 3, 10),
   ascii(
     "0a",
     "ASCII",
-    "�······························· !\"#\$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~·",
+    "␀␁␂␃␄␅␆␇␈␉␊␋␌␍␎␏␐␑␒␓␔␕␖␗␘␙␚␛␜␝␞␟␣!\"#\$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~␡",
     -1,
     10,
   );

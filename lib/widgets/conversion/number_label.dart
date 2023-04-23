@@ -40,9 +40,7 @@ class NumberLabel extends HookWidget {
     TextStyle? style,
     super.key,
   })  : style = style ?? defaultStyle,
-        labelField = labelFieldFromNumber(number) {
-    print(subscribedLabelField);
-  }
+        labelField = labelFieldFromNumber(number);
 
   NumberLabel.fromLabelField({
     required this.labelField,

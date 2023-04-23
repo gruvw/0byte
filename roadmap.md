@@ -51,8 +51,10 @@ Sharing
 
 New UX + WEB
 
-- [X] Support number separator
+- [ ] Settings
+  - [X] Support number separator
   - [ ] Display separator + Clipboard separator to settings (settings page)
+  - [ ] Option to copy ASCII Unicode Control Pictures vs ASCII values
 - [ ] Full UX redesign (no more fixed output per collection)
   - [X] Patch entry and collections to support new features (+ needed corrections)
   - [ ] Finish entry page
@@ -60,7 +62,8 @@ New UX + WEB
   - [ ] Fix outlined buttons hover color
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
-- [ ] Fix #1
+- [ ] Fix https://github.com/gruvw/0byte/issues/1
+- [ ] Fix https://github.com/gruvw/0byte/issues/4
 - [ ] Extract style from structure
 
 ## Beta release `v0.0.2-beta`

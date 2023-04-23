@@ -1,9 +1,14 @@
+import 'dart:math';
+
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/number_types.dart';
 
 import 'parser.dart';
 
 typedef ApplyText = String Function(String);
+
+const _asciiMap =
+    "\u{0}\u{1}\u{2}\u{3}\u{4}\u{5}\u{6}\u{7}\u{8}\u{9}\u{A}\u{B}\u{C}\u{D}\u{E}\u{F}\u{10}\u{11}\u{12}\u{13}\u{14}\u{15}\u{16}\u{17}\u{18}\u{19}\u{1A}\u{1B}\u{1C}\u{1D}\u{1E}\u{1F} !\"#\$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{7F}";
 
 String separatorTransform(
   ConversionType type,
@@ -40,12 +45,23 @@ ApplyText applyNumberTextFromType(ConversionType type, bool displaySeparator) =>
       if (type == ConversionType.hexadecimal) {
         // Modify only valid lowercase hex char to uppercase
         final upperText = text.toUpperCase();
-        String hexUpper = "";
+        final hexUpper = StringBuffer();
         for (int i = 0; i < text.length; i++) {
-          hexUpper +=
-              type.alphabet.contains(upperText[i]) ? upperText[i] : text[i];
+          hexUpper.write(
+              type.alphabet.contains(upperText[i]) ? upperText[i] : text[i]);
         }
-        text = hexUpper;
+        text = hexUpper.toString();
+      }
+
+      // ASCII map
+      if (type == ConversionType.ascii) {
+        final asciiMapped = StringBuffer();
+        for (int i = 0; i < text.length; i++) {
+          final pos = _asciiMap.indexOf(text[i]);
+          asciiMapped
+              .write(pos >= 0 ? ConversionType.ascii.alphabet[pos] : text[i]);
+        }
+        text = asciiMapped.toString();
       }
 
       // Trim number prefix from correct type (must be invalid at first)
@@ -58,6 +74,9 @@ ApplyText applyNumberTextFromType(ConversionType type, bool displaySeparator) =>
         }
       }
 
+      // Length limit (trim excess on the left)
+      final length = min(text.length, Digits.MAX_AMOUNT);
+      text = text.substring(text.length - length, text.length);
       text = separatorTransform(type, text, displaySeparator);
 
       return text;
@@ -104,6 +123,11 @@ PositionedText applyNumberPositionedText(
   final newFullDelta = appliedNewFull.length - newValue.text.length;
 
   final appliedOldFull = applyNumberText(oldValue.text);
+
+  // Prevent exceeding digits amount limit
+  if (withoutSeparator(type, appliedNewFull).length > Digits.MAX_AMOUNT) {
+    return oldValue;
+  }
 
   // If both old and new are invalid, don't carry on
   if (!isValidText(type, appliedOldFull) &&
@@ -172,6 +196,18 @@ String applyNumberText(
       displaySeparator,
     ).text;
 
+String applyNumberTextOnTypeChange(
+  ConversionType oldType,
+  ConversionType newType,
+  String text,
+) {
+  if (!newType.isSeparated) {
+    // Remove separator if type changes to non-separated type
+    return withoutSeparator(oldType, text);
+  }
+  return text;
+}
+
 void Function(String) onSubmitNumber(Number number) => (newText) {
       if (newText.isEmpty) {
         // Take previous value instead
@@ -182,8 +218,13 @@ void Function(String) onSubmitNumber(Number number) => (newText) {
           if (newText.startsWith(type.prefix)) {
             String newTextWithoutPrefix = newText.substring(type.prefix.length);
             if (isValidText(type, newTextWithoutPrefix)) {
+              newText = applyNumberTextOnTypeChange(
+                number.type,
+                type,
+                newTextWithoutPrefix,
+              );
               number.type = type; // change type
-              newText = newTextWithoutPrefix;
+              break;
             }
           }
         }

@@ -120,7 +120,7 @@ class EntryPage extends ConsumerWidget {
                   selected: entry.type,
                   onSelected: (selectedType) => entry.type = selectedType,
                 ),
-                _barFromText("Output"),
+                _barFromText("Target"),
                 ConversionTypesSelectors(
                   selected: entry.target.type,
                   onSelected: (selectedType) =>
