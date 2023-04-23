@@ -1,13 +1,13 @@
 import 'package:flutter/services.dart';
 
 import 'package:app_0byte/models/types.dart';
-import 'package:app_0byte/utils/validation.dart';
+import 'package:app_0byte/utils/transforms.dart';
 
-class ApplyTextFormatter extends TextInputFormatter {
+class NumberInputFormatter extends TextInputFormatter {
   final ConversionType type;
   final bool displaySeparator;
 
-  ApplyTextFormatter({
+  NumberInputFormatter({
     required this.type,
     required this.displaySeparator,
   });
@@ -17,13 +17,13 @@ class ApplyTextFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final newBase = applyPositionedText(
+    final newBase = applyNumberPositionedText(
       PositionedText(oldValue.text, oldValue.selection.baseOffset),
       PositionedText(newValue.text, newValue.selection.baseOffset),
       type,
       displaySeparator,
     );
-    final newExtend = applyPositionedText(
+    final newExtend = applyNumberPositionedText(
       PositionedText(oldValue.text, oldValue.selection.extentOffset),
       PositionedText(newValue.text, newValue.selection.extentOffset),
       type,

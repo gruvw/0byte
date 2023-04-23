@@ -14,7 +14,7 @@ import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/border_button.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
-import 'package:app_0byte/widgets/conversion/number_conversion.dart';
+import 'package:app_0byte/widgets/conversion/number_conversion_view.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/type_selector/conversion_types_selectors.dart';
 
@@ -52,9 +52,9 @@ class EntryPage extends ConsumerWidget {
     ref.subscribe(entryEditionUpdater(entry));
 
     // Cross subscribed label fields (between title and preview)
-    final entryPreviewLabelField =
-        NumberLabel.labelFieldFromNumber(Mutable(entry));
     final mutableEntry = Mutable(entry);
+    final entryPreviewLabelField =
+        NumberLabel.labelFieldFromNumber(mutableEntry);
     final entryLabelTitle = NumberLabel(
       number: mutableEntry,
       subscribedLabelField: entryPreviewLabelField,
@@ -109,7 +109,7 @@ class EntryPage extends ConsumerWidget {
                     vertical: 15,
                     horizontal: PaddingTheme.entryHorizontal,
                   ),
-                  child: EntryNumberConversion(
+                  child: NumberConversionEntryView(
                     entry: Mutable(entry),
                     chipEnabled: false,
                     label: entryPreviewLabel,

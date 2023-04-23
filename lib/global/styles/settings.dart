@@ -1,7 +1,15 @@
 import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/utils/conversion.dart';
 
 abstract class SettingsTheme {
-  static const ConversionType defaultTargetType = ConversionType.binary;
+  static final Number defaultNumber = DartNumber(
+    type: ConversionType.binary,
+    text: ConversionType.binary.alphabet[0],
+  );
+  static final ConversionTarget defaultTarget = ConversionTarget(
+    type: ConversionType.unsignedDecimal,
+    digits: Digits.fromInt(10)!,
+  );
 
   static const String newCollectionButtonLabel = "New Collection";
   static const String importButtonLabel = "Import";

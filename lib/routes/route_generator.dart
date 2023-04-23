@@ -1,6 +1,6 @@
-import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:flutter/material.dart';
 
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/routes/converter_page.dart';
 import 'package:app_0byte/routes/entry_page.dart';
 
@@ -17,9 +17,14 @@ class RouteGenerator {
           builder: (context) => const ConverterPage(),
         );
       case routeEntry:
-        if (args is NumberConversionEntry) {
+        if (args is List &&
+            args.isNotEmpty &&
+            args[0] is NumberConversionEntry) {
           return MaterialPageRoute(
-            builder: (context) => EntryPage(entry: args),
+            builder: (context) => EntryPage(
+              entry: args[0],
+              deleteOnCancel: args.length > 1 && args[1],
+            ),
           );
         }
         return _errorRoute();

@@ -3,41 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 class PotentiallyMutableField<T, View> extends PotentiallyMutable<T> {
-  final View Function(T value) _getValue;
+  final View Function(T object) _view;
 
-  final T Function(T value)? applyText;
+  final T Function(T object)? applyObject;
 
   late final ValueNotifier<View> notifier;
-  final void Function(T newValue)? onSubmitted;
+  final void Function(T object)? _onSubmit;
 
   PotentiallyMutableField(
     super.object, {
-    super.isMutable = true,
-    required View Function(T value) getValue,
-    T Function(T value)? applyText,
-    void Function(T newValue)? onSubmitted,
-  })  : _getValue = getValue,
+    required super.isMutable,
+    required View Function(T object) view,
+    T Function(T object)? applyObject,
+    void Function(T newObject)? onSubmitted,
+  })  : _view = view,
         // If not editable, discards applyText and onSubmitted
-        applyText = isMutable ? applyText : null,
-        onSubmitted = isMutable ? onSubmitted : null {
-    object = applyOr(applyText, object); // apply text at least once
-    notifier = ValueNotifier(this.getValue());
+        applyObject = isMutable ? applyObject : null,
+        _onSubmit = isMutable ? onSubmitted : null {
+    object = applyOr(applyObject, object); // apply text at least once
+    notifier = ValueNotifier(this.view());
   }
 
-  View getValue() => _getValue(object);
+  View view() => _view(object);
 
-  void setValue(T newValue) {
+  void set(T newObject) {
     if (isMutable) {
-      object = applyOr(applyText, newValue);
-      notifier.value = getValue();
+      object = applyOr(applyObject, newObject);
+      notifier.value = view();
     }
   }
 
-  void Function(T newValue) get onChanged => (newValue) {
-        setValue(applyOr(applyText, newValue));
-      };
-
-  void submit() {
-    onSubmitted?.call(object);
+  void submit(T newObject) {
+    set(newObject);
+    _onSubmit?.call(object);
   }
 }

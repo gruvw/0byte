@@ -1,4 +1,3 @@
-import 'package:app_0byte/utils/parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,9 +6,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/types.dart';
+import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
-import 'package:app_0byte/widgets/utils/apply_text_formatter.dart';
+import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
 import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
 
 class NumberText extends HookWidget {
@@ -38,37 +38,15 @@ class NumberText extends HookWidget {
     required this.number,
     super.key,
   }) : numberTextField = PotentiallyMutableField(
-            applySimpleText(
-              number.object.type,
-              number.object.text,
-              displaySeparator,
-            ),
-            getValue: (text) => number.object.withText(text),
-            isMutable: number.isMutable,
-            onSubmitted: (newText) {
-              if (newText.isEmpty) {
-                // Take previous value instead
-                newText = number.object.text;
-              } else if (!isValidText(number.object.type, newText)) {
-                // Change number type if text is valid without prefix (must be invalid at first)
-                for (final type in ConversionType.values) {
-                  if (newText.startsWith(type.prefix)) {
-                    String newTextWithoutPrefix =
-                        newText.substring(type.prefix.length);
-                    if (isValidText(type, newTextWithoutPrefix)) {
-                      number.object.type = type; // change type
-                      newText = newTextWithoutPrefix;
-                    }
-                  }
-                }
-              }
-
-              number.object.text = newText;
-            });
+          applyNumberText(number.object, displaySeparator),
+          view: (text) => number.object.withText(text),
+          isMutable: number.isMutable,
+          onSubmitted: onSubmitNumber(number.object),
+        );
 
   @override
   Widget build(BuildContext context) {
-    final number = numberTextField.getValue();
+    final number = numberTextField.view();
 
     // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild)
     final controller = numberTextField.isMutable
@@ -119,15 +97,15 @@ class NumberText extends HookWidget {
             readOnly: !numberTextField.isMutable,
             autofocus: number.text.isEmpty && numberTextField.isMutable,
             inputFormatters: [
-              ApplyTextFormatter(
+              NumberInputFormatter(
                 type: number.type,
                 displaySeparator: displaySeparator,
               )
             ],
-            onSubmitted: numberTextField.onSubmitted,
+            onSubmitted: numberTextField.submit,
             onChanged: (value) {
-              numberTextField.onChanged(value);
-              style.value = styleFrom(numberTextField.getValue());
+              numberTextField.set(value);
+              style.value = styleFrom(numberTextField.view());
             },
             cursorColor: ColorTheme.text1,
             style: style.value,

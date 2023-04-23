@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -13,17 +12,16 @@ import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
-import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
-import 'package:app_0byte/utils/conversion.dart';
+import 'package:app_0byte/routes/route_generator.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/collections_list_drawer_widget.dart';
 import 'package:app_0byte/widgets/components/slidable_delete.dart';
 import 'package:app_0byte/widgets/components/text_icon.dart';
-import 'package:app_0byte/widgets/conversion/number_conversion.dart';
+import 'package:app_0byte/widgets/conversion/number_conversion_view.dart';
 import 'package:app_0byte/widgets/conversion_title_widget.dart';
 import 'package:app_0byte/widgets/forms/text_form.dart';
 
@@ -147,54 +145,25 @@ class ConverterPage extends HookConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: SpeedDial(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: ColorTheme.textPrefix,
-        icon: Icons.add,
-        activeIcon: Icons.close,
         foregroundColor: ColorTheme.text1,
-        useRotationAnimation: false,
-        renderOverlay: false,
-        childrenButtonSize: const Size(
-          DimensionsTheme.floatingActionChildrenSize,
-          DimensionsTheme.floatingActionChildrenSize,
-        ),
-        spacing: 8,
-        children: [
-          for (final conversionType in ConversionType.values)
-            SpeedDialChild(
-              backgroundColor: ColorTheme.background2,
-              labelBackgroundColor: ColorTheme.background2,
-              labelShadow: [],
-              labelStyle: const TextStyle(
-                color: ColorTheme.text1,
-                fontFamily: FontTheme.firaCode,
-              ),
-              label: conversionType.label,
-              child: Text(
-                conversionType.prefix,
-                style: const TextStyle(
-                  color: ColorTheme.textPrefix,
-                  fontFamily: FontTheme.firaCode,
-                  fontWeight: FontWeight.w600,
-                  fontSize: FontTheme.addEntryPrefixSize,
-                ),
-              ),
-              onTap: () {
-                final nbEntries = collection.entries.length;
-                // TODO entry creation to entry page
-                database.createNumberConversionEntry(
-                  collection: collection,
-                  position: nbEntries,
-                  label: "Value ${nbEntries + 1}",
-                  number: DartNumber(type: conversionType, text: ""),
-                  target: ConversionTarget(
-                    type: ConversionType.binary,
-                    digits: Digits.fromInt(16)!,
-                  ),
-                );
-              },
-            ),
-        ],
+        onPressed: () {
+          final nbEntries = collection.entries.length;
+          final entry = database.createNumberConversionEntry(
+            collection: collection,
+            position: nbEntries,
+            label: "${SettingsTheme.defaultNumberLabel} ${nbEntries + 1}",
+            number: SettingsTheme.defaultNumber,
+            target: SettingsTheme.defaultTarget,
+          );
+          Navigator.pushNamed(
+            context,
+            routeEntry,
+            arguments: [entry, true],
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -251,7 +220,7 @@ class _NumberEntry extends StatelessWidget {
                 horizontal: PaddingTheme.entryHorizontal,
                 vertical: PaddingTheme.entryVertical,
               ),
-              child: EntryNumberConversion(entry: Mutable(entry)),
+              child: NumberConversionEntryView(entry: Mutable(entry)),
             ),
           ),
           const Divider(

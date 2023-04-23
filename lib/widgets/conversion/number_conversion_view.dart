@@ -1,4 +1,3 @@
-import 'package:app_0byte/widgets/conversion/conversion.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,16 +8,17 @@ import 'package:app_0byte/models/types.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/updaters.dart';
 import 'package:app_0byte/utils/validation.dart';
+import 'package:app_0byte/widgets/conversion/conversion.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 
-class EntryNumberConversion extends HookConsumerWidget {
+class NumberConversionEntryView extends HookConsumerWidget {
   final PotentiallyMutable<NumberConversionEntry> entry;
   final NumberLabel? label;
   final bool chipEnabled;
 
-  const EntryNumberConversion({
+  const NumberConversionEntryView({
     required this.entry,
     this.chipEnabled = true,
     this.label,
@@ -33,11 +33,12 @@ class EntryNumberConversion extends HookConsumerWidget {
     return NumberConversionView(
       key: UniqueKey(), // Fixes non-updating number value
       number: this.entry,
+      label: label,
       onChipPressed: chipEnabled
           ? () {
               Navigator.of(context).pushNamed(
                 "/entry",
-                arguments: entry,
+                arguments: [entry],
               );
             }
           : null,
@@ -48,9 +49,11 @@ class EntryNumberConversion extends HookConsumerWidget {
 class NumberConversionView extends StatelessWidget {
   final PotentiallyMutable<NumberConversion> number;
   final VoidCallback? onChipPressed;
+  final NumberLabel? label;
 
   const NumberConversionView({
     required this.number,
+    this.label,
     this.onChipPressed,
     super.key,
   });
@@ -70,9 +73,10 @@ class NumberConversionView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NumberLabel(
-                  number: number,
-                ),
+                label ??
+                    NumberLabel(
+                      number: number,
+                    ),
                 const SizedBox(
                   height: DimensionsTheme.entryLabelNumberVerticalSpacing,
                 ),

@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tuple/tuple.dart';
 
 import 'package:app_0byte/models/types.dart';
-import 'package:app_0byte/utils/validation.dart';
+import 'package:app_0byte/utils/transforms.dart';
 
 const _positionChar = "|";
 
@@ -24,7 +24,7 @@ void testApplyPositioned(
   String expectedReadable,
 ) {
   final oldValue = _positionedFromReadable(oldReadable);
-  PositionedText actual = applyPositionedText(
+  PositionedText actual = applyNumberPositionedText(
     oldValue.item2,
     _positionedFromReadable(newReadable).item2,
     oldValue.item1,
