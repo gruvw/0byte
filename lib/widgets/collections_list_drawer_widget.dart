@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -153,11 +151,9 @@ class CollectionsListDrawer extends HookConsumerWidget {
                     color: ColorTheme.danger,
                   ),
                   onPressed: () {
-                    // Workaround, fixes #3
-                    Future.delayed(TimeTheme.zeroDuration, () {
-                      collection.delete();
-                    });
-                    if (selectedCollection == collection) {
+                    final deletedSelected = selectedCollection == collection;
+                    collection.delete();
+                    if (deletedSelected) {
                       ref.read(selectedCollectionProvider.notifier).state =
                           database.getCollections().first;
                     }

@@ -99,7 +99,7 @@ ApplyText applyTextFromType(ConversionType type, bool displaySeparator) =>
         text = hexUpper;
       }
 
-      // Trim number prefix (must be invalid at first)
+      // Trim number prefix from correct type (must be invalid at first)
       if (!isValidText(type, text)) {
         if (text.startsWith(type.prefix)) {
           String textWithoutPrefix = text.substring(type.prefix.length);

@@ -1,3 +1,4 @@
+import 'package:app_0byte/utils/parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -37,21 +38,33 @@ class NumberText extends HookWidget {
     required this.number,
     super.key,
   }) : numberTextField = PotentiallyMutableField(
-          applySimpleText(
-            number.object.type,
-            number.object.text,
-            displaySeparator,
-          ),
-          getValue: (text) => number.object.withText(text),
-          isMutable: number.isMutable,
-          onSubmitted: (newValue) {
-            // TODO change type if invalid but valid without prefix for some type
-            if (newValue.isEmpty) {
-              newValue = number.object.text; // take previous value instead
-            }
-            number.object.text = newValue;
-          },
-        );
+            applySimpleText(
+              number.object.type,
+              number.object.text,
+              displaySeparator,
+            ),
+            getValue: (text) => number.object.withText(text),
+            isMutable: number.isMutable,
+            onSubmitted: (newText) {
+              if (newText.isEmpty) {
+                // Take previous value instead
+                newText = number.object.text;
+              } else if (!isValidText(number.object.type, newText)) {
+                // Change number type if text is valid without prefix (must be invalid at first)
+                for (final type in ConversionType.values) {
+                  if (newText.startsWith(type.prefix)) {
+                    String newTextWithoutPrefix =
+                        newText.substring(type.prefix.length);
+                    if (isValidText(type, newTextWithoutPrefix)) {
+                      number.object.type = type; // change type
+                      newText = newTextWithoutPrefix;
+                    }
+                  }
+                }
+              }
+
+              number.object.text = newText;
+            });
 
   @override
   Widget build(BuildContext context) {
