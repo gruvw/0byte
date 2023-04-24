@@ -45,7 +45,7 @@ class EntryPage extends ConsumerWidget {
     super.key,
     required this.entry,
     this.deleteOnCancel = false,
-  }) : initial = DartConversion.from(entry);
+  }) : initial = DartNumberConversion.from(entry);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

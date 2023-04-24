@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/parser.dart';
 
@@ -8,6 +9,11 @@ class ConversionTarget {
   final Digits digits;
 
   const ConversionTarget({required this.type, required this.digits});
+
+  @override
+  String toString() {
+    return "${type.prefix} ${digits.amount}";
+  }
 }
 
 class Converted<N extends Number> {
@@ -53,7 +59,7 @@ class Converted<N extends Number> {
 
   @override
   String toString() {
-    return convertedNumber.type.prefix + convertedNumber.text;
+    return "${wasSymmetric ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} [${convertedNumber.type.prefix}${wasSymmetric ? "" : " ${digits.amount}"}]${convertedNumber.text}";
   }
 }
 

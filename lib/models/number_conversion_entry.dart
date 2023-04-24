@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/database.dart';
@@ -9,7 +11,9 @@ abstract class NumberConversionEntry extends DatabaseObject
 
   abstract final Collection collection;
 
-  abstract int position;
+  int get position;
+  @protected
+  set position(int newPosition);
 
   void move(int newPosition) {
     final entries = collection.sortedEntries;
@@ -25,6 +29,16 @@ abstract class NumberConversionEntry extends DatabaseObject
     collection.notify(EventType.edit);
   }
 
+  Map<String, dynamic> toJson() => {
+        EntryFields.position: position,
+        EntryFields.label: label,
+        EntryFields.typeIndex: type.index,
+        EntryFields.text: text,
+        EntryFields.targetTypeIndex: target.type.index,
+        EntryFields.targetDigitsAmount: target.digits.amount,
+      };
+
+  @protected
   void notify(EventType type) =>
       database.entryEventsController.add(Event(object: this, type: type));
 
@@ -36,13 +50,4 @@ abstract class NumberConversionEntry extends DatabaseObject
       }
     }
   }
-
-  Map<String, dynamic> toJson() => {
-        EntryFields.position: position,
-        EntryFields.label: label,
-        EntryFields.typeIndex: type.index,
-        EntryFields.text: text,
-        EntryFields.targetTypeIndex: target.type.index,
-        EntryFields.targetDigitsAmount: target.digits.amount,
-      };
 }

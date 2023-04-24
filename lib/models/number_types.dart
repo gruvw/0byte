@@ -1,6 +1,5 @@
 import 'package:app_0byte/utils/transforms.dart';
 
-import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/validation.dart';
@@ -34,11 +33,18 @@ mixin Number {
   Number withText(String text) {
     return DartNumber(type: type, text: text);
   }
+
+  @override
+  String toString() {
+    return "[${type.prefix}]$text";
+  }
 }
 
 mixin NumberConversion on Number {
   abstract String label;
   abstract ConversionTarget target;
+
+  Converted<Number>? get converted => convertTo(target);
 
   void setAllLike(NumberConversion other) {
     label = other.label;
@@ -49,13 +55,11 @@ mixin NumberConversion on Number {
 
   @override
   String toString() {
-    String res = "$label: ${innerType.prefix}$text";
+    String res = "$label: ${super.toString()}";
 
-    final converted = convertTo(target);
-
+    final converted = this.converted;
     if (converted != null) {
-      res +=
-          " ${converted.wasSymmetric ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} ${converted.convertedNumber}";
+      res += " $converted";
     }
 
     return res;
@@ -75,7 +79,7 @@ class DartNumber with Number {
   }) : innerType = type;
 }
 
-class DartConversion with Number, NumberConversion {
+class DartNumberConversion with Number, NumberConversion {
   @override
   String label;
   @override
@@ -85,7 +89,7 @@ class DartConversion with Number, NumberConversion {
   @override
   ConversionTarget target;
 
-  DartConversion.from(NumberConversion entry)
+  DartNumberConversion.from(NumberConversion entry)
       : label = entry.label,
         innerType = entry.innerType,
         text = entry.text,
