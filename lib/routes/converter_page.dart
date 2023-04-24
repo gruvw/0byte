@@ -104,7 +104,9 @@ class ConverterPage extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: collection.toString()))
+                  Clipboard.setData(ClipboardData(
+                          // FIXME should display separator from settings
+                          text: collection.display(true)))
                       .then((_) =>
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: RichText(

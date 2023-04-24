@@ -13,7 +13,7 @@ import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
 import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
 
 class NumberText extends HookWidget {
-// TODO wrap number on new line (allign with prefix); maybe on sigle line (number, converted) when very small ?
+  // TODO wrap number on new line (allign with prefix); maybe on sigle line (number, converted) when very small ?
 
   static const bool displaySeparator =
       true; // TODO use app/collection based setting
@@ -25,7 +25,7 @@ class NumberText extends HookWidget {
     color: ColorTheme.text1,
   );
 
-  static TextStyle styleFrom(Number number) {
+  static TextStyle _styleFrom(Number number) {
     return _displayTitleStyle.apply(
       color: number.parsed() == null ? ColorTheme.danger : null,
     );
@@ -38,7 +38,7 @@ class NumberText extends HookWidget {
     super.key,
     required this.number,
   }) : numberTextField = PotentiallyMutableField(
-          applyNumberText(number.object, displaySeparator),
+          applyNumberTextDisplay(number.object, displaySeparator),
           view: (text) => number.object.withText(text),
           isMutable: number.isMutable,
           onSubmitted: onSubmitNumber(number.object),
@@ -53,13 +53,13 @@ class NumberText extends HookWidget {
         ? useTextEditingController(text: number.text)
         : TextEditingController(text: number.text);
 
-    final style = useState(styleFrom(number));
+    final style = useState(_styleFrom(number));
 
     void valueToClipboard() {
       final number = this.number.object;
 
       FocusScope.of(context).unfocus();
-      String copy = number.type.prefix + number.text;
+      String copy = number.display(displaySeparator);
       Clipboard.setData(ClipboardData(text: copy)).then(
         (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: RichText(
@@ -105,7 +105,7 @@ class NumberText extends HookWidget {
             onSubmitted: numberTextField.submit,
             onChanged: (value) {
               numberTextField.set(value);
-              style.value = styleFrom(numberTextField.view());
+              style.value = _styleFrom(numberTextField.view());
             },
             cursorColor: ColorTheme.text1,
             style: style.value,

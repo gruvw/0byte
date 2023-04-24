@@ -3,20 +3,16 @@ import 'dart:math';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/parser.dart';
+import 'package:app_0byte/utils/transforms.dart';
 
 class ConversionTarget {
   final ConversionType type;
   final Digits digits;
 
   const ConversionTarget({required this.type, required this.digits});
-
-  @override
-  String toString() {
-    return "${type.prefix} ${digits.amount}";
-  }
 }
 
-class Converted<N extends Number> {
+class Converted<N extends Number> implements SeparableDisplay {
   final Number convertedNumber;
   final Digits digits;
   final bool wasSymmetric;
@@ -58,9 +54,8 @@ class Converted<N extends Number> {
   }
 
   @override
-  String toString() {
-    return "${wasSymmetric ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} [${convertedNumber.type.prefix}${wasSymmetric ? "" : " ${digits.amount}"}]${convertedNumber.text}";
-  }
+  String display(bool displaySeparator) =>
+      "${wasSymmetric ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} [${convertedNumber.type.prefix}${wasSymmetric ? "" : " ${digits.amount}"}]${applyNumberTextDisplay(convertedNumber, displaySeparator)}";
 }
 
 String converted({

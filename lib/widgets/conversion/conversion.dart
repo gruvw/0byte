@@ -10,11 +10,11 @@ import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
 
-class Conversion extends HookWidget {
+class TextFieldConversion extends HookWidget {
   final PotentiallyMutableField<String, Number> numberTextField;
   final ConversionTarget target;
 
-  const Conversion({
+  const TextFieldConversion({
     super.key,
     required this.numberTextField,
     required this.target,

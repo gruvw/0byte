@@ -1,8 +1,13 @@
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/parser.dart';
+import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 
-mixin Number {
+mixin SeparableDisplay {
+  String display(bool displaySeparator);
+}
+
+mixin Number implements SeparableDisplay {
   abstract ConversionType type;
   abstract String text;
 
@@ -21,9 +26,8 @@ mixin Number {
   }
 
   @override
-  String toString() {
-    return "[${type.prefix}]$text";
-  }
+  String display(bool displaySeparator) =>
+      type.prefix + applyNumberTextDisplay(this, displaySeparator);
 }
 
 mixin NumberConversion on Number {
@@ -38,18 +42,6 @@ mixin NumberConversion on Number {
     text = other.text;
     target = other.target;
   }
-
-  @override
-  String toString() {
-    String res = "$label: ${super.toString()}";
-
-    final converted = this.converted;
-    if (converted != null) {
-      res += " $converted";
-    }
-
-    return res;
-  }
 }
 
 class DartNumber with Number {
@@ -60,9 +52,9 @@ class DartNumber with Number {
   String text;
 
   DartNumber({
-    required type,
+    required this.type,
     required this.text,
-  }) : type = type;
+  });
 }
 
 class DartNumberConversion with Number, NumberConversion {

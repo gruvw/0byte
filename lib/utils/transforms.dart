@@ -92,6 +92,7 @@ class PositionedText {
 
   @override
   String toString() {
+    // Testing purposes
     final clampedPosition = position.clamp(0, text.length);
     final readable =
         "${text.substring(0, clampedPosition)}|${text.substring(clampedPosition)}";
@@ -185,7 +186,7 @@ void Function(String) onSubmitNumberLabel(NumberConversion number) =>
       number.label = newLabel;
     };
 
-String applyNumberText(
+String applyNumberTextDisplay(
   Number number,
   bool displaySeparator,
 ) =>

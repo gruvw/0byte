@@ -94,7 +94,7 @@ class NumberConversionView extends StatelessWidget {
             ),
           ],
         ),
-        Conversion(
+        TextFieldConversion(
           numberTextField: numberView.numberTextField,
           target: number.object.target,
         ),

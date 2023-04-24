@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
-        "ascii"
+        "ascii",
+        "cshow",
+        "fshow",
+        "nshow"
     ],
     "java.configuration.updateBuildConfiguration": "interactive",
     "cmake.configureOnOpen": false
