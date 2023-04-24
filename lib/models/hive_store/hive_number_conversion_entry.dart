@@ -78,10 +78,10 @@ class HiveNumberConversionEntry extends NumberConversionEntry {
   }
 
   @override
-  ConversionType get innerType =>
+  ConversionType get type =>
       ConversionType.values[hiveStoreNumberEntry.hiveTypeIndex];
   @override
-  set innerType(ConversionType newType) {
+  set type(ConversionType newType) {
     hiveStoreNumberEntry.hiveTypeIndex = newType.index;
     hiveStoreNumberEntry.save();
     notify(EventType.edit);

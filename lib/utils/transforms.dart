@@ -196,16 +196,11 @@ String applyNumberText(
       displaySeparator,
     ).text;
 
-String applyNumberTextOnTypeChange(
-  ConversionType oldType,
-  ConversionType newType,
+String applyNumberTextBeforeSave(
+  ConversionType type,
   String text,
 ) {
-  if (!newType.isSeparated) {
-    // Remove separator if type changes to non-separated type
-    return withoutSeparator(oldType, text);
-  }
-  return text;
+  return withoutSeparator(type, text);
 }
 
 void Function(String) onSubmitNumber(Number number) => (newText) {
@@ -218,17 +213,13 @@ void Function(String) onSubmitNumber(Number number) => (newText) {
           if (newText.startsWith(type.prefix)) {
             String newTextWithoutPrefix = newText.substring(type.prefix.length);
             if (isValidText(type, newTextWithoutPrefix)) {
-              newText = applyNumberTextOnTypeChange(
-                number.type,
-                type,
-                newTextWithoutPrefix,
-              );
-              number.type = type; // change type
+              number.type = type;
+              newText = newTextWithoutPrefix;
               break;
             }
           }
         }
       }
 
-      number.text = newText;
+      number.text = applyNumberTextBeforeSave(number.type, newText);
     };

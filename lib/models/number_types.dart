@@ -1,24 +1,10 @@
-import 'package:app_0byte/utils/transforms.dart';
-
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:flutter/foundation.dart';
 
 mixin Number {
-  @protected
-  abstract ConversionType innerType;
+  abstract ConversionType type;
   abstract String text;
-
-  @nonVirtual
-  ConversionType get type => innerType;
-
-  @nonVirtual
-  // Setter should not be used internally!
-  set type(ConversionType newType) {
-    text = applyNumberTextOnTypeChange(type, newType, text);
-    innerType = newType;
-  }
 
   String? parsed() => parseText(type, text);
 
@@ -68,7 +54,7 @@ mixin NumberConversion on Number {
 
 class DartNumber with Number {
   @override
-  ConversionType innerType;
+  ConversionType type;
 
   @override
   String text;
@@ -76,14 +62,14 @@ class DartNumber with Number {
   DartNumber({
     required type,
     required this.text,
-  }) : innerType = type;
+  }) : type = type;
 }
 
 class DartNumberConversion with Number, NumberConversion {
   @override
   String label;
   @override
-  ConversionType innerType;
+  ConversionType type;
   @override
   String text;
   @override
@@ -91,7 +77,7 @@ class DartNumberConversion with Number, NumberConversion {
 
   DartNumberConversion.from(NumberConversion entry)
       : label = entry.label,
-        innerType = entry.innerType,
+        type = entry.type,
         text = entry.text,
         target = entry.target;
 }

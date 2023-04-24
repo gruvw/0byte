@@ -30,10 +30,10 @@ class FlutterNumberConversionEntry extends NumberConversionEntry {
   Number flutterNumber;
 
   @override
-  ConversionType get innerType => flutterNumber.type;
+  ConversionType get type => flutterNumber.type;
   @override
-  set innerType(ConversionType newType) {
-    flutterNumber.innerType = newType;
+  set type(ConversionType newType) {
+    flutterNumber.type = newType;
     notify(EventType.edit);
   }
 
