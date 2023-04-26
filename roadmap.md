@@ -58,7 +58,7 @@ New UX + WEB
   - [ ] Option: Always remove leading 0s on converted (maybe on input too ?)
 - [ ] Full UX redesign (no more fixed output per collection)
   - [X] Patch entry and collections to support new features (+ needed corrections)
-  - [ ] Finish entry page
+  - [X] Finish entry page
   - [ ] Finish refactor (pages, no longer used classes, new types, new entry, extract constants, ...)
   - [ ] Fix outlined buttons hover color
 - [ ] Fix web issues (cross-browser)
@@ -74,7 +74,7 @@ New UX + WEB
 - [ ] Support Octal conversion
 - [ ] Help menu (displaying possible prefixes, alphabets (hex to maj), explain data validation, explain conversion process, app infos and versions, long press to copy (features), local data/no server -> exports)
 - [ ] FIXMEs and TODOs
-- [ ] Features + screenshots to README
+- [ ] Write README (features + screenshots)
 
 ## Major release `v0.0.3`
 
@@ -85,10 +85,10 @@ New UX + WEB
 - [ ] Test WEB (all browsers, mobile)
 - [ ] (Test IOS, MAC ?)
 
-## Ideas
+## Further Ideas
 
-- Custom keyboard for data input
-- Light theme support
-- Key-maps for keyboard only use (on web)
-- Enable application wide undo
-- Multiple conversion targets per entry
+1. Light theme support
+2. Key-maps (shortcuts) for keyboard only use (on desktop and web)
+3. Enable application wide undo (redo)
+4. Multiple conversion targets per entry
+5. Custom keyboard for data input

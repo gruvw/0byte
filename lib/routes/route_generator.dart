@@ -4,19 +4,32 @@ import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/routes/converter_page.dart';
 import 'package:app_0byte/routes/entry_page.dart';
 
-const routeHome = "/";
-const routeEntry = "/entry";
+enum Routes {
+  home("/"),
+  entry("/entry"),
+  error("/error");
+
+  static Routes get miss => error;
+
+  static Routes parse(String name) {
+    return Routes.values.firstWhere((e) => e.name == name, orElse: () => miss);
+  }
+
+  final String name;
+
+  const Routes(this.name);
+}
 
 class RouteGenerator {
   static Route generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
-    switch (settings.name) {
-      case routeHome:
+    switch (Routes.parse(settings.name ?? Routes.miss.name)) {
+      case Routes.home:
         return MaterialPageRoute(
           builder: (context) => const ConverterPage(),
         );
-      case routeEntry:
+      case Routes.entry:
         if (args is List &&
             args.isNotEmpty &&
             args[0] is NumberConversionEntry) {
@@ -28,7 +41,7 @@ class RouteGenerator {
           );
         }
         return _errorRoute();
-      default:
+      case Routes.error:
         return _errorRoute();
     }
   }

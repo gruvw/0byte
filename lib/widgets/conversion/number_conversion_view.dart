@@ -37,7 +37,7 @@ class NumberConversionEntryView extends HookConsumerWidget {
           ? () {
               Navigator.of(context).pushNamed(
                 "/entry",
-                arguments: [entry],
+                arguments: [entry.object],
               );
             }
           : null,

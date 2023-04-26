@@ -80,16 +80,24 @@ class Digits {
   // ignore: constant_identifier_names
   static const int MAX_AMOUNT = 64;
 
-  static bool isValidAmount(int amount) {
-    return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
+  static bool isValidAmount(int? amount) {
+    return amount != null && amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
   }
 
-  static Digits? fromInt(int amount) {
+  static Digits? fromInt(int? amount) {
     if (!isValidAmount(amount)) {
       return null;
     }
 
-    return Digits._(amount: amount);
+    return Digits._(amount: amount!);
+  }
+
+  static Digits? fromString(String? text) {
+    if (text == null) {
+      return null;
+    }
+
+    return fromInt(int.tryParse(text));
   }
 
   final int amount;

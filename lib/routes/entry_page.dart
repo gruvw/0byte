@@ -19,7 +19,7 @@ import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/selectors/conversion_types_selectors.dart';
 import 'package:app_0byte/widgets/conversion/selectors/digits_selector.dart';
 
-// TODO extract constants
+// TODO 0 extract constants
 
 class EntryPage extends ConsumerWidget {
   static Widget _barFromText(String text) => SecondaryBar(
@@ -128,7 +128,7 @@ class EntryPage extends ConsumerWidget {
                       entry.target = selectedType.defaultTarget,
                 ),
                 DigitsSelector(
-                  selected: entry.target.digits,
+                  initial: entry.target.digits,
                   onSelected: (selectedDigits) =>
                       entry.target = entry.target.withDigits(selectedDigits),
                 )

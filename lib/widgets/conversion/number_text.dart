@@ -100,11 +100,11 @@ class NumberTextView extends HookWidget {
                 displaySeparator: displaySeparator,
               )
             ],
-            onSubmitted: textNumberField.submit,
-            onChanged: (value) {
-              textNumberField.set(value);
+            onChanged: (newText) {
+              textNumberField.set(newText);
               style.value = _styleFrom(textNumberField.view());
             },
+            onSubmitted: textNumberField.submit,
             cursorColor: ColorTheme.text1,
             style: style.value,
             decoration: const InputDecoration(

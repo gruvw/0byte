@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_0byte/global/styles/fonts.dart';
 
-// TODO extract constants
+// TODO 0 extract constants
 
 class BorderButton extends StatelessWidget {
   final String text;

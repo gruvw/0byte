@@ -161,7 +161,7 @@ class ConverterPage extends HookConsumerWidget {
           );
           Navigator.pushNamed(
             context,
-            routeEntry,
+            Routes.entry.name,
             arguments: [entry, true],
           );
         },
@@ -203,7 +203,7 @@ class _NumberEntries extends StatelessWidget {
   }
 }
 
-// TODO split in other files ?
+// TODO 1 split in other files ?
 class _NumberEntry extends StatelessWidget {
   final NumberConversionEntry entry;
 

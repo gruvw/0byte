@@ -20,4 +20,5 @@ abstract class SettingsTheme {
   static const String defaultNumberLabel = "Value";
   static const String symmetricArrow = "<-->";
   static const String nonSymmetricArrow = "-->";
+  static const String digitsSelectorLabel = "Digits:";
 }
