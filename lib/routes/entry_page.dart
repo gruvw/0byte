@@ -16,7 +16,8 @@ import 'package:app_0byte/widgets/components/secondary_bar.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
 import 'package:app_0byte/widgets/conversion/number_conversion_view.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
-import 'package:app_0byte/widgets/conversion/type_selector/conversion_types_selectors.dart';
+import 'package:app_0byte/widgets/conversion/selectors/conversion_types_selectors.dart';
+import 'package:app_0byte/widgets/conversion/selectors/digits_selector.dart';
 
 // TODO extract constants
 
@@ -126,7 +127,11 @@ class EntryPage extends ConsumerWidget {
                   onSelected: (selectedType) =>
                       entry.target = selectedType.defaultTarget,
                 ),
-                // TODO 0 digits changer
+                DigitsSelector(
+                  selected: entry.target.digits,
+                  onSelected: (selectedDigits) =>
+                      entry.target = entry.target.withDigits(selectedDigits),
+                )
               ],
             ),
           ),

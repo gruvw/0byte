@@ -10,6 +10,9 @@ class ConversionTarget {
   final Digits digits;
 
   const ConversionTarget({required this.type, required this.digits});
+
+  ConversionTarget withDigits(Digits digits) =>
+      ConversionTarget(type: type, digits: digits);
 }
 
 class Converted<N extends Number> implements SeparableDisplay {

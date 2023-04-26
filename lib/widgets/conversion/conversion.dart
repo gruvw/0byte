@@ -11,18 +11,18 @@ import 'package:app_0byte/widgets/conversion/number_text.dart';
 import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
 
 class TextFieldConversion extends HookWidget {
-  final PotentiallyMutableField<String, Number> numberTextField;
+  final PotentiallyMutableField<String, Number> textNumberField;
   final ConversionTarget target;
 
   const TextFieldConversion({
     super.key,
-    required this.numberTextField,
+    required this.textNumberField,
     required this.target,
   });
 
   @override
   Widget build(BuildContext context) {
-    final number = useValueListenable(numberTextField.notifier);
+    final number = useValueListenable(textNumberField.notifier);
     final converted = number.convertTo(target);
 
     if (converted == null) {
@@ -35,7 +35,7 @@ class TextFieldConversion extends HookWidget {
         IntrinsicWidth(
           child: Column(
             children: [
-              NumberText(
+              NumberTextView(
                 number: Immutable(converted.convertedNumber),
               ),
               if (!converted.wasSymmetric)

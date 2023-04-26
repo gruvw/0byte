@@ -54,7 +54,8 @@ New UX + WEB
 - [ ] Settings
   - [X] Support number separator
   - [ ] Display separator + Clipboard separator to settings (settings page)
-  - [ ] Option to copy ASCII Unicode Control Pictures vs ASCII values
+  - [ ] Option: to copy ASCII Unicode Control Pictures vs ASCII values
+  - [ ] Option: Always remove leading 0s on converted (maybe on input too ?)
 - [ ] Full UX redesign (no more fixed output per collection)
   - [X] Patch entry and collections to support new features (+ needed corrections)
   - [ ] Finish entry page

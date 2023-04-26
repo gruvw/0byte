@@ -56,10 +56,10 @@ class NumberLabel extends HookWidget {
     final value = subscribedLabelField == null
         ? labelField.view()
         : useValueListenable(subscribedLabelField.notifier);
-    final controller = useTextEditingController(text: value);
 
     return FocusSubmittedTextField(
-      controller: controller,
+      // Must not use hook to rebuild on change
+      controller: TextEditingController(text: value),
       readOnly: !labelField.isMutable,
       onSubmitted: labelField.submit,
       onChanged: labelField.set,

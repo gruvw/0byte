@@ -27,12 +27,11 @@ class NumberConversionEntryView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final entry = this.entry.object;
-    ref.subscribe(entryEditionUpdater(entry));
+    ref.subscribe(entryEditionUpdater(entry.object));
 
     return NumberConversionView(
       key: UniqueKey(), // Fixes non-updating number value
-      number: this.entry,
+      number: entry,
       label: label,
       onChipPressed: chipEnabled
           ? () {
@@ -63,7 +62,7 @@ class NumberConversionView extends StatelessWidget {
     // TODO go to triple row layout (move conversion chip on first row) when input close to overflow
 
     // PotentiallyMutableField holder (used for live conversion)
-    final numberView = NumberText(number: number);
+    final numberView = NumberTextView(number: number);
 
     return Column(
       children: [
@@ -95,7 +94,7 @@ class NumberConversionView extends StatelessWidget {
           ],
         ),
         TextFieldConversion(
-          numberTextField: numberView.numberTextField,
+          textNumberField: numberView.textNumberField,
           target: number.object.target,
         ),
       ],

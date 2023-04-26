@@ -12,7 +12,7 @@ import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
 import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
 
-class NumberText extends HookWidget {
+class NumberTextView extends HookWidget {
   // TODO wrap number on new line (allign with prefix); maybe on sigle line (number, converted) when very small ?
 
   static const bool displaySeparator =
@@ -32,12 +32,12 @@ class NumberText extends HookWidget {
   }
 
   final PotentiallyMutable<Number> number;
-  final PotentiallyMutableField<String, Number> numberTextField;
+  final PotentiallyMutableField<String, Number> textNumberField;
 
-  NumberText({
+  NumberTextView({
     super.key,
     required this.number,
-  }) : numberTextField = PotentiallyMutableField(
+  }) : textNumberField = PotentiallyMutableField(
           applyNumberTextDisplay(number.object, displaySeparator),
           view: (text) => number.object.withText(text),
           isMutable: number.isMutable,
@@ -46,20 +46,18 @@ class NumberText extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final number = numberTextField.view();
+    final numberView = textNumberField.view();
 
     // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild, must create new TextEditingController)
-    final controller = numberTextField.isMutable
-        ? useTextEditingController(text: number.text)
-        : TextEditingController(text: number.text);
+    final controller = textNumberField.isMutable
+        ? useTextEditingController(text: numberView.text)
+        : TextEditingController(text: numberView.text);
 
-    final style = useState(_styleFrom(number));
+    final style = useState(_styleFrom(numberView));
 
     void valueToClipboard() {
-      final number = this.number.object;
-
       FocusScope.of(context).unfocus();
-      String copy = number.display(displaySeparator);
+      String copy = number.object.display(displaySeparator);
       Clipboard.setData(ClipboardData(text: copy)).then(
         (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: RichText(
@@ -89,23 +87,23 @@ class NumberText extends HookWidget {
         children: [
           // Prefix
           Text(
-            number.type.prefix,
+            numberView.type.prefix,
             style: _displayTitleStyle.apply(color: ColorTheme.textPrefix),
           ),
           FocusSubmittedTextField(
             controller: controller,
-            readOnly: !numberTextField.isMutable,
-            autofocus: number.text.isEmpty && numberTextField.isMutable,
+            readOnly: !textNumberField.isMutable,
+            autofocus: numberView.text.isEmpty && textNumberField.isMutable,
             inputFormatters: [
               NumberInputFormatter(
-                type: number.type,
+                type: numberView.type,
                 displaySeparator: displaySeparator,
               )
             ],
-            onSubmitted: numberTextField.submit,
+            onSubmitted: textNumberField.submit,
             onChanged: (value) {
-              numberTextField.set(value);
-              style.value = _styleFrom(numberTextField.view());
+              textNumberField.set(value);
+              style.value = _styleFrom(textNumberField.view());
             },
             cursorColor: ColorTheme.text1,
             style: style.value,
