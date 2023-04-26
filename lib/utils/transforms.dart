@@ -94,10 +94,10 @@ class PositionedText {
   String toString() {
     // Testing purposes
     final clampedPosition = position.clamp(0, text.length);
-    final readable =
-        "${text.substring(0, clampedPosition)}|${text.substring(clampedPosition)}";
+    final before = text.substring(0, clampedPosition);
+    final after = text.substring(clampedPosition);
 
-    return "PositionedText[$readable = text: $text, position: $position]";
+    return "PositionedText[$before|$after = text: $text, position: $position]";
   }
 
   @override

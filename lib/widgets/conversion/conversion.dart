@@ -36,7 +36,7 @@ class TextFieldConversion extends HookWidget {
           child: Column(
             children: [
               NumberTextView(
-                number: Immutable(converted.convertedNumber),
+                number: Immutable(converted.result),
               ),
               if (!converted.wasSymmetric)
                 const Divider(

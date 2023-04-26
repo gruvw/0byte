@@ -21,8 +21,8 @@ Future<String?> exportCollection(Collection collection) async =>
     _saveJson(jsonEncode([collection.toJson()]));
 
 Future<String?> _saveJson(String json) async {
-  String fileName =
-      "0byte_export_${DateTime.now().millisecondsSinceEpoch}.json";
+  final time = DateTime.now().millisecondsSinceEpoch;
+  String fileName = "0byte_export_$time.json";
 
   if (kIsWeb) {
     String content = base64Encode(utf8.encode(json));

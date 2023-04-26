@@ -10,6 +10,7 @@ String leftTrimmed(ConversionType type, String value) {
   if (type == ConversionType.signedDecimal ||
       type == ConversionType.unsignedDecimal ||
       type == ConversionType.ascii) {
+    // Don't trim sign
     String newVal =
         value.replaceFirst(RegExp("(?<=^$sign?)${type.alphabet[0]}+"), "");
     return newVal.isNotEmpty ? newVal : type.alphabet[0];

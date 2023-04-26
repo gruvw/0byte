@@ -16,12 +16,12 @@ class ConversionTarget {
 }
 
 class Converted<N extends Number> implements SeparableDisplay {
-  final Number convertedNumber;
+  final Number result;
   final Digits digits;
   final bool wasSymmetric;
 
   Converted._({
-    required this.convertedNumber,
+    required this.result,
     required this.digits,
     required this.wasSymmetric,
   });
@@ -50,15 +50,21 @@ class Converted<N extends Number> implements SeparableDisplay {
     );
 
     return Converted._(
-      convertedNumber: DartNumber(type: target.type, text: result),
+      result: DartNumber(type: target.type, text: result),
       digits: target.digits,
       wasSymmetric: wasSymmetric,
     );
   }
 
   @override
-  String display(bool displaySeparator) =>
-      "${wasSymmetric ? SettingsTheme.symmetricArrow : SettingsTheme.nonSymmetricArrow} [${convertedNumber.type.prefix}${wasSymmetric ? "" : " ${digits.amount}"}]${applyNumberTextDisplay(convertedNumber, displaySeparator)}";
+  String display(bool displaySeparator) {
+    final arrow = wasSymmetric
+        ? SettingsTheme.symmetricArrow
+        : SettingsTheme.nonSymmetricArrow;
+    final displayedDigits = wasSymmetric ? "" : " ${digits.amount}";
+    final displayedConverted = applyNumberTextDisplay(result, displaySeparator);
+    return " $arrow [${result.type.prefix}$displayedDigits]$displayedConverted";
+  }
 }
 
 String converted({

@@ -135,7 +135,7 @@ enum ConversionType {
     this.alphabet,
     this.blockLength,
     this._defaultDigitsAmount,
-  )   : base = alphabet.length,
+  )   : base = alphabet.length, // must be >= 1
         isSeparated = blockLength >= 1;
 
   ConversionTarget get defaultTarget => ConversionTarget(
