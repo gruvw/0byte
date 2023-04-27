@@ -1,4 +1,3 @@
-import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -9,6 +8,7 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
+import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
 class DigitsSelector extends HookWidget {
   static const _displayDigitsStyle = TextStyle(
@@ -24,26 +24,31 @@ class DigitsSelector extends HookWidget {
     );
   }
 
-  // TODO Fields to nameField instead of name (digitsField)
-  final ProvidedField<Digits> digits;
+  final ListenableField<Digits> digitsField;
   final void Function(Digits selectedDigits)? onSelected;
 
   const DigitsSelector({
     super.key,
-    required this.digits,
+    required this.digitsField,
     this.onSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    final controller = useTextEditingController(text: digits.value.toString());
-    final style = useState(_styleFrom(digits.value.toString()));
+    final controller =
+        useTextEditingController(text: digitsField.value.toString());
+    final focusNode = useFocusNode();
+    final style = useState(_styleFrom(digitsField.value.toString()));
 
-    digits.notifier.addListener(() {
-      final text = digits.value.toString();
-      controller.text = text;
-      style.value = _styleFrom(text);
-    });
+    final digitsUpdate = useValueListenable(digitsField.notifier);
+    useEffect(() {
+      if (!focusNode.hasFocus) {
+        final text = digitsUpdate.toString();
+        controller.text = text;
+        style.value = _styleFrom(text);
+      }
+      return null;
+    }, [digitsUpdate]);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -59,6 +64,7 @@ class DigitsSelector extends HookWidget {
         const SizedBox(width: DimensionsTheme.digitsSelectorHorizontalSpacing),
         FocusSubmittedTextField(
           controller: controller,
+          focusNode: focusNode,
           cursorColor: ColorTheme.accent,
           keyboardType: TextInputType.number,
           style: style.value,
@@ -67,7 +73,8 @@ class DigitsSelector extends HookWidget {
             style.value = _styleFrom(newDigitsText);
           },
           onSubmitted: (newDigitsText) {
-            final newDigits = Digits.fromString(newDigitsText) ?? digits.value;
+            final newDigits =
+                Digits.fromString(newDigitsText) ?? digitsField.value;
             onSelected?.call(newDigits);
           },
         ),

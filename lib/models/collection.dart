@@ -38,8 +38,7 @@ abstract class Collection extends DatabaseObject implements SeparableDisplay {
       final displayedText =
           e.display(displaySeparator).substring(e.type.prefix.length);
       final converted = e.converted;
-      final displayedConverted =
-          converted != null ? converted.display(displaySeparator) : "";
+      final displayedConverted = converted.display(displaySeparator);
       return "${e.label}: [${e.type.prefix}]$displayedText$displayedConverted\n";
     }));
     return res.toString();

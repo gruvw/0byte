@@ -14,6 +14,7 @@ class FocusSubmittedTextField extends HookWidget {
   final int? maxLength;
   final TextInputType keyboardType;
   final bool enableSuggestions;
+  final FocusNode? focusNode;
   final bool autofocus;
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChanged;
@@ -30,6 +31,7 @@ class FocusSubmittedTextField extends HookWidget {
     this.maxLength,
     this.keyboardType = TextInputType.visiblePassword,
     this.enableSuggestions = true,
+    this.focusNode,
     this.autofocus = false,
     this.inputFormatters,
     this.onChanged,
@@ -51,6 +53,7 @@ class FocusSubmittedTextField extends HookWidget {
 
     return IntrinsicWidth(
       child: Focus(
+        focusNode: focusNode,
         onFocusChange: (hasFocus) {
           if (hasFocus) {
             wasSubmitted.value = false;

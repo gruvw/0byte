@@ -200,7 +200,7 @@ class _NumberEntries extends StatelessWidget {
         children: [
           for (final entry in entries)
             _NumberEntry(key: UniqueKey(), entry: entry),
-          // TODO try ValueKey
+          // TODO 1 try ValueKey with builder
         ],
       ),
     );

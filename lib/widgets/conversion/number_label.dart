@@ -1,4 +1,3 @@
-import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,13 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/providers/entry_providers.dart';
 import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
-
-typedef StringField = PotentiallyMutableField<String, String>;
 
 class NumberLabel extends HookWidget {
   static final defaultStyle = GoogleFonts.getFont(
@@ -20,54 +19,53 @@ class NumberLabel extends HookWidget {
     fontSize: FontTheme.numberLabelSize,
   ).apply(color: ColorTheme.text2);
 
-  static StringField labelFieldFromNumber(
+  static PotentiallyMutableField<String> labelFieldFromNumber(
     PotentiallyMutable<NumberConversion> number,
   ) {
-    return PotentiallyMutableField(
+    final labelField = PotentiallyMutableField(
       number.object.label,
-      view: (value) => value,
       isMutable: number.isMutable,
-      onSubmitted: onSubmitNumberLabel(number.object),
+      onSubmitted: onSubmitNumberConversionLabel(number.object),
     );
+    if (number is NumberConversionEntry) {
+      labelField.subscribeTo(
+          ListenableField.provided(number, provider: entryLabelProvider));
+    }
+    return labelField;
   }
 
-  final PotentiallyMutable<NumberConversion>? number;
-  final StringField labelField;
-  final StringField? subscribedLabelField;
+  final PotentiallyMutableField<String> labelField;
   final TextStyle style;
 
   NumberLabel({
     super.key,
-    required PotentiallyMutable<NumberConversion> this.number,
-    this.subscribedLabelField,
+    required PotentiallyMutable<NumberConversion> number,
     TextStyle? style,
   })  : style = style ?? defaultStyle,
         labelField = labelFieldFromNumber(number);
 
-  NumberLabel.fromLabelField({
+  NumberLabel.fromLabelField(
+    this.labelField, {
     super.key,
-    required this.labelField,
-    this.subscribedLabelField,
     TextStyle? style,
-  })  : style = style ?? defaultStyle,
-        number = null;
+  }) : style = style ?? defaultStyle;
 
   @override
   Widget build(BuildContext context) {
-    final subscribedLabelField = this.subscribedLabelField;
-    final number = this.number;
+    final controller = useTextEditingController(text: labelField.value);
+    final focusNode = useFocusNode();
 
-    final value = subscribedLabelField == null
-        ? labelField.value
-        : useValueListenable(subscribedLabelField.notifier);
-
-    final controller = useTextEditingController(text: value);
-
-    if (number != null && number.object is NumberConversionEntry) {}
+    final labelUpdate = useValueListenable(labelField.notifier);
+    useEffect(() {
+      if (!focusNode.hasFocus) {
+        controller.text = labelUpdate;
+      }
+      return null;
+    }, [labelUpdate]);
 
     return FocusSubmittedTextField(
-      // Must not use hook to rebuild on change
       controller: controller,
+      focusNode: focusNode,
       readOnly: !labelField.isMutable,
       onSubmitted: labelField.submit,
       onChanged: labelField.set,

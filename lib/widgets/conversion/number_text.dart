@@ -5,15 +5,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/providers/entry_providers.dart';
 import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
-import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
+import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
 
 class NumberTextView extends HookWidget {
-  // TODO wrap number on new line (allign with prefix); maybe on sigle line (number, converted) when very small ?
+  // TODO wrap number on new line (align with prefix); maybe on sigle line (number, converted) when very small ?
 
   static const bool displaySeparator =
       true; // TODO use app/collection based setting
@@ -25,39 +27,70 @@ class NumberTextView extends HookWidget {
     color: ColorTheme.text1,
   );
 
-  static TextStyle _styleFrom(Number number) {
-    return _displayTitleStyle.apply(
-      color: number.parsed() == null ? ColorTheme.danger : null,
-    );
+  static TextStyle _styleFrom(Number? number) {
+    return number == null
+        ? _displayTitleStyle
+        : _displayTitleStyle.apply(
+            color: number.parsed() == null ? ColorTheme.danger : null,
+          );
   }
 
-  final PotentiallyMutable<Number> number;
-  final PotentiallyMutableField<String, Number> textNumberField;
+  final PotentiallyMutableField<String> numberTextField;
+  late final ListenableField<Number?> numberField;
 
   NumberTextView({
     super.key,
-    required this.number,
-  }) : textNumberField = PotentiallyMutableField(
+    required PotentiallyMutable<Number?> number,
+  }) : numberTextField = PotentiallyMutableField(
           applyNumberTextDisplay(number.object, displaySeparator),
-          view: (text) => number.object.withText(text),
           isMutable: number.isMutable,
           onSubmitted: onSubmitNumber(number.object),
-        );
+        ) {
+    if (number is NumberConversionEntry) {
+      numberTextField.subscribeTo(
+          ListenableField.provided(number, provider: entryTextProvider));
+    }
+    numberField = ListenableFieldTransform(
+      numberTextField,
+      transform: (text) => number.object?.withText(text),
+    );
+  }
+
+  NumberTextView.fromNumberField({super.key, required this.numberField})
+      : numberTextField = ImmutableField(ListenableFieldTransform(
+          numberField,
+          transform: (input) => applyNumberTextDisplay(
+            input,
+            displaySeparator,
+          ),
+        ));
 
   @override
   Widget build(BuildContext context) {
-    final numberView = textNumberField.value;
+    final number = numberField.value;
 
-    // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild, must create new TextEditingController)
-    final controller = textNumberField.isMutable
-        ? useTextEditingController(text: numberView.text)
-        : TextEditingController(text: numberView.text);
+    final controller = useTextEditingController(text: numberTextField.value);
+    final focusNode = useFocusNode();
+    final style = useState(_styleFrom(number));
 
-    final style = useState(_styleFrom(numberView));
+    final numberUpdate = useValueListenable(numberField.notifier);
+    useEffect(() {
+      style.value = _styleFrom(numberUpdate);
+      if (!focusNode.hasFocus && numberUpdate != null) {
+        controller.text = numberTextField.value;
+      }
+      return null;
+    }, [numberUpdate]);
 
     void valueToClipboard() {
       FocusScope.of(context).unfocus();
-      String copy = number.object.display(displaySeparator);
+
+      final number = numberField.value;
+      if (number == null) {
+        return;
+      }
+
+      String copy = number.display(displaySeparator);
       Clipboard.setData(ClipboardData(text: copy)).then(
         (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: RichText(
@@ -79,6 +112,10 @@ class NumberTextView extends HookWidget {
       );
     }
 
+    if (number == null) {
+      return const SizedBox();
+    }
+
     // BUG long press temporarily focuses TextField
     return GestureDetector(
       onSecondaryTap: valueToClipboard,
@@ -87,24 +124,22 @@ class NumberTextView extends HookWidget {
         children: [
           // Prefix
           Text(
-            numberView.type.prefix,
+            number.type.prefix,
             style: _displayTitleStyle.apply(color: ColorTheme.textPrefix),
           ),
           FocusSubmittedTextField(
             controller: controller,
-            readOnly: !textNumberField.isMutable,
-            autofocus: numberView.text.isEmpty && textNumberField.isMutable,
+            focusNode: focusNode,
+            readOnly: !numberTextField.isMutable,
+            autofocus: number.text.isEmpty && numberTextField.isMutable,
             inputFormatters: [
               NumberInputFormatter(
-                type: numberView.type,
+                type: number.type,
                 displaySeparator: displaySeparator,
               )
             ],
-            onChanged: (newText) {
-              textNumberField.set(newText);
-              style.value = _styleFrom(textNumberField.value);
-            },
-            onSubmitted: textNumberField.submit,
+            onChanged: numberTextField.set,
+            onSubmitted: numberTextField.submit,
             cursorColor: ColorTheme.text1,
             style: style.value,
             decoration: const InputDecoration(

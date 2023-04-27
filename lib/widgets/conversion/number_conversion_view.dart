@@ -14,7 +14,7 @@ import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 
-class NumberConversionEntryView extends HookConsumerWidget {
+class NumberConversionEntryView extends ConsumerWidget {
   final PotentiallyMutable<NumberConversionEntry> entry;
   final NumberLabel? label;
   final bool chipEnabled;
@@ -33,7 +33,7 @@ class NumberConversionEntryView extends HookConsumerWidget {
     return NumberConversionView(
       key: UniqueKey(), // Fixes non-updating number value
       number: entry,
-      label: label,
+      label: label ?? NumberLabel(number: entry),
       onChipPressed: chipEnabled
           ? () {
               Navigator.of(context).pushNamed(
@@ -62,7 +62,7 @@ class NumberConversionView extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO go to triple row layout (move conversion chip on first row) when input close to overflow
 
-    // PotentiallyMutableField holder (used for live conversion)
+    // ListenableField<Number?> holder (used for live conversion)
     final numberView = NumberTextView(number: number);
 
     return Column(
@@ -73,10 +73,7 @@ class NumberConversionView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                label ??
-                    NumberLabel(
-                      number: number,
-                    ),
+                label ?? NumberLabel(number: number),
                 const SizedBox(
                   height: DimensionsTheme.entryLabelNumberVerticalSpacing,
                 ),
@@ -95,7 +92,7 @@ class NumberConversionView extends StatelessWidget {
           ],
         ),
         TextFieldConversion(
-          textNumberField: numberView.textNumberField,
+          textNumberField: numberView.numberField,
           target: number.object.target,
         ),
       ],

@@ -178,7 +178,7 @@ PositionedText applyNumberPositionedText(
   );
 }
 
-void Function(String) onSubmitNumberLabel(NumberConversion number) =>
+void Function(String) onSubmitNumberConversionLabel(NumberConversion number) =>
     (newLabel) {
       if (newLabel.isEmpty) {
         newLabel = SettingsTheme.defaultNumberLabel;
@@ -187,15 +187,17 @@ void Function(String) onSubmitNumberLabel(NumberConversion number) =>
     };
 
 String applyNumberTextDisplay(
-  Number number,
+  Number? number,
   bool displaySeparator,
 ) =>
-    applyNumberPositionedText(
-      PositionedText(number.text, 0),
-      PositionedText(number.text, 0),
-      number.type,
-      displaySeparator,
-    ).text;
+    number == null
+        ? ""
+        : applyNumberPositionedText(
+            PositionedText(number.text, 0),
+            PositionedText(number.text, 0),
+            number.type,
+            displaySeparator,
+          ).text;
 
 String applyNumberTextBeforeSave(
   ConversionType type,
@@ -204,7 +206,11 @@ String applyNumberTextBeforeSave(
   return withoutSeparator(type, text);
 }
 
-void Function(String) onSubmitNumber(Number number) => (newText) {
+void Function(String) onSubmitNumber(Number? number) => (newText) {
+      if (number == null) {
+        return;
+      }
+
       if (newText.isEmpty) {
         // Take previous value instead
         newText = number.text;

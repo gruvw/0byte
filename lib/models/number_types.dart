@@ -13,8 +13,8 @@ mixin Number implements SeparableDisplay {
 
   String? parsed() => parseText(type, text);
 
-  Converted<Number>? convertTo(ConversionTarget target) {
-    return Converted.from(number: this, target: target);
+  ConvertedNumber convertTo(ConversionTarget target) {
+    return ConvertedNumber.from(number: this, target: target);
   }
 
   PotentiallyMutable<Number> toPotentiallyMutable(bool isMutable) {
@@ -34,7 +34,7 @@ mixin NumberConversion on Number {
   abstract String label;
   abstract ConversionTarget target;
 
-  Converted<Number>? get converted => convertTo(target);
+  ConvertedNumber get converted => convertTo(target);
 
   void setAllLike(NumberConversion other) {
     label = other.label;

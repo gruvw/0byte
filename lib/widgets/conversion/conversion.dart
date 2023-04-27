@@ -6,28 +6,37 @@ import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/conversion.dart';
-import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
 class TextFieldConversion extends HookWidget {
-  final PotentiallyMutableField<String, Number> textNumberField;
+  final ListenableField<Number?> textNumberField;
   final ConversionTarget target;
+  late final ListenableFieldTransform<Number?, ConvertedNumber?> convertedField;
+  late final ListenableFieldTransform<ConvertedNumber?, Number?>
+      convertedNumberField;
 
-  const TextFieldConversion({
+  TextFieldConversion({
     super.key,
     required this.textNumberField,
     required this.target,
-  });
+  }) {
+    convertedField = ListenableFieldTransform(
+      textNumberField,
+      transform: (number) {
+        return number?.convertTo(target);
+      },
+    );
+    convertedNumberField = ListenableFieldTransform(
+      convertedField,
+      transform: (input) => input?.result,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final number = useValueListenable(textNumberField.notifier);
-    final converted = number.convertTo(target);
-
-    if (converted == null) {
-      return const SizedBox();
-    }
+    final convertedNumber = useValueListenable(convertedField.notifier);
+    final wasSymmetric = convertedNumber?.wasSymmetric;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -35,10 +44,10 @@ class TextFieldConversion extends HookWidget {
         IntrinsicWidth(
           child: Column(
             children: [
-              NumberTextView(
-                number: Immutable(converted.result),
+              NumberTextView.fromNumberField(
+                numberField: convertedNumberField,
               ),
-              if (!converted.wasSymmetric)
+              if (wasSymmetric != null && !wasSymmetric)
                 const Divider(
                   color: ColorTheme.warning,
                   thickness:

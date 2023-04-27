@@ -1,5 +1,3 @@
-import 'package:app_0byte/providers/entry_providers.dart';
-import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -10,8 +8,9 @@ import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
-import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/providers/database_updaters.dart';
+import 'package:app_0byte/providers/entry_providers.dart';
+import 'package:app_0byte/providers/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/border_button.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
@@ -20,10 +19,11 @@ import 'package:app_0byte/widgets/conversion/number_conversion_view.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/selectors/conversion_types_selectors.dart';
 import 'package:app_0byte/widgets/conversion/selectors/digits_selector.dart';
+import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
 // TODO 0 extract constants
 
-class EntryPage extends ConsumerWidget {
+class EntryPage extends HookConsumerWidget {
   static Widget _barFromText(String text) => SecondaryBar(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
@@ -42,34 +42,19 @@ class EntryPage extends ConsumerWidget {
 
   final NumberConversion initial;
   final NumberConversionEntry entry;
+  final PotentiallyMutableField<String> titleLabelField;
   final bool deleteOnCancel;
 
   EntryPage({
     super.key,
     required this.entry,
     this.deleteOnCancel = false,
-  }) : initial = DartNumberConversion.from(entry);
+  })  : initial = DartNumberConversion.from(entry),
+        titleLabelField = NumberLabel.labelFieldFromNumber(Mutable(entry));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.subscribe(entryEditionUpdater(entry));
-
-    // Cross subscribed label fields (between title and preview)
-    final mutableEntry = Mutable(entry);
-    final entryPreviewLabelField =
-        NumberLabel.labelFieldFromNumber(mutableEntry);
-    final entryLabelTitle = NumberLabel(
-      number: mutableEntry,
-      subscribedLabelField: entryPreviewLabelField,
-      style: NumberLabel.defaultStyle.copyWith(
-        color: ColorTheme.text1,
-        fontSize: 24,
-      ),
-    );
-    final entryPreviewLabel = NumberLabel.fromLabelField(
-      labelField: entryPreviewLabelField,
-      subscribedLabelField: entryLabelTitle.labelField,
-    );
 
     void onCancel() {
       if (deleteOnCancel) {
@@ -104,7 +89,15 @@ class EntryPage extends ConsumerWidget {
                 SecondaryBar(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: Center(child: entryLabelTitle),
+                    child: Center(
+                      child: NumberLabel.fromLabelField(
+                        titleLabelField,
+                        style: NumberLabel.defaultStyle.copyWith(
+                          color: ColorTheme.text1,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
@@ -115,7 +108,7 @@ class EntryPage extends ConsumerWidget {
                   child: NumberConversionEntryView(
                     entry: Mutable(entry),
                     chipEnabled: false,
-                    label: entryPreviewLabel,
+                    label: NumberLabel.fromLabelField(titleLabelField),
                   ),
                 ),
                 _barFromText("Input"),
@@ -130,9 +123,9 @@ class EntryPage extends ConsumerWidget {
                       entry.target = selectedType.defaultTarget,
                 ),
                 DigitsSelector(
-                  digits: ProvidedField.fromProvider(
+                  digitsField: ListenableField.provided(
                     entry,
-                    provider: digitsProvider,
+                    provider: entryDigitsProvider,
                   ),
                   onSelected: (selectedDigits) =>
                       entry.target = entry.target.withDigits(selectedDigits),

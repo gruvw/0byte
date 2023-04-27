@@ -15,25 +15,29 @@ class ConversionTarget {
       ConversionTarget(type: type, digits: digits);
 }
 
-class Converted<N extends Number> implements SeparableDisplay {
-  final Number result;
+class ConvertedNumber implements SeparableDisplay {
+  final Number? result;
   final Digits digits;
   final bool wasSymmetric;
 
-  Converted._({
+  ConvertedNumber._({
     required this.result,
     required this.digits,
     required this.wasSymmetric,
   });
 
-  static Converted<N>? from<N extends Number>({
-    required N number,
+  static ConvertedNumber from({
+    required Number number,
     required ConversionTarget target,
   }) {
     final parsedNumber = number.parsed();
 
     if (parsedNumber == null) {
-      return null;
+      return ConvertedNumber._(
+        result: null,
+        digits: target.digits,
+        wasSymmetric: false,
+      );
     }
 
     String result = converted(
@@ -49,7 +53,7 @@ class Converted<N extends Number> implements SeparableDisplay {
       result: result,
     );
 
-    return Converted._(
+    return ConvertedNumber._(
       result: DartNumber(type: target.type, text: result),
       digits: target.digits,
       wasSymmetric: wasSymmetric,
@@ -58,11 +62,18 @@ class Converted<N extends Number> implements SeparableDisplay {
 
   @override
   String display(bool displaySeparator) {
+    final result = this.result;
+
+    if (result == null) {
+      return "";
+    }
+
     final arrow = wasSymmetric
         ? SettingsTheme.symmetricArrow
         : SettingsTheme.nonSymmetricArrow;
     final displayedDigits = wasSymmetric ? "" : " ${digits.amount}";
     final displayedConverted = applyNumberTextDisplay(result, displaySeparator);
+
     return " $arrow [${result.type.prefix}$displayedDigits]$displayedConverted";
   }
 }

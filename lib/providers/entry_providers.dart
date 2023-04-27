@@ -5,10 +5,26 @@ import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/providers/database_updaters.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
 
-final digitsProvider =
+final entryDigitsProvider =
     Provider.autoDispose.family<Digits, NumberConversionEntry>(
   (ref, entry) {
     ref.subscribe(entryEditionUpdater(entry));
     return entry.target.digits;
+  },
+);
+
+final entryLabelProvider =
+    Provider.autoDispose.family<String, NumberConversionEntry>(
+  (ref, entry) {
+    ref.subscribe(entryEditionUpdater(entry));
+    return entry.label;
+  },
+);
+
+final entryTextProvider =
+    Provider.autoDispose.family<String, NumberConversionEntry>(
+  (ref, entry) {
+    ref.subscribe(entryEditionUpdater(entry));
+    return entry.text;
   },
 );
