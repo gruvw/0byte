@@ -10,7 +10,7 @@ import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
-import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
+import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
 class NumberTextView extends HookWidget {
   // TODO wrap number on new line (allign with prefix); maybe on sigle line (number, converted) when very small ?
@@ -46,7 +46,7 @@ class NumberTextView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final numberView = textNumberField.view();
+    final numberView = textNumberField.value;
 
     // Use hook only when text is modified (otherwise controller.text won't be updated on rebuild, must create new TextEditingController)
     final controller = textNumberField.isMutable
@@ -102,7 +102,7 @@ class NumberTextView extends HookWidget {
             ],
             onChanged: (newText) {
               textNumberField.set(newText);
-              style.value = _styleFrom(textNumberField.view());
+              style.value = _styleFrom(textNumberField.value);
             },
             onSubmitted: textNumberField.submit,
             cursorColor: ColorTheme.text1,

@@ -36,7 +36,6 @@ dependencies:
   tuple: ^2.0.1
   url_strategy: ^0.2.0
   flutter_slidable: ^2.0.0
-  flutter_speed_dial: ^6.2.0
   flutter_native_splash: ^2.2.14
   google_fonts: ^3.0.1
   hive: ^2.2.3

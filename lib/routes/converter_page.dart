@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,9 +11,9 @@ import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
-import 'package:app_0byte/providers/providers.dart';
+import 'package:app_0byte/providers/database_providers.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/providers/updaters.dart';
+import 'package:app_0byte/providers/database_updaters.dart';
 import 'package:app_0byte/routes/route_generator.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
@@ -182,8 +181,9 @@ class _NumberEntries extends StatelessWidget {
 
     return Theme(
       data: ThemeData(canvasColor: ColorTheme.background2),
-      child: ReorderableListView(
-        dragStartBehavior: DragStartBehavior.down,
+      child: //
+          ReorderableListView(
+        // ReorderableListView.builder(
         buildDefaultDragHandles: false,
         onReorder: (oldIndex, newIndex) {
           if (oldIndex < newIndex) {
@@ -194,9 +194,13 @@ class _NumberEntries extends StatelessWidget {
         footer: const SizedBox(
           height: DimensionsTheme.converterPageEndScrollingSpacing,
         ),
+        // itemCount: entries.length,
+        // itemBuilder: (context, index) =>
+        //     _NumberEntry(key: UniqueKey(), entry: entries[index]),
         children: [
           for (final entry in entries)
             _NumberEntry(key: UniqueKey(), entry: entry),
+          // TODO try ValueKey
         ],
       ),
     );

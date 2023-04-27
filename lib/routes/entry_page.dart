@@ -1,3 +1,5 @@
+import 'package:app_0byte/providers/entry_providers.dart';
+import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +11,7 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/providers/updaters.dart';
+import 'package:app_0byte/providers/database_updaters.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/border_button.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
@@ -128,10 +130,13 @@ class EntryPage extends ConsumerWidget {
                       entry.target = selectedType.defaultTarget,
                 ),
                 DigitsSelector(
-                  initial: entry.target.digits,
+                  digits: ProvidedField.fromProvider(
+                    entry,
+                    provider: digitsProvider,
+                  ),
                   onSelected: (selectedDigits) =>
                       entry.target = entry.target.withDigits(selectedDigits),
-                )
+                ),
               ],
             ),
           ),

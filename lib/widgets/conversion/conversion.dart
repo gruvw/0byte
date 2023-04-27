@@ -8,7 +8,7 @@ import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
-import 'package:app_0byte/widgets/utils/potentially_mutable_field.dart';
+import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
 class TextFieldConversion extends HookWidget {
   final PotentiallyMutableField<String, Number> textNumberField;

@@ -103,6 +103,11 @@ class Digits {
   final int amount;
 
   const Digits._({required this.amount});
+
+  @override
+  String toString() {
+    return amount.toString();
+  }
 }
 
 final Map<String, ConversionType> _typeFromPrefix =

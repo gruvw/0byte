@@ -66,6 +66,7 @@ New UX + WEB
 - [ ] Fix https://github.com/gruvw/0byte/issues/1
 - [X] Fix https://github.com/gruvw/0byte/issues/4
 - [ ] Extract style from structure
+- [ ] Link to github repository in app
 
 ## Beta release `v0.0.2-beta`
 

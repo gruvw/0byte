@@ -1,3 +1,4 @@
+import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,21 +24,26 @@ class DigitsSelector extends HookWidget {
     );
   }
 
-  final Digits initial;
+  // TODO Fields to nameField instead of name (digitsField)
+  final ProvidedField<Digits> digits;
   final void Function(Digits selectedDigits)? onSelected;
 
   const DigitsSelector({
     super.key,
-    required this.initial,
+    required this.digits,
     this.onSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        useTextEditingController(text: initial.amount.toString());
+    final controller = useTextEditingController(text: digits.value.toString());
+    final style = useState(_styleFrom(digits.value.toString()));
 
-    final style = useState(_styleFrom(initial.amount.toString()));
+    digits.notifier.addListener(() {
+      final text = digits.value.toString();
+      controller.text = text;
+      style.value = _styleFrom(text);
+    });
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -61,11 +67,7 @@ class DigitsSelector extends HookWidget {
             style.value = _styleFrom(newDigitsText);
           },
           onSubmitted: (newDigitsText) {
-            final newDigits = Digits.fromString(newDigitsText) ?? initial;
-            final newText = newDigits.amount.toString();
-
-            controller.text = newText;
-            style.value = _styleFrom(newText);
+            final newDigits = Digits.fromString(newDigitsText) ?? digits.value;
             onSelected?.call(newDigits);
           },
         ),

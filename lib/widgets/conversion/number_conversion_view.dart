@@ -5,8 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/providers/database_updaters.dart';
 import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/providers/updaters.dart';
+import 'package:app_0byte/routes/route_generator.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/conversion/conversion.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
@@ -36,7 +37,7 @@ class NumberConversionEntryView extends HookConsumerWidget {
       onChipPressed: chipEnabled
           ? () {
               Navigator.of(context).pushNamed(
-                "/entry",
+                Routes.entry.name,
                 arguments: [entry.object],
               );
             }
