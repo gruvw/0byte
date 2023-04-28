@@ -181,9 +181,7 @@ class _NumberEntries extends StatelessWidget {
 
     return Theme(
       data: ThemeData(canvasColor: ColorTheme.background2),
-      child: // TODO fix ReorderableListView.builder
-          ReorderableListView(
-        // ReorderableListView.builder(
+      child: ReorderableListView.builder(
         buildDefaultDragHandles: false,
         onReorder: (oldIndex, newIndex) {
           if (oldIndex < newIndex) {
@@ -194,13 +192,12 @@ class _NumberEntries extends StatelessWidget {
         footer: const SizedBox(
           height: DimensionsTheme.converterPageEndScrollingSpacing,
         ),
-        // itemCount: entries.length,
-        // itemBuilder: (context, index) =>
-        //     _NumberEntry(key: ValueKey(entries[index]), entry: entries[index]),
-        children: [
-          for (final entry in entries)
-            _NumberEntry(key: ValueKey(entry), entry: entry),
-        ],
+        itemCount: entries.length,
+        itemBuilder: (context, index) => _NumberEntry(
+          key: ValueKey(index),
+          index: index,
+          entry: entries[index],
+        ),
       ),
     );
   }
@@ -208,14 +205,19 @@ class _NumberEntries extends StatelessWidget {
 
 // TODO 1 split in other files ?
 class _NumberEntry extends StatelessWidget {
+  final int index;
   final NumberConversionEntry entry;
 
-  const _NumberEntry({super.key, required this.entry});
+  const _NumberEntry({
+    super.key,
+    required this.entry,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ReorderableDelayedDragStartListener(
-      index: entry.position,
+      index: index,
       child: Column(
         children: [
           SlidableDelete(

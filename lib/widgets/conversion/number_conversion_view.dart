@@ -31,7 +31,6 @@ class NumberConversionEntryView extends ConsumerWidget {
     ref.subscribe(entryEditionUpdater(entry.object));
 
     return NumberConversionView(
-      key: UniqueKey(), // Fixes non-updating number value
       number: entry,
       label: label ?? NumberLabel(number: entry),
       onChipPressed: chipEnabled
@@ -60,8 +59,6 @@ class NumberConversionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO go to triple row layout (move conversion chip on first row) when input close to overflow
-
     // ListenableField<Number?> holder (used for live conversion)
     final numberView = NumberTextView(number: number);
 

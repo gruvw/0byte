@@ -8,7 +8,7 @@ import 'package:app_0byte/global/styles/dimensions.dart';
 class SlidableDelete extends StatelessWidget {
   final Widget child;
   final SlidableActionCallback onDelete;
-  final Object? groupTag; // TODO make groupTag actually work
+  final Object? groupTag;
 
   const SlidableDelete({
     super.key,
@@ -20,7 +20,6 @@ class SlidableDelete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      key: UniqueKey(),
       groupTag: groupTag,
       endActionPane: ActionPane(
         motion: const BehindMotion(),
