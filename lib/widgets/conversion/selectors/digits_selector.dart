@@ -7,6 +7,7 @@ import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/state/hooks/listener.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
@@ -35,20 +36,18 @@ class DigitsSelector extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        useTextEditingController(text: digitsField.value.toString());
+    final digits = digitsField.value;
+    final controller = useTextEditingController(text: digits.toString());
     final focusNode = useFocusNode();
-    final style = useState(_styleFrom(digitsField.value.toString()));
+    final style = useState(_styleFrom(digits.toString()));
 
-    final digitsUpdate = useValueListenable(digitsField.notifier);
-    useEffect(() {
+    useListener(digitsField.notifier, (newDigits) {
       if (!focusNode.hasFocus) {
-        final text = digitsUpdate.toString();
+        final text = newDigits.toString();
         controller.text = text;
         style.value = _styleFrom(text);
       }
-      return null;
-    }, [digitsUpdate]);
+    });
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -57,9 +56,10 @@ class DigitsSelector extends HookWidget {
         const Text(
           SettingsTheme.digitsSelectorLabel,
           style: TextStyle(
-              color: ColorTheme.text1,
-              fontFamily: FontTheme.firaSans,
-              fontSize: FontTheme.conversionSelectorSize),
+            color: ColorTheme.text1,
+            fontFamily: FontTheme.firaSans,
+            fontSize: FontTheme.conversionSelectorSize,
+          ),
         ),
         const SizedBox(width: DimensionsTheme.digitsSelectorHorizontalSpacing),
         FocusSubmittedTextField(
@@ -73,8 +73,7 @@ class DigitsSelector extends HookWidget {
             style.value = _styleFrom(newDigitsText);
           },
           onSubmitted: (newDigitsText) {
-            final newDigits =
-                Digits.fromString(newDigitsText) ?? digitsField.value;
+            final newDigits = Digits.fromString(newDigitsText) ?? digits;
             onSelected?.call(newDigits);
           },
         ),

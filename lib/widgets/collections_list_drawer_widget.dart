@@ -8,9 +8,9 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/providers/database_providers.dart';
-import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/providers/database_updaters.dart';
+import 'package:app_0byte/state/providers/database_providers.dart';
+import 'package:app_0byte/state/providers/update_riverpod.dart';
+import 'package:app_0byte/state/providers/database_updaters.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
 

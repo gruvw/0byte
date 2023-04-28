@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/providers/database_providers.dart';
+import 'package:app_0byte/state/providers/database_providers.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 mixin ListenableField<T> {

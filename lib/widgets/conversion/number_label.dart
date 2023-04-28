@@ -7,7 +7,8 @@ import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
-import 'package:app_0byte/providers/entry_providers.dart';
+import 'package:app_0byte/state/hooks/listener.dart';
+import 'package:app_0byte/state/providers/entry_providers.dart';
 import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
@@ -55,13 +56,11 @@ class NumberLabel extends HookWidget {
     final controller = useTextEditingController(text: labelField.value);
     final focusNode = useFocusNode();
 
-    final labelUpdate = useValueListenable(labelField.notifier);
-    useEffect(() {
+    useListener(labelField.notifier, (newLabel) {
       if (!focusNode.hasFocus) {
-        controller.text = labelUpdate;
+        controller.text = newLabel;
       }
-      return null;
-    }, [labelUpdate]);
+    });
 
     return FocusSubmittedTextField(
       controller: controller,

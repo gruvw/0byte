@@ -11,10 +11,10 @@ import 'package:app_0byte/global/styles/settings.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
-import 'package:app_0byte/providers/database_providers.dart';
-import 'package:app_0byte/providers/update_riverpod.dart';
-import 'package:app_0byte/providers/database_updaters.dart';
 import 'package:app_0byte/routes/route_generator.dart';
+import 'package:app_0byte/state/providers/database_providers.dart';
+import 'package:app_0byte/state/providers/database_updaters.dart';
+import 'package:app_0byte/state/providers/update_riverpod.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/collections_list_drawer_widget.dart';
@@ -196,11 +196,10 @@ class _NumberEntries extends StatelessWidget {
         ),
         // itemCount: entries.length,
         // itemBuilder: (context, index) =>
-        //     _NumberEntry(key: UniqueKey(), entry: entries[index]),
+        //     _NumberEntry(key: ValueKey(entries[index]), entry: entries[index]),
         children: [
           for (final entry in entries)
-            _NumberEntry(key: UniqueKey(), entry: entry),
-          // TODO 1 try ValueKey with builder
+            _NumberEntry(key: ValueKey(entry), entry: entry),
         ],
       ),
     );

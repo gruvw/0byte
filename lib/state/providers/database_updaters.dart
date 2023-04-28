@@ -1,7 +1,7 @@
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
-import 'package:app_0byte/providers/database_providers.dart';
-import 'package:app_0byte/providers/update_riverpod.dart';
+import 'package:app_0byte/state/providers/database_providers.dart';
+import 'package:app_0byte/state/providers/update_riverpod.dart';
 
 final collectionsUpdater = Updater<List<Collection>>((ref) {
   ref.watch(collectionsProvider);

@@ -7,7 +7,8 @@ import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
-import 'package:app_0byte/providers/entry_providers.dart';
+import 'package:app_0byte/state/hooks/listener.dart';
+import 'package:app_0byte/state/providers/entry_providers.dart';
 import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
@@ -73,14 +74,12 @@ class NumberTextView extends HookWidget {
     final focusNode = useFocusNode();
     final style = useState(_styleFrom(number));
 
-    final numberUpdate = useValueListenable(numberField.notifier);
-    useEffect(() {
-      style.value = _styleFrom(numberUpdate);
-      if (!focusNode.hasFocus && numberUpdate != null) {
+    useListener(numberField.notifier, (newNumber) {
+      style.value = _styleFrom(newNumber);
+      if (!focusNode.hasFocus && newNumber != null) {
         controller.text = numberTextField.value;
       }
-      return null;
-    }, [numberUpdate]);
+    });
 
     void valueToClipboard() {
       FocusScope.of(context).unfocus();

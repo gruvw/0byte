@@ -123,7 +123,7 @@ enum ConversionType {
     "ASCII",
     "␀␁␂␃␄␅␆␇␈␉␊␋␌␍␎␏␐␑␒␓␔␕␖␗␘␙␚␛␜␝␞␟␣!\"#\$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~␡",
     -1,
-    10,
+    4,
   );
 
   static bool isValidTypeIndex(int typeIndex) {
