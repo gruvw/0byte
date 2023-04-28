@@ -9,14 +9,14 @@ import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
-class TextFieldConversion extends HookWidget {
+class TextFieldNumberConversion extends HookWidget {
   final ListenableField<Number?> textNumberField;
   final ConversionTarget target;
   late final ListenableFieldTransform<Number?, ConvertedNumber?> convertedField;
   late final ListenableFieldTransform<ConvertedNumber?, Number?>
       convertedNumberField;
 
-  TextFieldConversion({
+  TextFieldNumberConversion({
     super.key,
     required this.textNumberField,
     required this.target,

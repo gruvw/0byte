@@ -181,7 +181,7 @@ class _NumberEntries extends StatelessWidget {
 
     return Theme(
       data: ThemeData(canvasColor: ColorTheme.background2),
-      child: //
+      child: // TODO fix ReorderableListView.builder
           ReorderableListView(
         // ReorderableListView.builder(
         buildDefaultDragHandles: false,
@@ -219,6 +219,7 @@ class _NumberEntry extends StatelessWidget {
       child: Column(
         children: [
           SlidableDelete(
+            groupTag: entry.collection,
             onDelete: (_) => entry.delete(),
             child: Padding(
               padding: const EdgeInsets.symmetric(
