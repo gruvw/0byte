@@ -36,6 +36,8 @@ abstract class PaddingTheme {
   static const EdgeInsetsGeometry drawer = EdgeInsets.all(10);
   static const EdgeInsetsGeometry secondaryBar = EdgeInsets.symmetric(vertical: 5, horizontal: 14);
   static const EdgeInsetsGeometry targetSecondaryBars = EdgeInsets.symmetric(vertical: 5);
+  static const EdgeInsetsGeometry conversionTitle =
+      EdgeInsets.symmetric(vertical: 10, horizontal: 5);
   static const EdgeInsetsGeometry entry = EdgeInsets.symmetric(vertical: 8, horizontal: 14);
   static const EdgeInsetsGeometry conversionChip = EdgeInsets.symmetric(horizontal: 6);
   static const EdgeInsetsGeometry borderButton = EdgeInsets.symmetric(vertical: 6);

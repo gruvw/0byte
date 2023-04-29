@@ -24,6 +24,7 @@ class ConversionTypeSelector extends StatelessWidget {
     return OutlinedButton(
       onPressed: onSelected,
       style: OutlinedButton.styleFrom(
+        foregroundColor: ColorTheme.accent,
         backgroundColor: isSelected ? ColorTheme.accent : ColorTheme.background1,
         shape: DimensionsTheme.conversionTypeSelectorBorder,
         side: const BorderSide(

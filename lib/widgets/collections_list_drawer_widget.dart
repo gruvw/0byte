@@ -5,12 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/global/styles/time.dart';
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/state/providers/database_providers.dart';
-import 'package:app_0byte/state/providers/update_riverpod.dart';
-import 'package:app_0byte/state/providers/database_updaters.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
 
@@ -25,9 +23,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.subscribe(collectionsUpdater);
-
-    final collections = database.getCollections();
+    final collections = ref.read(collectionsProvider);
     final selectedCollection = ref.read(selectedCollectionProvider);
 
     void changeSelectedCollection(Collection collection) {
@@ -88,9 +84,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    success
-                        ? "Successfully imported."
-                        : "An error occurred while importing.",
+                    success ? "Successfully imported." : "An error occurred while importing.",
                   ),
                 ),
               );
@@ -119,8 +113,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
                 duration: TimeTheme.exportMessageDuration,
                 action: SnackBarAction(
                   label: "Ok",
-                  onPressed: () =>
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                  onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
                 ),
                 content: Text("Exported collections: $path."),
               ));
@@ -131,9 +124,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
         final collection = collections[index];
 
         return ListTile(
-          tileColor: collection == selectedCollection
-              ? ColorTheme.background2
-              : Colors.transparent,
+          tileColor: collection == selectedCollection ? ColorTheme.background2 : Colors.transparent,
           title: Text(
             collection.label,
             overflow: TextOverflow.ellipsis,

@@ -17,6 +17,8 @@ No support for bookmarking, no data persistence, basic data validation
 
 ## Beta release `v0.0.1-beta`
 
+Improving user input
+
 - [X] Data input validation (+ alphabet verification & hex to maj & no sign if not signed decimal input/ascii, subtitle not empty, not only sign alone)
 - [X] Handle entries UI overflow (middle), **converted to issue**
 - [X] Reorder entries
@@ -49,18 +51,18 @@ Sharing
 
 ## Alpha release `v0.0.2-alpha.3`
 
-New UX + WEB
+Improving UX + code architecture
 
 - [ ] Settings
   - [X] Support number separator
   - [ ] Display separator + Clipboard separator to settings (settings page)
   - [ ] Option: to copy ASCII Unicode Control Pictures vs ASCII values
-  - [ ] Option: Always remove leading 0s on converted (maybe on input too ?)
+  - [ ] Option: Always hide leading 0s on converted (maybe on input too ?)
 - [ ] Full UX redesign (no more fixed output per collection)
   - [X] Patch entry and collections to support new features (+ needed corrections)
   - [X] Finish entry page
   - [ ] Finish refactor (pages, no longer used classes, new types, new entry, extract constants, ...)
-  - [ ] Fix outlined buttons hover color
+  - [X] Fix outlined buttons hover color
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
 - [ ] Fix https://github.com/gruvw/0byte/issues/1
@@ -70,6 +72,8 @@ New UX + WEB
 
 ## Beta release `v0.0.2-beta`
 
+Usability polish
+
 - [ ] Support base 64 conversions
 - [ ] Support Latin-1/ISO 8859-1
 - [ ] Support Octal conversion
@@ -78,6 +82,8 @@ New UX + WEB
 - [ ] Write README (features + screenshots)
 
 ## Major release `v0.0.3`
+
+Cross-Compatibility
 
 - [ ] Application website with download links
 - [ ] Test android

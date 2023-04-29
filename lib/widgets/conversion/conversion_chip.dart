@@ -47,11 +47,13 @@ class ConversionChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(ColorTheme.accent),
-        foregroundColor: MaterialStateProperty.all(ColorTheme.background3),
-        padding: MaterialStateProperty.all(PaddingTheme.conversionChip),
-        shape: MaterialStateProperty.all(DimensionsTheme.conversionChipBorder),
+      style: OutlinedButton.styleFrom(
+        backgroundColor: ColorTheme.accent,
+        foregroundColor: ColorTheme.background3,
+        disabledBackgroundColor: ColorTheme.accent,
+        disabledForegroundColor: ColorTheme.background3,
+        padding: PaddingTheme.conversionChip,
+        shape: DimensionsTheme.conversionChipBorder,
       ),
       child: Text(
         "${inputType.prefix} -> ${target.type.prefix} ${target.digits.amount}",

@@ -30,11 +30,12 @@ final collectionsEventProvider = StreamProvider.autoDispose<Event<Collection>>(
   },
 );
 
-final entryEditionEventProvider = StreamProvider.autoDispose
-    .family<Event<NumberConversionEntry>, NumberConversionEntry>(
+final entryEditionEventProvider =
+    StreamProvider.autoDispose.family<Event<NumberConversionEntry>, NumberConversionEntry>(
   (ref, entry) async* {
-    yield* database.watchEntries().where(
-        (event) => event.object == entry && event.type == EventType.edit);
+    yield* database
+        .watchEntries()
+        .where((event) => event.object == entry && event.type == EventType.edit);
   },
 );
 
