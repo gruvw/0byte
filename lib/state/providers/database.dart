@@ -38,13 +38,3 @@ final entryEditionEventProvider =
         .where((event) => event.object == entry && event.type == EventType.edit);
   },
 );
-
-final selectedCollectionProvider = StateProvider.autoDispose<Collection>(
-  (ref) {
-    final collections = ref.read(collectionsProvider);
-
-    return collections.isEmpty
-        ? database.createCollection(label: "My Collection")
-        : collections.first;
-  },
-);

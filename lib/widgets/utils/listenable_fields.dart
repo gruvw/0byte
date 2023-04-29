@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/state/providers/database_providers.dart';
+import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 mixin ListenableField<T> {
@@ -37,8 +37,7 @@ class ListenableFieldTransform<Input, Output> with ListenableField<Output> {
   }
 }
 
-class PotentiallyMutableField<T> extends PotentiallyMutable<T>
-    with ListenableField<T> {
+class PotentiallyMutableField<T> extends PotentiallyMutable<T> with ListenableField<T> {
   @override
   @protected
   T get object;
@@ -74,8 +73,7 @@ class PotentiallyMutableField<T> extends PotentiallyMutable<T>
     }
   }
 
-  void subscribeTo(ListenableField<T> field) =>
-      field.addListener((newValue) => set(newValue));
+  void subscribeTo(ListenableField<T> field) => field.addListener((newValue) => set(newValue));
 
   void submit(T newObject) {
     set(newObject);

@@ -7,14 +7,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/global/styles/time.dart';
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/routes/route_generator.dart';
-import 'package:app_0byte/state/providers/database_providers.dart';
-import 'package:app_0byte/state/providers/database_updaters.dart';
-import 'package:app_0byte/state/providers/update_riverpod.dart';
+import 'package:app_0byte/state/providers/application.dart';
+import 'package:app_0byte/state/providers/database.dart';
+import 'package:app_0byte/state/updaters/database.dart';
+import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/collections_list_drawer_widget.dart';
@@ -84,8 +85,7 @@ class ConverterPage extends HookConsumerWidget {
                     duration: TimeTheme.exportMessageDuration,
                     action: SnackBarAction(
                       label: "Ok",
-                      onPressed: () =>
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                      onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
                     ),
                     content: Text("Exported collection: $path."),
                   ));
@@ -106,8 +106,7 @@ class ConverterPage extends HookConsumerWidget {
                   Clipboard.setData(ClipboardData(
                           // FIXME should display separator from settings
                           text: collection.display(true)))
-                      .then((_) =>
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      .then((_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: RichText(
                               text: TextSpan(
                                 children: [

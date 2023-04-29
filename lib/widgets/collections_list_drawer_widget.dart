@@ -8,7 +8,8 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/state/providers/database_providers.dart';
+import 'package:app_0byte/state/providers/application.dart';
+import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
 

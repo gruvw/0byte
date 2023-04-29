@@ -9,9 +9,9 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
-import 'package:app_0byte/state/providers/database_updaters.dart';
-import 'package:app_0byte/state/providers/entry_providers.dart';
-import 'package:app_0byte/state/providers/update_riverpod.dart';
+import 'package:app_0byte/state/providers/entry.dart';
+import 'package:app_0byte/state/updaters/database.dart';
+import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/border_button.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
@@ -111,8 +111,7 @@ class EntryPage extends HookConsumerWidget {
               _barFromText(ValuesTheme.targetTitle),
               ConversionTypesSelectors(
                 selected: entry.target.type,
-                onSelected: (selectedType) =>
-                    entry.target = selectedType.defaultTarget,
+                onSelected: (selectedType) => entry.target = selectedType.defaultTarget,
               ),
               DigitsSelector(
                 digitsField: ListenableField.provided(

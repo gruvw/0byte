@@ -8,7 +8,7 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
-import 'package:app_0byte/state/providers/entry_providers.dart';
+import 'package:app_0byte/state/providers/entry.dart';
 import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
@@ -18,8 +18,7 @@ import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
 class NumberTextView extends HookWidget {
   // TODO wrap number on new line (align with prefix); maybe on sigle line (number, converted) when very small ?
 
-  static const bool displaySeparator =
-      true; // TODO use app/collection based setting
+  static const bool displaySeparator = true; // TODO use app/collection based setting
 
   static const _displayTitleStyle = TextStyle(
     fontFamily: FontTheme.firaCode,
@@ -48,8 +47,7 @@ class NumberTextView extends HookWidget {
           onSubmitted: onSubmitNumber(number.object),
         ) {
     if (number is NumberConversionEntry) {
-      numberTextField.subscribeTo(
-          ListenableField.provided(number, provider: entryTextProvider));
+      numberTextField.subscribeTo(ListenableField.provided(number, provider: entryTextProvider));
     }
     numberField = ListenableFieldTransform(
       numberTextField,
