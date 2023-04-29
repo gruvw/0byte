@@ -1,3 +1,4 @@
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/global/styles/fonts.dart';
@@ -19,11 +20,11 @@ class ConversionTitleWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Input", style: _titleStyle),
+            const Text(ValuesTheme.inputTitle, style: _titleStyle),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: const [
-                Text("Converted", style: _titleStyle),
+                Text(ValuesTheme.conversionTitle, style: _titleStyle),
               ],
             )
           ],

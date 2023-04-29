@@ -46,29 +46,21 @@ class ConversionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(ColorTheme.accent),
-          foregroundColor: MaterialStateProperty.all(ColorTheme.background3),
-          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
-            vertical: 0,
-            horizontal: PaddingTheme.conversionChipHorizontal,
-          )),
-          shape: MaterialStateProperty.all(
-            const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(DimensionsTheme.conversionChipRadius),
-              ),
-            ),
-          ),
+      onPressed: onPressed,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(ColorTheme.accent),
+        foregroundColor: MaterialStateProperty.all(ColorTheme.background3),
+        padding: MaterialStateProperty.all(PaddingTheme.conversionChip),
+        shape: MaterialStateProperty.all(DimensionsTheme.conversionChipBorder),
+      ),
+      child: Text(
+        "${inputType.prefix} -> ${target.type.prefix} ${target.digits.amount}",
+        style: const TextStyle(
+          fontFamily: FontTheme.firaCode,
+          fontWeight: FontWeight.bold,
+          fontSize: FontTheme.numberLabelSize,
         ),
-        child: Text(
-          "${inputType.prefix} -> ${target.type.prefix} ${target.digits.amount}",
-          style: const TextStyle(
-            fontFamily: FontTheme.firaCode,
-            fontWeight: FontWeight.bold,
-            fontSize: FontTheme.numberLabelSize,
-          ),
-        ));
+      ),
+    );
   }
 }

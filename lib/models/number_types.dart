@@ -67,7 +67,7 @@ class DartNumberConversion with Number, NumberConversion {
   @override
   ConversionTarget target;
 
-  DartNumberConversion.from(NumberConversion entry)
+  DartNumberConversion.clone(NumberConversion entry)
       : label = entry.label,
         type = entry.type,
         text = entry.text,

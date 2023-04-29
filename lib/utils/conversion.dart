@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/transforms.dart';
@@ -69,8 +69,8 @@ class ConvertedNumber implements SeparableDisplay {
     }
 
     final arrow = wasSymmetric
-        ? SettingsTheme.symmetricArrow
-        : SettingsTheme.nonSymmetricArrow;
+        ? ValuesTheme.symmetricArrow
+        : ValuesTheme.nonSymmetricArrow;
     final displayedDigits = wasSymmetric ? "" : " ${digits.amount}";
     final displayedConverted = applyNumberTextDisplay(result, displaySeparator);
 

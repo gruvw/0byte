@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_types.dart';
-
-// TODO 0 extract constants
 
 class ConversionTypeSelector extends StatelessWidget {
   final ConversionType type;
@@ -25,27 +24,22 @@ class ConversionTypeSelector extends StatelessWidget {
     return OutlinedButton(
       onPressed: onSelected,
       style: OutlinedButton.styleFrom(
-        backgroundColor:
-            isSelected ? ColorTheme.accent : ColorTheme.background1,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(6),
-          ),
-        ),
+        backgroundColor: isSelected ? ColorTheme.accent : ColorTheme.background1,
+        shape: DimensionsTheme.conversionTypeSelectorBorder,
         side: const BorderSide(
           color: ColorTheme.accent,
-          width: 3,
+          width: DimensionsTheme.conversionTypeSelectorBorderWidth,
           style: BorderStyle.solid,
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: PaddingTheme.typeSelector,
         child: Text(
           type.prefix,
           style: GoogleFonts.getFont(
             FontTheme.firaCode,
             color: isSelected ? ColorTheme.background1 : ColorTheme.accent,
-            fontSize: 35,
+            fontSize: FontTheme.typeSelectorSize,
             fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
           ),
         ),

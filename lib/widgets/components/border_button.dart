@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-
-// TODO 0 extract constants
 
 class BorderButton extends StatelessWidget {
   final String text;
@@ -28,19 +27,15 @@ class BorderButton extends StatelessWidget {
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         foregroundColor: color,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8),
-          ),
-        ),
+        shape: DimensionsTheme.borderButtonBorder,
         side: BorderSide(
           color: color,
-          width: 2,
+          width: DimensionsTheme.borderButtonWidth,
           style: BorderStyle.solid,
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6),
+        padding: PaddingTheme.borderButton,
         child: Row(
           children: [
             Text(
@@ -48,13 +43,13 @@ class BorderButton extends StatelessWidget {
               style: GoogleFonts.getFont(
                 FontTheme.firaSans,
                 color: color,
-                fontSize: 22,
+                fontSize: FontTheme.borderButtonSize,
                 fontWeight: FontWeight.w400,
               ),
             ),
             if (child != null)
               Padding(
-                padding: const EdgeInsets.fromLTRB(12, 4, 0, 4),
+                padding: PaddingTheme.borderButtonChild,
                 child: child,
               ),
           ],

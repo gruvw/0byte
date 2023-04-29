@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/number_types.dart';
 
 import 'parser.dart';
@@ -181,7 +181,7 @@ PositionedText applyNumberPositionedText(
 void Function(String) onSubmitNumberConversionLabel(NumberConversion number) =>
     (newLabel) {
       if (newLabel.isEmpty) {
-        newLabel = SettingsTheme.defaultNumberLabel;
+        newLabel = ValuesTheme.defaultNumberLabel;
       }
       number.label = newLabel;
     };

@@ -1,12 +1,15 @@
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
+
 class SecondaryBar extends StatelessWidget {
+  final EdgeInsetsGeometry padding;
   final Widget? child;
 
   const SecondaryBar({
     super.key,
+    this.padding = EdgeInsets.zero,
     this.child,
   });
 
@@ -14,10 +17,7 @@ class SecondaryBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: ColorTheme.background2,
-      padding: const EdgeInsets.symmetric(
-        vertical: PaddingTheme.titleVertical,
-        horizontal: PaddingTheme.titleHorizontal,
-      ),
+      padding: PaddingTheme.secondaryBar.add(padding),
       child: child,
     );
   }

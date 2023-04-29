@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/providers/database_updaters.dart';
@@ -21,20 +22,16 @@ import 'package:app_0byte/widgets/conversion/selectors/conversion_types_selector
 import 'package:app_0byte/widgets/conversion/selectors/digits_selector.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
-// TODO 0 extract constants
-
 class EntryPage extends HookConsumerWidget {
   static Widget _barFromText(String text) => SecondaryBar(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: Center(
-            child: Text(
-              text,
-              style: const TextStyle(
-                color: ColorTheme.text1,
-                fontFamily: FontTheme.firaCode,
-                fontSize: 20,
-              ),
+        padding: PaddingTheme.targetSecondaryBars,
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: ColorTheme.text1,
+              fontFamily: FontTheme.firaCode,
+              fontSize: FontTheme.entryBarSize,
             ),
           ),
         ),
@@ -49,7 +46,7 @@ class EntryPage extends HookConsumerWidget {
     super.key,
     required this.entry,
     this.deleteOnCancel = false,
-  })  : initial = DartNumberConversion.from(entry),
+  })  : initial = DartNumberConversion.clone(entry),
         titleLabelField = NumberLabel.labelFieldFromNumber(Mutable(entry));
 
   @override
@@ -82,69 +79,63 @@ class EntryPage extends HookConsumerWidget {
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: Column(
-              children: [
-                SecondaryBar(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: Center(
-                      child: NumberLabel.fromLabelField(
-                        titleLabelField,
-                        style: NumberLabel.defaultStyle.copyWith(
-                          color: ColorTheme.text1,
-                          fontSize: 24,
-                        ),
-                      ),
+          Column(
+            children: [
+              SecondaryBar(
+                padding: PaddingTheme.targetSecondaryBars,
+                child: Center(
+                  child: NumberLabel.fromLabelField(
+                    titleLabelField,
+                    style: NumberLabel.defaultStyle.copyWith(
+                      color: ColorTheme.text1,
+                      fontSize: FontTheme.labelTitleSize,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                    horizontal: PaddingTheme.entryHorizontal,
-                  ),
-                  child: NumberConversionEntryView(
-                    entry: Mutable(entry),
-                    chipEnabled: false,
-                    label: NumberLabel.fromLabelField(titleLabelField),
-                  ),
+              ),
+              Padding(
+                padding: PaddingTheme.entryPagePreview,
+                child: NumberConversionEntryView(
+                  entry: Mutable(entry),
+                  chipEnabled: false,
+                  label: NumberLabel.fromLabelField(titleLabelField),
                 ),
-                _barFromText("Input"),
-                ConversionTypesSelectors(
-                  selected: entry.type,
-                  onSelected: (selectedType) => entry.type = selectedType,
+              ),
+              _barFromText(ValuesTheme.inputTitle),
+              ConversionTypesSelectors(
+                selected: entry.type,
+                onSelected: (selectedType) => entry.type = selectedType,
+              ),
+              _barFromText(ValuesTheme.targetTitle),
+              ConversionTypesSelectors(
+                selected: entry.target.type,
+                onSelected: (selectedType) =>
+                    entry.target = selectedType.defaultTarget,
+              ),
+              DigitsSelector(
+                digitsField: ListenableField.provided(
+                  entry,
+                  provider: entryDigitsProvider,
                 ),
-                _barFromText("Target"),
-                ConversionTypesSelectors(
-                  selected: entry.target.type,
-                  onSelected: (selectedType) =>
-                      entry.target = selectedType.defaultTarget,
-                ),
-                DigitsSelector(
-                  digitsField: ListenableField.provided(
-                    entry,
-                    provider: entryDigitsProvider,
-                  ),
-                  onSelected: (selectedDigits) =>
-                      entry.target = entry.target.withDigits(selectedDigits),
-                ),
-              ],
-            ),
+                onSelected: (selectedDigits) =>
+                    entry.target = entry.target.withDigits(selectedDigits),
+              ),
+            ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+            padding: PaddingTheme.entryPageSubmit,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BorderButton(
-                  text: "Cancel",
+                  text: ValuesTheme.cancelLabel,
                   color: ColorTheme.text2,
                   onPressed: onCancel,
                 ),
                 BorderButton(
-                  text: "Confirm",
+                  text: ValuesTheme.confirmLabel,
                   color: ColorTheme.accent,
                   onPressed: () {
                     Navigator.pop(context);

@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
@@ -71,7 +71,7 @@ class ConverterPage extends HookConsumerWidget {
                     color: ColorTheme.text1,
                   ),
                   text: Text(
-                    SettingsTheme.exportCollectionButtonLabel,
+                    ValuesTheme.exportCollectionButtonLabel,
                     style: menuTextStyle,
                   ),
                 ),
@@ -98,7 +98,7 @@ class ConverterPage extends HookConsumerWidget {
                     color: ColorTheme.text1,
                   ),
                   text: Text(
-                    SettingsTheme.copyCollectionButtonLabel,
+                    ValuesTheme.copyCollectionButtonLabel,
                     style: menuTextStyle,
                   ),
                 ),
@@ -154,9 +154,9 @@ class ConverterPage extends HookConsumerWidget {
           final entry = database.createNumberConversionEntry(
             collection: collection,
             position: nbEntries,
-            label: "${SettingsTheme.defaultNumberLabel} ${nbEntries + 1}",
-            number: SettingsTheme.defaultNumber,
-            target: SettingsTheme.defaultTarget,
+            label: "${ValuesTheme.defaultNumberLabel} ${nbEntries + 1}",
+            number: ValuesTheme.defaultNumber,
+            target: ValuesTheme.defaultTarget,
           );
           Navigator.pushNamed(
             context,
@@ -224,10 +224,7 @@ class _NumberEntry extends StatelessWidget {
             groupTag: entry.collection,
             onDelete: (_) => entry.delete(),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: PaddingTheme.entryHorizontal,
-                vertical: PaddingTheme.entryVertical,
-              ),
+              padding: PaddingTheme.entry,
               child: NumberConversionEntryView(entry: Mutable(entry)),
             ),
           ),

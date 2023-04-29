@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/state/providers/database_providers.dart';
@@ -36,7 +36,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
     }
 
     return ListView.separated(
-      padding: const EdgeInsets.all(PaddingTheme.drawerAll),
+      padding: PaddingTheme.drawer,
       itemCount: collections.length + 3,
       separatorBuilder: (context, index) => const Divider(
         color: ColorTheme.text2,
@@ -51,7 +51,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
               color: ColorTheme.text2,
             ),
             title: const Text(
-              SettingsTheme.newCollectionButtonLabel,
+              ValuesTheme.newCollectionButtonLabel,
               style: drawerTextStyle,
             ),
             onTap: () {
@@ -59,7 +59,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
                 database.createCollection(
                   label: uniqueLabel(
                     ref.read(collectionsProvider).map((c) => c.label).toList(),
-                    SettingsTheme.defaultCollectionLabel,
+                    ValuesTheme.defaultCollectionLabel,
                   ),
                 ),
               );
@@ -75,7 +75,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
               color: ColorTheme.text2,
             ),
             title: const Text(
-              SettingsTheme.importButtonLabel,
+              ValuesTheme.importButtonLabel,
               style: drawerTextStyle,
             ),
             onTap: () async {
@@ -106,7 +106,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
               color: ColorTheme.text2,
             ),
             title: const Text(
-              SettingsTheme.exportCollectionsButtonLabel,
+              ValuesTheme.exportCollectionsButtonLabel,
               style: drawerTextStyle,
             ),
             onTap: () async {

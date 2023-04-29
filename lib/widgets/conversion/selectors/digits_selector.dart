@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/styles/settings.dart';
+import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
@@ -54,7 +54,7 @@ class DigitsSelector extends HookWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          SettingsTheme.digitsSelectorLabel,
+          ValuesTheme.digitsSelectorLabel,
           style: TextStyle(
             color: ColorTheme.text1,
             fontFamily: FontTheme.firaSans,
