@@ -26,4 +26,5 @@ abstract class ValuesTheme {
   static const String digitsSelectorLabel = "Digits:";
   static const String cancelLabel = "Cancel";
   static const String confirmLabel = "Confirm";
+  static const String errorRouteText = "ERROR";
 }

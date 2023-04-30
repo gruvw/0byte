@@ -32,14 +32,12 @@ class HiveCollection extends Collection {
   });
 
   @override
-  List<NumberConversionEntry> get entries =>
-      ReorderableListView(hiveStoreCollection.entriesKeys
-          .map((k) => HiveNumberConversionEntry(
-                database: database,
-                hiveStoreNumberEntry:
-                    (database as HiveDatabase).entriesBox.get(k)!,
-              ))
-          .toList());
+  List<NumberConversionEntry> get entries => SortableList(hiveStoreCollection.entriesKeys
+      .map((k) => HiveNumberConversionEntry(
+            database: database,
+            hiveStoreNumberEntry: (database as HiveDatabase).entriesBox.get(k)!,
+          ))
+      .toList());
 
   @override
   String get label => hiveStoreCollection.hiveLabel;
@@ -61,8 +59,7 @@ class HiveCollection extends Collection {
 
   @override
   bool operator ==(covariant HiveCollection other) =>
-      database == other.database &&
-      hiveStoreCollection.key == other.hiveStoreCollection.key;
+      database == other.database && hiveStoreCollection.key == other.hiveStoreCollection.key;
 
   @override
   int get hashCode => Object.hash(database, hiveStoreCollection.key);

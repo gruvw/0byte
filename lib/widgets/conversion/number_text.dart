@@ -35,8 +35,8 @@ class NumberTextView extends HookWidget {
           );
   }
 
-  final PotentiallyMutableField<String> numberTextField;
   late final ListenableField<Number?> numberField;
+  final PotentiallyMutableField<String> numberTextField;
 
   NumberTextView({
     super.key,

@@ -1,8 +1,8 @@
-import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/styles/values.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
 
 class ConversionTitleWidget extends StatelessWidget {

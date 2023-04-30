@@ -61,7 +61,7 @@ Improving UX + code architecture
 - [ ] Full UX redesign (no more fixed output per collection)
   - [X] Patch entry and collections to support new features (+ needed corrections)
   - [X] Finish entry page
-  - [ ] Finish refactor (pages, no longer used classes, new types, new entry, extract constants, ...)
+  - [X] Finish refactor (pages, no longer used classes, new types, new entry, extract constants, ...)
   - [X] Fix outlined buttons hover color
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)

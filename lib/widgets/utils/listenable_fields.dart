@@ -6,11 +6,12 @@ import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 mixin ListenableField<T> {
-  static ProvidedField<Provided, Arg> provided<Provided, Arg>(
+  // Can't have generic constructor in _ProvidedField so static generic "constructor" here
+  static ListenableField<Provided> provided<Provided, Arg>(
     Arg object, {
     required AutoDisposeProviderFamily<Provided, Arg> provider,
   }) =>
-      ProvidedField._(object, provider: provider);
+      _ProvidedField._(object, provider: provider);
 
   ValueListenable<T> get notifier;
 
@@ -90,11 +91,11 @@ class ImmutableField<T> extends PotentiallyMutableField<T> {
   ValueListenable<T> get notifier => field.notifier;
 }
 
-class ProvidedField<Provided, Arg> with ListenableField<Provided> {
+class _ProvidedField<Provided, Arg> with ListenableField<Provided> {
   @override
   final ValueNotifier<Provided> notifier;
 
-  ProvidedField._(
+  _ProvidedField._(
     Arg object, {
     required AutoDisposeProviderFamily<Provided, Arg> provider,
   }) : notifier = ValueNotifier(container.read(provider(object))) {

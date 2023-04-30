@@ -1,3 +1,4 @@
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/models/number_types.dart';
@@ -16,10 +17,10 @@ class ConversionTypesSelectors extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      padding: PaddingTheme.typesSelectors,
       child: Wrap(
-        spacing: 15,
-        runSpacing: 15,
+        spacing: DimensionsTheme.typesSelectorsWrapSpacing,
+        runSpacing: DimensionsTheme.typesSelectorsWrapSpacing,
         alignment: WrapAlignment.start,
         children: [
           for (final type in ConversionType.values)

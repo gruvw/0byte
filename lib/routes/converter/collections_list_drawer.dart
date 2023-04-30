@@ -6,7 +6,7 @@ import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/time.dart';
-import 'package:app_0byte/global/styles/values.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/state/providers/application.dart';
 import 'package:app_0byte/state/providers/database.dart';
@@ -24,8 +24,8 @@ class CollectionsListDrawer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final collections = ref.read(collectionsProvider);
-    final selectedCollection = ref.read(selectedCollectionProvider);
+    final collections = ref.watch(collectionsProvider);
+    final selectedCollection = ref.watch(selectedCollectionProvider);
 
     void changeSelectedCollection(Collection collection) {
       ref.read(selectedCollectionProvider.notifier).state = collection;
@@ -55,8 +55,10 @@ class CollectionsListDrawer extends HookConsumerWidget {
               changeSelectedCollection(
                 database.createCollection(
                   label: uniqueLabel(
-                    ref.read(collectionsProvider).map((c) => c.label).toList(),
+                    ref.read(collectionsProvider).map((c) => c.label),
                     ValuesTheme.defaultCollectionLabel,
+                    enclosingLeft: "(",
+                    enclosingRight: ")",
                   ),
                 ),
               );
@@ -122,6 +124,7 @@ class CollectionsListDrawer extends HookConsumerWidget {
           );
         }
 
+        // Collection
         final collection = collections[index];
 
         return ListTile(

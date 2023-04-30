@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:app_0byte/global/styles/values.dart';
 import 'package:app_0byte/models/number_types.dart';
 
 import 'parser.dart';
@@ -28,17 +27,15 @@ String separatorTransform(
   String unsignedSeparatedText = "";
   int i = unsignedText.length;
   for (; i > type.blockLength; i -= type.blockLength) {
-    unsignedSeparatedText = separator +
-        unsignedText.substring(i - type.blockLength, i) +
-        unsignedSeparatedText;
+    unsignedSeparatedText =
+        separator + unsignedText.substring(i - type.blockLength, i) + unsignedSeparatedText;
   }
   final left = unsignedText.substring(0, i);
 
   return signSplit.item1 + left + unsignedSeparatedText;
 }
 
-ApplyText applyNumberTextFromType(ConversionType type, bool displaySeparator) =>
-    (String text) {
+ApplyText applyNumberTextFromType(ConversionType type, bool displaySeparator) => (String text) {
       text = withoutSeparator(type, text);
 
       // HEX to maj
@@ -47,8 +44,7 @@ ApplyText applyNumberTextFromType(ConversionType type, bool displaySeparator) =>
         final upperText = text.toUpperCase();
         final hexUpper = StringBuffer();
         for (int i = 0; i < text.length; i++) {
-          hexUpper.write(
-              type.alphabet.contains(upperText[i]) ? upperText[i] : text[i]);
+          hexUpper.write(type.alphabet.contains(upperText[i]) ? upperText[i] : text[i]);
         }
         text = hexUpper.toString();
       }
@@ -58,8 +54,7 @@ ApplyText applyNumberTextFromType(ConversionType type, bool displaySeparator) =>
         final asciiMapped = StringBuffer();
         for (int i = 0; i < text.length; i++) {
           final pos = _asciiMap.indexOf(text[i]);
-          asciiMapped
-              .write(pos >= 0 ? ConversionType.ascii.alphabet[pos] : text[i]);
+          asciiMapped.write(pos >= 0 ? ConversionType.ascii.alphabet[pos] : text[i]);
         }
         text = asciiMapped.toString();
       }
@@ -117,8 +112,7 @@ PositionedText applyNumberPositionedText(
   ApplyText applyNumberText = applyNumberTextFromType(type, displaySeparator);
 
   final appliedNewAfterPosition = applyNumberText(newValue.textAfterPosition);
-  int newAfterPositionDelta =
-      appliedNewAfterPosition.length - newValue.textAfterPosition.length;
+  int newAfterPositionDelta = appliedNewAfterPosition.length - newValue.textAfterPosition.length;
 
   final appliedNewFull = applyNumberText(newValue.text);
   final newFullDelta = appliedNewFull.length - newValue.text.length;
@@ -131,32 +125,27 @@ PositionedText applyNumberPositionedText(
   }
 
   // If both old and new are invalid, don't carry on
-  if (!isValidText(type, appliedOldFull) &&
-      !isValidText(type, appliedNewFull)) {
+  if (!isValidText(type, appliedOldFull) && !isValidText(type, appliedNewFull)) {
     return newValue;
   }
 
   // newFull is invalid but newAfterPosition is valid (added separators)
-  if (!isValidText(type, appliedNewFull) &&
-      isValidText(type, appliedNewAfterPosition)) {
-    final newSeparatorsCountBeforePosition = separator
-        .allMatches(newValue.text.substring(0, newValue.position))
-        .length;
+  if (!isValidText(type, appliedNewFull) && isValidText(type, appliedNewAfterPosition)) {
+    final newSeparatorsCountBeforePosition =
+        separator.allMatches(newValue.text.substring(0, newValue.position)).length;
     newAfterPositionDelta = newFullDelta + newSeparatorsCountBeforePosition;
   }
 
   if (type.isSeparated && isValidText(type, appliedNewFull)) {
     // Check addition of separator right after position (not detected when textAfterPosition isolated)
-    final newRealAfterPositonCharIndex =
-        appliedNewFull.length - appliedNewAfterPosition.length - 1;
+    final newRealAfterPositonCharIndex = appliedNewFull.length - appliedNewAfterPosition.length - 1;
     if (newRealAfterPositonCharIndex >= 0 &&
         appliedNewFull[newRealAfterPositonCharIndex] == separator) {
       newAfterPositionDelta += 1;
 
       // Separator (addition) deletion correction (move over separator instead)
       final oldNewFullDelta = appliedNewFull.length - appliedOldFull.length;
-      final appliedOldAfterPosition =
-          applyNumberText(oldValue.textAfterPosition);
+      final appliedOldAfterPosition = applyNumberText(oldValue.textAfterPosition);
 
       final oldRealAfterPositionCharIndex =
           appliedOldFull.length - appliedOldAfterPosition.length - 1;
@@ -178,10 +167,9 @@ PositionedText applyNumberPositionedText(
   );
 }
 
-void Function(String) onSubmitNumberConversionLabel(NumberConversion number) =>
-    (newLabel) {
+void Function(String) onSubmitNumberConversionLabel(NumberConversion number) => (newLabel) {
       if (newLabel.isEmpty) {
-        newLabel = ValuesTheme.defaultNumberLabel;
+        newLabel = number.label;
       }
       number.label = newLabel;
     };

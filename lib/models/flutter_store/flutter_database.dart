@@ -57,7 +57,6 @@ class FlutterDatabase extends Database {
 
   @override
   List<Collection> getCollections() {
-    return List.unmodifiable(
-        _collections..sort((a, b) => a.label.compareTo(b.label)));
+    return List.unmodifiable(_collections..sort((a, b) => a.label.compareTo(b.label)));
   }
 }

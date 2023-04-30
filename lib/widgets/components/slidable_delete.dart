@@ -6,20 +6,23 @@ import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 
 class SlidableDelete extends StatelessWidget {
-  final Widget child;
-  final SlidableActionCallback onDelete;
+  final dynamic value; // used in ValueKey (otherwise glitches the slide animation on next row)
   final Object? groupTag;
+  final SlidableActionCallback onDelete;
+  final Widget child;
 
   const SlidableDelete({
     super.key,
+    required this.value,
+    required this.groupTag,
     required this.onDelete,
     required this.child,
-    required this.groupTag,
   });
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      key: ValueKey(value),
       groupTag: groupTag,
       endActionPane: ActionPane(
         motion: const BehindMotion(),

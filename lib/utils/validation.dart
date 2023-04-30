@@ -32,21 +32,29 @@ class Immutable<T> extends PotentiallyMutable<T> {
   Immutable(super.object) : super(isMutable: false);
 }
 
-Pattern occurrence = RegExp(r" \((\d+)\)");
+String _regexEnclosing(String enclosing) => enclosing.isNotEmpty ? "\\${enclosing[0]}" : "";
 
-String uniqueLabel(List<String> labels, String label) {
-  String withoutOccurrence(String l) => l.replaceFirst(
-      occurrence, "", l.lastIndexOf(occurrence).clamp(0, l.length));
+String uniqueLabel(
+  Iterable<String> labels,
+  String label, {
+  // Only first enclosing char taken into account
+  String enclosingLeft = "",
+  String enclosingRight = "",
+}) {
+  final occurrence =
+      RegExp(" ${_regexEnclosing(enclosingLeft)}(\\d+)${_regexEnclosing(enclosingRight)}\$");
+
+  String withoutOccurrence(String l) =>
+      l.replaceFirst(occurrence, "", l.lastIndexOf(occurrence).clamp(0, l.length));
 
   label = withoutOccurrence(label);
 
-  List<int> numbers =
-      labels.where((l) => withoutOccurrence(l) == label).map((l) {
+  final numbers = labels.where((l) => withoutOccurrence(l) == label).map((l) {
     final matches = occurrence.allMatches(l);
     return (matches.isEmpty ? 0 : int.parse(matches.last.group(1)!)) + 1;
-  }).toList();
+  });
 
-  return numbers.isEmpty ? label : "$label (${numbers.reduce(max)})";
+  return numbers.isEmpty ? label : "$label $enclosingLeft${numbers.reduce(max)}$enclosingRight";
 }
 
 T applyOr<T>(T Function(T value)? applyText, T value) {

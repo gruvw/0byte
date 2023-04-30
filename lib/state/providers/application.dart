@@ -1,3 +1,4 @@
+import 'package:app_0byte/global/values.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/models/collection.dart';
@@ -8,7 +9,7 @@ final selectedCollectionProvider = StateProvider.autoDispose<Collection>(
     final collections = ref.read(collectionsProvider);
 
     return collections.isEmpty
-        ? database.createCollection(label: "My Collection")
+        ? database.createCollection(label: ValuesTheme.defaultCollectionLabel)
         : collections.first;
   },
 );

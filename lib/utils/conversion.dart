@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app_0byte/global/styles/values.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/transforms.dart';
@@ -9,10 +9,12 @@ class ConversionTarget {
   final ConversionType type;
   final Digits digits;
 
-  const ConversionTarget({required this.type, required this.digits});
+  const ConversionTarget({
+    required this.type,
+    required this.digits,
+  });
 
-  ConversionTarget withDigits(Digits digits) =>
-      ConversionTarget(type: type, digits: digits);
+  ConversionTarget withDigits(Digits digits) => ConversionTarget(type: type, digits: digits);
 }
 
 class ConvertedNumber implements SeparableDisplay {
@@ -68,9 +70,7 @@ class ConvertedNumber implements SeparableDisplay {
       return "";
     }
 
-    final arrow = wasSymmetric
-        ? ValuesTheme.symmetricArrow
-        : ValuesTheme.nonSymmetricArrow;
+    final arrow = wasSymmetric ? ValuesTheme.symmetricArrow : ValuesTheme.nonSymmetricArrow;
     final displayedDigits = wasSymmetric ? "" : " ${digits.amount}";
     final displayedConverted = applyNumberTextDisplay(result, displaySeparator);
 
@@ -90,16 +90,14 @@ String converted({
   // Absolute input to decimal
   BigInt abs = BigInt.zero;
   for (int i = 0; i < absData.length; ++i) {
-    abs += BigInt.from(
-            inputType.alphabet.indexOf(absData[absData.length - i - 1])) *
+    abs += BigInt.from(inputType.alphabet.indexOf(absData[absData.length - i - 1])) *
         BigInt.from(inputType.base).pow(i);
   }
 
   // Absolute input decimal to binary
   List<bool> binary = List.filled(
       (absData.length * _log2(inputType.base)).ceil() +
-          (inputType == ConversionType.signedDecimal &&
-                  targetType == ConversionType.signedDecimal
+          (inputType == ConversionType.signedDecimal && targetType == ConversionType.signedDecimal
               ? 1
               : 0),
       false,

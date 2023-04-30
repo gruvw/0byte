@@ -9,25 +9,24 @@ import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
-class TextFieldNumberConversion extends HookWidget {
-  final ListenableField<Number?> textNumberField;
+class ConvertedNumberView extends HookWidget {
+  final ListenableField<Number?> numberField;
   final ConversionTarget target;
   late final ListenableFieldTransform<Number?, ConvertedNumber?> convertedField;
-  late final ListenableFieldTransform<ConvertedNumber?, Number?>
-      convertedNumberField;
+  late final ListenableFieldTransform<ConvertedNumber?, Number?> resultField;
 
-  TextFieldNumberConversion({
+  ConvertedNumberView({
     super.key,
-    required this.textNumberField,
+    required this.numberField,
     required this.target,
   }) {
     convertedField = ListenableFieldTransform(
-      textNumberField,
+      numberField,
       transform: (number) {
         return number?.convertTo(target);
       },
     );
-    convertedNumberField = ListenableFieldTransform(
+    resultField = ListenableFieldTransform(
       convertedField,
       transform: (input) => input?.result,
     );
@@ -45,13 +44,12 @@ class TextFieldNumberConversion extends HookWidget {
           child: Column(
             children: [
               NumberTextView.fromNumberField(
-                numberField: convertedNumberField,
+                numberField: resultField,
               ),
               if (wasSymmetric != null && !wasSymmetric)
                 const Divider(
                   color: ColorTheme.warning,
-                  thickness:
-                      DimensionsTheme.conversionUnderlineWarningThickness,
+                  thickness: DimensionsTheme.conversionUnderlineWarningThickness,
                   height: DimensionsTheme.conversionUnderlineWarningHeight,
                 ),
             ],

@@ -58,7 +58,7 @@ class FocusSubmittedTextField extends HookWidget {
           if (hasFocus) {
             wasSubmitted.value = false;
           } else if (!wasSubmitted.value) {
-            onSubmitted.call(controller.text);
+            onSubmitted(controller.text);
           }
         },
         child: TextField(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
-import 'package:app_0byte/routes/converter_page.dart';
-import 'package:app_0byte/routes/entry_page.dart';
+import 'package:app_0byte/routes/converter/converter_route.dart';
+import 'package:app_0byte/routes/entry/entry_route.dart';
 
 enum Routes {
   home("/"),
@@ -30,9 +31,7 @@ class RouteGenerator {
           builder: (context) => const ConverterPage(),
         );
       case Routes.entry:
-        if (args is List &&
-            args.isNotEmpty &&
-            args[0] is NumberConversionEntry) {
+        if (args is List && args.isNotEmpty && args[0] is NumberConversionEntry) {
           return MaterialPageRoute(
             builder: (context) => EntryPage(
               entry: args[0],
@@ -50,10 +49,10 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text("ERROR"),
+          title: const Text(ValuesTheme.errorRouteText),
         ),
         body: const Center(
-          child: Text("ERROR"),
+          child: Text(ValuesTheme.errorRouteText),
         ),
       ),
     );

@@ -13,6 +13,7 @@ abstract class DimensionsTheme {
   static const double digitsSelectorHorizontalSpacing = 5;
   static const double entryLabelNumberVerticalSpacing = 3;
   static const double converterPageEndScrollingSpacing = 100;
+  static const double typesSelectorsWrapSpacing = 15;
 
   // Size
   static const double floatingActionChildrenSize = 62;
@@ -43,6 +44,8 @@ abstract class PaddingTheme {
   static const EdgeInsetsGeometry borderButton = EdgeInsets.symmetric(vertical: 6);
   static const EdgeInsetsGeometry borderButtonChild = EdgeInsets.fromLTRB(12, 4, 0, 4);
   static const EdgeInsetsGeometry typeSelector = EdgeInsets.symmetric(vertical: 8);
+  static const EdgeInsetsGeometry typesSelectors =
+      EdgeInsets.symmetric(horizontal: 15, vertical: 15);
   static const EdgeInsetsGeometry entryPagePreview = EdgeInsets.all(14);
   static const EdgeInsetsGeometry entryPageSubmit =
       EdgeInsets.symmetric(vertical: 10, horizontal: 14);

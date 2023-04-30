@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:app_0byte/utils/conversion.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
+import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/utils/conversion.dart';
 
 abstract class Database {
   final StreamController<Event<NumberConversionEntry>> entryEventsController =
@@ -30,10 +30,8 @@ abstract class Database {
 
   List<Collection> getCollections();
 
-  Stream<Event<NumberConversionEntry>> watchEntries() =>
-      entryEventsController.stream;
-  Stream<Event<Collection>> watchCollections() =>
-      collectionEventsController.stream;
+  Stream<Event<NumberConversionEntry>> watchEntries() => entryEventsController.stream;
+  Stream<Event<Collection>> watchCollections() => collectionEventsController.stream;
 }
 
 abstract class DatabaseObject {

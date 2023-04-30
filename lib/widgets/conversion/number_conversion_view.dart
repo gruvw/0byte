@@ -9,7 +9,7 @@ import 'package:app_0byte/routes/route_generator.dart';
 import 'package:app_0byte/state/updaters/database.dart';
 import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widgets/conversion/conversion.dart';
+import 'package:app_0byte/widgets/conversion/converted_number.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
@@ -88,8 +88,8 @@ class NumberConversionView extends StatelessWidget {
             ),
           ],
         ),
-        TextFieldNumberConversion(
-          textNumberField: numberView.numberField,
+        ConvertedNumberView(
+          numberField: numberView.numberField,
           target: number.object.target,
         ),
       ],
