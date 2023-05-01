@@ -14,10 +14,11 @@ abstract class DimensionsTheme {
   static const double entryLabelNumberVerticalSpacing = 3;
   static const double converterPageEndScrollingSpacing = 100;
   static const double typesSelectorsWrapSpacing = 15;
+  static const double drawerIconsSpacing = 5;
 
   // Size
   static const double floatingActionChildrenSize = 62;
-  static const double dropdownIconSize = 32;
+  static const double iconSize = 32;
 
   // Ratio
   static const double slidableExtendRatio = 0.2;
@@ -35,6 +36,7 @@ abstract class DimensionsTheme {
 
 abstract class PaddingTheme {
   static const EdgeInsetsGeometry drawer = EdgeInsets.all(10);
+  static const EdgeInsetsGeometry drawerFooter = EdgeInsets.fromLTRB(10, 15, 10, 10);
   static const EdgeInsetsGeometry secondaryBar = EdgeInsets.symmetric(vertical: 5, horizontal: 14);
   static const EdgeInsetsGeometry targetSecondaryBars = EdgeInsets.symmetric(vertical: 5);
   static const EdgeInsetsGeometry conversionTitle =

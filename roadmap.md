@@ -58,17 +58,19 @@ Improving UX + code architecture
   - [ ] Display separator + Clipboard separator to settings (settings page)
   - [ ] Option: to copy ASCII Unicode Control Pictures vs ASCII values
   - [ ] Option: Always hide leading 0s on converted (maybe on input too ?)
-- [ ] Full UX redesign (no more fixed output per collection)
+- [X] Full UX redesign (no more fixed output per collection)
   - [X] Patch entry and collections to support new features (+ needed corrections)
   - [X] Finish entry page
   - [X] Finish refactor (pages, no longer used classes, new types, new entry, extract constants, ...)
   - [X] Fix outlined buttons hover color
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
+  - [ ] Fix android keyboard comes and moves UI (entry page)
 - [ ] Fix https://github.com/gruvw/0byte/issues/1
 - [X] Fix https://github.com/gruvw/0byte/issues/4
-- [ ] Extract style from structure
-- [ ] Link to github repository in app
+- [ ] Extract style from structure (theme)
+- [X] Link to github repository in app
+- [ ] Splash screen logo
 
 ## Beta release `v0.0.2-beta`
 
@@ -85,7 +87,7 @@ Usability polish
 
 Cross-Compatibility
 
-- [ ] Application website with download links
+- [ ] Application website with download links (+ support)
 - [ ] Test android
 - [ ] Test Linux
 - [ ] Test Windows

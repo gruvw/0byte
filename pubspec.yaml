@@ -46,6 +46,8 @@ dependencies:
   permission_handler: ^10.0.2
   universal_html: ^2.0.9
   sprintf: ^7.0.0
+  url_launcher: ^6.1.10
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.12.0
