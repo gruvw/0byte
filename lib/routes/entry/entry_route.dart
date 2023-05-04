@@ -114,7 +114,7 @@ class EntryRoute extends HookConsumerWidget {
                 onSelected: (selectedType) => entry.target = selectedType.defaultTarget,
               ),
               DigitsSelector(
-                digitsField: ListenableField.provided(
+                digitsField: ListenableField.familyProvided(
                   entry,
                   provider: entryDigitsProvider,
                 ),

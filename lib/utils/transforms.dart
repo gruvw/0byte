@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/models/settings.dart';
 
 import 'parser.dart';
 
@@ -174,18 +175,20 @@ void Function(String) onSubmitNumberConversionLabel(NumberConversion number) => 
       number.label = newLabel;
     };
 
-String applyNumberTextDisplay(
-  Number? number,
-  bool displaySeparator,
-) =>
-    number == null
-        ? ""
-        : applyNumberPositionedText(
-            PositionedText(number.text, 0),
-            PositionedText(number.text, 0),
-            number.type,
-            displaySeparator,
-          ).text;
+String applyNumberTextDisplay(Number? number, DisplaySettings displaySettings) {
+  if (number == null) {
+    return "";
+  }
+
+  final text = applyNumberPositionedText(
+    PositionedText(number.text, 0),
+    PositionedText(number.text, 0),
+    number.type,
+    displaySettings.useSeparators,
+  ).text;
+
+  return displaySettings.trimLeadingZeros ? leftTrimmed(number.type, text, true) : text;
+}
 
 String applyNumberTextBeforeSave(
   ConversionType type,

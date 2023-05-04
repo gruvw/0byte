@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/transforms.dart';
 
@@ -17,7 +18,7 @@ class ConversionTarget {
   ConversionTarget withDigits(Digits digits) => ConversionTarget(type: type, digits: digits);
 }
 
-class ConvertedNumber implements SeparableDisplay {
+class ConvertedNumber implements Exportable {
   final Number? result;
   final Digits digits;
   final bool wasSymmetric;
@@ -63,7 +64,7 @@ class ConvertedNumber implements SeparableDisplay {
   }
 
   @override
-  String display(bool displaySeparator) {
+  String export(ExportSettings settings) {
     final result = this.result;
 
     if (result == null) {
@@ -72,7 +73,7 @@ class ConvertedNumber implements SeparableDisplay {
 
     final arrow = wasSymmetric ? ValuesTheme.symmetricArrow : ValuesTheme.nonSymmetricArrow;
     final displayedDigits = wasSymmetric ? "" : " ${digits.amount}";
-    final displayedConverted = applyNumberTextDisplay(result, displaySeparator);
+    final displayedConverted = applyNumberTextDisplay(result, settings);
 
     return " $arrow [${result.type.prefix}$displayedDigits]$displayedConverted";
   }

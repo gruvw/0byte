@@ -29,7 +29,7 @@ class NumberLabel extends HookWidget {
       onSubmitted: onSubmitNumberConversionLabel(number.object),
     );
     if (number is NumberConversionEntry) {
-      labelField.subscribeTo(ListenableField.provided(number, provider: entryLabelProvider));
+      labelField.subscribeTo(ListenableField.familyProvided(number, provider: entryLabelProvider));
     }
     return labelField;
   }

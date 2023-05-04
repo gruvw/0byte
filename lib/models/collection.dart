@@ -2,8 +2,9 @@ import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/models/settings.dart';
 
-abstract class Collection extends DatabaseObject implements SeparableDisplay {
+abstract class Collection extends DatabaseObject implements Exportable {
   abstract String label;
   abstract final List<NumberConversionEntry> entries;
 
@@ -32,13 +33,13 @@ abstract class Collection extends DatabaseObject implements SeparableDisplay {
   }
 
   @override
-  String display(bool displaySeparator) {
+  String export(ExportSettings settings) {
     final res = StringBuffer("$label\n");
     res.writeAll(entries.map((e) {
       final displayedText =
-          e.display(displaySeparator).substring(e.type.prefix.length);
+          e.export(settings.along(trimLeadingZeros: false)).substring(e.type.prefix.length);
       final converted = e.converted;
-      final displayedConverted = converted.display(displaySeparator);
+      final displayedConverted = converted.export(settings);
       return "${e.label}: [${e.type.prefix}]$displayedText$displayedConverted\n";
     }));
     return res.toString();

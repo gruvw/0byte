@@ -1,13 +1,14 @@
+import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 
-mixin SeparableDisplay {
-  String display(bool displaySeparator);
+mixin Exportable {
+  String export(ExportSettings settings);
 }
 
-mixin Number implements SeparableDisplay {
+mixin Number implements Exportable {
   abstract ConversionType type;
   abstract String text;
 
@@ -26,8 +27,7 @@ mixin Number implements SeparableDisplay {
   }
 
   @override
-  String display(bool displaySeparator) =>
-      type.prefix + applyNumberTextDisplay(this, displaySeparator);
+  String export(ExportSettings settings) => type.prefix + applyNumberTextDisplay(this, settings);
 }
 
 mixin NumberConversion on Number {

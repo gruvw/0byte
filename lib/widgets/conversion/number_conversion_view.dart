@@ -6,15 +6,17 @@ import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/routes/route_generator.dart';
+import 'package:app_0byte/state/providers/settings.dart';
 import 'package:app_0byte/state/updaters/database.dart';
 import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
-import 'package:app_0byte/widgets/conversion/converted_number.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
+import 'package:app_0byte/widgets/conversion/converted_number.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
+import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
-class NumberConversionView extends StatelessWidget {
+class NumberConversionView extends ConsumerWidget {
   final PotentiallyMutable<NumberConversion> number;
   final VoidCallback? onChipPressed;
   final NumberLabel? label;
@@ -27,9 +29,12 @@ class NumberConversionView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // ListenableField<Number?> holder (used for live conversion)
-    final numberView = NumberTextView(number: number);
+    final numberView = NumberTextView(
+      number: number,
+      displaySettings: ListenableField.provided(displayNumberSettingsProvider),
+    );
 
     return Column(
       children: [

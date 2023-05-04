@@ -46,8 +46,8 @@ class SettingsRoute extends StatelessWidget {
                     label: ValuesTheme.displaySeparatorSettingsLabel,
                   ),
                   ProvidedLabelSwitchButton(
-                    trimConvertedLeadingZerosProvider,
-                    label: ValuesTheme.trimConvertedLeadingZerosSettingsLabel,
+                    displayConvertedLeadingZerosProvider,
+                    label: ValuesTheme.displayConvertedLeadingZerosSettingsLabel,
                   ),
                 ],
               ),
@@ -64,6 +64,10 @@ class SettingsRoute extends StatelessWidget {
                   ProvidedLabelSwitchButton(
                     exportSeparatorsProvider,
                     label: ValuesTheme.exportSeparatorsSettingsLabel,
+                  ),
+                  ProvidedLabelSwitchButton(
+                    exportConvertedLeadingZerosProvider,
+                    label: ValuesTheme.exportConvertedLeadingZerosSettingsLabel,
                   ),
                   ProvidedLabelSwitchButton(
                     exportASCIIControlProvider,

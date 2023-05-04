@@ -1,12 +1,15 @@
+import 'package:app_0byte/state/providers/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
+import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
 import 'package:app_0byte/state/providers/entry.dart';
 import 'package:app_0byte/utils/transforms.dart';
@@ -15,10 +18,8 @@ import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
 
-class NumberTextView extends HookWidget {
+class NumberTextView extends HookConsumerWidget {
   // TODO wrap number on new line (align with prefix); maybe on sigle line (number, converted) when very small ?
-
-  static const bool displaySeparator = true; // TODO use app/collection based setting
 
   static const _displayTitleStyle = TextStyle(
     fontFamily: FontTheme.firaCode,
@@ -38,16 +39,21 @@ class NumberTextView extends HookWidget {
   late final ListenableField<Number?> numberField;
   final PotentiallyMutableField<String> numberTextField;
 
+  final ListenableField<DisplaySettings> displaySettings;
+
   NumberTextView({
     super.key,
     required PotentiallyMutable<Number?> number,
+    required this.displaySettings,
   }) : numberTextField = PotentiallyMutableField(
-          applyNumberTextDisplay(number.object, displaySeparator),
+          applyNumberTextDisplay(number.object, displaySettings.value),
           isMutable: number.isMutable,
+          // Don't use applyObject here (uses NumberInputFormatter)
           onSubmitted: onSubmitNumber(number.object),
         ) {
     if (number is NumberConversionEntry) {
-      numberTextField.subscribeTo(ListenableField.provided(number, provider: entryTextProvider));
+      numberTextField
+          .subscribeTo(ListenableField.familyProvided(number, provider: entryTextProvider));
     }
     numberField = ListenableFieldTransform(
       numberTextField,
@@ -55,17 +61,19 @@ class NumberTextView extends HookWidget {
     );
   }
 
-  NumberTextView.fromNumberField({super.key, required this.numberField})
-      : numberTextField = ImmutableField(ListenableFieldTransform(
-          numberField,
-          transform: (input) => applyNumberTextDisplay(
-            input,
-            displaySeparator,
+  NumberTextView.fromNumberField({
+    super.key,
+    required this.numberField,
+    required this.displaySettings,
+  }) : numberTextField = ImmutableField(
+          ListenableFieldTransform(
+            numberField,
+            transform: (input) => applyNumberTextDisplay(input, displaySettings.value),
           ),
-        ));
+        );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final number = numberField.value;
 
     final controller = useTextEditingController(text: numberTextField.value);
@@ -79,6 +87,12 @@ class NumberTextView extends HookWidget {
       }
     });
 
+    useListener(displaySettings.notifier, (newSettings) {
+      if (!focusNode.hasFocus) {
+        controller.text = applyNumberTextDisplay(number, newSettings);
+      }
+    });
+
     void valueToClipboard() {
       FocusScope.of(context).unfocus();
 
@@ -87,7 +101,7 @@ class NumberTextView extends HookWidget {
         return;
       }
 
-      String copy = number.display(displaySeparator);
+      String copy = number.export(ref.read(exportSettingsProvider));
       Clipboard.setData(ClipboardData(text: copy)).then(
         (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: RichText(
@@ -132,7 +146,7 @@ class NumberTextView extends HookWidget {
             inputFormatters: [
               NumberInputFormatter(
                 type: number.type,
-                displaySeparator: displaySeparator,
+                displaySeparator: displaySettings.value.useSeparators,
               )
             ],
             onChanged: numberTextField.set,

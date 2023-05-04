@@ -46,7 +46,7 @@ class LabelSwitchButton extends StatelessWidget {
 }
 
 class ProvidedLabelSwitchButton extends ConsumerWidget {
-  final AutoDisposeStateProvider<bool> provider;
+  final StateProvider<bool> provider;
   final String? label;
 
   const ProvidedLabelSwitchButton(

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/collection.dart';
+import 'package:app_0byte/state/providers/settings.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/widgets/components/text_icon.dart';
 
-class CollectionMenu extends StatelessWidget {
+class CollectionMenu extends ConsumerWidget {
   static const _menuTextStyle = TextStyle(
     fontFamily: FontTheme.firaSans,
     fontSize: FontTheme.menuSize,
@@ -24,9 +27,13 @@ class CollectionMenu extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return PopupMenuButton(
       color: ColorTheme.background3,
+      icon: const Icon(
+        Icons.more_vert,
+        color: ColorTheme.text1,
+      ),
       itemBuilder: (context) => [
         PopupMenuItem(
           child: const TextIcon(
@@ -67,24 +74,23 @@ class CollectionMenu extends StatelessWidget {
           ),
           onTap: () {
             Clipboard.setData(ClipboardData(
-                    // FIXME should display separator from settings
-                    text: collection.display(true)))
-                .then((_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: RichText(
-                        text: TextSpan(
-                          children: [
-                            const TextSpan(text: "Copied "),
-                            TextSpan(
-                              text: collection.label,
-                              style: const TextStyle(
-                                color: ColorTheme.textPrefix,
-                              ),
-                            ),
-                            const TextSpan(text: " to clipboard."),
-                          ],
+              text: collection.export(ref.read(exportSettingsProvider)),
+            )).then((_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(text: "Copied "),
+                        TextSpan(
+                          text: collection.label,
+                          style: const TextStyle(
+                            color: ColorTheme.textPrefix,
+                          ),
                         ),
-                      ),
-                    )));
+                        const TextSpan(text: " to clipboard."),
+                      ],
+                    ),
+                  ),
+                )));
           },
         )
       ],

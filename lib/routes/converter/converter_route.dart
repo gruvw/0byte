@@ -1,4 +1,3 @@
-import 'package:app_0byte/routes/converter/drawer/footer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -9,8 +8,9 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/routes/converter/collection_entries.dart';
 import 'package:app_0byte/routes/converter/collection_menu.dart';
-import 'package:app_0byte/routes/converter/drawer/collections_list.dart';
 import 'package:app_0byte/routes/converter/conversion_title.dart';
+import 'package:app_0byte/routes/converter/drawer/collections_list.dart';
+import 'package:app_0byte/routes/converter/drawer/footer.dart';
 import 'package:app_0byte/routes/route_generator.dart';
 import 'package:app_0byte/state/providers/application.dart';
 import 'package:app_0byte/state/providers/database.dart';
