@@ -27,4 +27,13 @@ abstract class ValuesTheme {
   static const String cancelLabel = "Cancel";
   static const String confirmLabel = "Confirm";
   static const String errorRouteText = "ERROR";
+  static const String settingsTitle = "Settings";
+  static const String settingsUITitle = "User Interface";
+  static const String settingsExportTitle = "Clipboard exports";
+  static const String displaySeparatorSettingsLabel = "Display number separators";
+  static const String trimConvertedLeadingZerosSettingsLabel =
+      "Display leading zeros in conversion";
+  static const String exportSeparatorsSettingsLabel = "Export number separators";
+  static const String exportASCIIControlSettingsLabel =
+      "Export ASCII Unicode Control Pictures instead of ASCII values";
 }

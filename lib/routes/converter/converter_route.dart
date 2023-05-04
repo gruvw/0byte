@@ -19,8 +19,8 @@ import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/forms/text_form.dart';
 
-class ConverterPage extends HookConsumerWidget {
-  const ConverterPage({super.key});
+class ConverterRoute extends HookConsumerWidget {
+  const ConverterRoute({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

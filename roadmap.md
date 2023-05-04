@@ -57,7 +57,7 @@ Improving UX + code architecture
   - [X] Support number separator
   - [ ] Display separator + Clipboard separator to settings (settings page)
   - [ ] Option: to copy ASCII Unicode Control Pictures vs ASCII values
-  - [ ] Option: Always hide leading 0s on converted (maybe on input too ?)
+  - [ ] Option: Always trim leading 0s on converted
 - [X] Full UX redesign (no more fixed output per collection)
   - [X] Patch entry and collections to support new features (+ needed corrections)
   - [X] Finish entry page

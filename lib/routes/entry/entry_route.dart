@@ -22,7 +22,7 @@ import 'package:app_0byte/widgets/conversion/selectors/conversion_types_selector
 import 'package:app_0byte/widgets/conversion/selectors/digits_selector.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
-class EntryPage extends HookConsumerWidget {
+class EntryRoute extends HookConsumerWidget {
   static Widget _barFromText(String text) => SecondaryBar(
         padding: PaddingTheme.targetSecondaryBars,
         child: Center(
@@ -42,7 +42,7 @@ class EntryPage extends HookConsumerWidget {
   final PotentiallyMutableField<String> titleLabelField;
   final bool deleteOnCancel;
 
-  EntryPage({
+  EntryRoute({
     super.key,
     required this.entry,
     this.deleteOnCancel = false,

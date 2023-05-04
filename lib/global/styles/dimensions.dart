@@ -15,6 +15,7 @@ abstract class DimensionsTheme {
   static const double converterPageEndScrollingSpacing = 100;
   static const double typesSelectorsWrapSpacing = 15;
   static const double drawerIconsSpacing = 5;
+  static const double settingsCategorySpacing = 10;
 
   // Size
   static const double floatingActionChildrenSize = 62;
@@ -35,6 +36,7 @@ abstract class DimensionsTheme {
 }
 
 abstract class PaddingTheme {
+  static const EdgeInsetsGeometry zero = EdgeInsets.all(0);
   static const EdgeInsetsGeometry drawer = EdgeInsets.all(10);
   static const EdgeInsetsGeometry drawerFooter = EdgeInsets.fromLTRB(10, 15, 10, 10);
   static const EdgeInsetsGeometry secondaryBar = EdgeInsets.symmetric(vertical: 5, horizontal: 14);
@@ -51,4 +53,6 @@ abstract class PaddingTheme {
   static const EdgeInsetsGeometry entryPagePreview = EdgeInsets.all(14);
   static const EdgeInsetsGeometry entryPageSubmit =
       EdgeInsets.symmetric(vertical: 10, horizontal: 14);
+  static const EdgeInsetsGeometry settings = EdgeInsets.fromLTRB(10, 10, 10, 0);
+  static const EdgeInsetsGeometry settingsCategoryIndentation = EdgeInsets.fromLTRB(15, 0, 0, 0);
 }

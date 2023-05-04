@@ -11,25 +11,6 @@ import 'package:app_0byte/state/updaters/database.dart';
 import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
-class EntryConversionChip extends HookConsumerWidget {
-  final NumberConversionEntry entry;
-
-  const EntryConversionChip({
-    super.key,
-    required this.entry,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.subscribe(entryEditionUpdater(entry));
-
-    return ConversionChip(
-      inputType: entry.type,
-      target: entry.target,
-    );
-  }
-}
-
 class ConversionChip extends StatelessWidget {
   final ConversionType inputType;
   final ConversionTarget target;
@@ -63,6 +44,25 @@ class ConversionChip extends StatelessWidget {
           fontSize: FontTheme.numberLabelSize,
         ),
       ),
+    );
+  }
+}
+
+class EntryConversionChip extends HookConsumerWidget {
+  final NumberConversionEntry entry;
+
+  const EntryConversionChip({
+    super.key,
+    required this.entry,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.subscribe(entryEditionUpdater(entry));
+
+    return ConversionChip(
+      inputType: entry.type,
+      target: entry.target,
     );
   }
 }

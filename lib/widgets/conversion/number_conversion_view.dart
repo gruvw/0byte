@@ -14,37 +14,6 @@ import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
 import 'package:app_0byte/widgets/conversion/number_label.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 
-class NumberConversionEntryView extends ConsumerWidget {
-  final PotentiallyMutable<NumberConversionEntry> entry;
-  final NumberLabel? label;
-  final bool chipEnabled;
-
-  const NumberConversionEntryView({
-    super.key,
-    required this.entry,
-    this.chipEnabled = true,
-    this.label,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.subscribe(entryEditionUpdater(entry.object));
-
-    return NumberConversionView(
-      number: entry,
-      label: label ?? NumberLabel(number: entry),
-      onChipPressed: chipEnabled
-          ? () {
-              Navigator.of(context).pushNamed(
-                Routes.entry.name,
-                arguments: [entry.object],
-              );
-            }
-          : null,
-    );
-  }
-}
-
 class NumberConversionView extends StatelessWidget {
   final PotentiallyMutable<NumberConversion> number;
   final VoidCallback? onChipPressed;
@@ -93,6 +62,37 @@ class NumberConversionView extends StatelessWidget {
           target: number.object.target,
         ),
       ],
+    );
+  }
+}
+
+class NumberConversionEntryView extends ConsumerWidget {
+  final PotentiallyMutable<NumberConversionEntry> entry;
+  final NumberLabel? label;
+  final bool chipEnabled;
+
+  const NumberConversionEntryView({
+    super.key,
+    required this.entry,
+    this.chipEnabled = true,
+    this.label,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.subscribe(entryEditionUpdater(entry.object));
+
+    return NumberConversionView(
+      number: entry,
+      label: label,
+      onChipPressed: chipEnabled
+          ? () {
+              Navigator.of(context).pushNamed(
+                Routes.entry.name,
+                arguments: [entry.object],
+              );
+            }
+          : null,
     );
   }
 }

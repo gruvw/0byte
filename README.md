@@ -1,6 +1,6 @@
 # 0byte
 
-A cross-platform persistent base conversion application
+A cross-platform, collection oriented, persistent base conversion application
 
 **Note**: Project under development, take a look at the [RoadMap](roadmap.md) if you are interested.
 

@@ -1,3 +1,4 @@
+import 'package:app_0byte/routes/settings/settings_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/global/values.dart';
@@ -8,6 +9,7 @@ import 'package:app_0byte/routes/entry/entry_route.dart';
 enum Routes {
   home("/"),
   entry("/entry"),
+  settings("/settings"),
   error("/error");
 
   static Routes get miss => error;
@@ -28,18 +30,22 @@ class RouteGenerator {
     switch (Routes.parse(settings.name ?? Routes.miss.name)) {
       case Routes.home:
         return MaterialPageRoute(
-          builder: (context) => const ConverterPage(),
+          builder: (context) => const ConverterRoute(),
         );
       case Routes.entry:
         if (args is List && args.isNotEmpty && args[0] is NumberConversionEntry) {
           return MaterialPageRoute(
-            builder: (context) => EntryPage(
+            builder: (context) => EntryRoute(
               entry: args[0],
               deleteOnCancel: args.length > 1 && args[1],
             ),
           );
         }
         return _errorRoute();
+      case Routes.settings:
+        return MaterialPageRoute(
+          builder: (context) => const SettingsRoute(),
+        );
       case Routes.error:
         return _errorRoute();
     }

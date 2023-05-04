@@ -1,9 +1,11 @@
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/dimensions.dart';
+import 'package:app_0byte/routes/route_generator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 
 final Uri _repository = Uri.parse("https://github.com/gruvw/0byte");
 
@@ -20,7 +22,7 @@ class DrawerFooter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              padding: const EdgeInsets.all(0),
+              padding: PaddingTheme.zero,
               onPressed: () => launchUrl(_repository),
               icon: const Icon(
                 FontAwesomeIcons.github,
@@ -31,7 +33,7 @@ class DrawerFooter extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  padding: const EdgeInsets.all(0),
+                  padding: PaddingTheme.zero,
                   onPressed: () {}, // TODO information page
                   icon: const Icon(
                     Icons.info_outline,
@@ -41,8 +43,11 @@ class DrawerFooter extends StatelessWidget {
                 ),
                 const SizedBox(width: DimensionsTheme.drawerIconsSpacing),
                 IconButton(
-                  padding: const EdgeInsets.all(0),
-                  onPressed: () {}, // TODO settings page
+                  padding: PaddingTheme.zero,
+                  onPressed: () {
+                    Navigator.pop(context); // closes drawer
+                    Navigator.pushNamed(context, Routes.settings.name);
+                  },
                   icon: const Icon(
                     Icons.settings,
                     color: ColorTheme.text1,
