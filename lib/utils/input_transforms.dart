@@ -175,7 +175,7 @@ void Function(String) onSubmitNumberConversionLabel(NumberConversion number) => 
       number.label = newLabel;
     };
 
-String applyNumberTextDisplay(Number? number, DisplaySettings displaySettings) {
+String applyNumberTextDisplay(Number? number, DisplaySettings settings) {
   if (number == null) {
     return "";
   }
@@ -184,10 +184,26 @@ String applyNumberTextDisplay(Number? number, DisplaySettings displaySettings) {
     PositionedText(number.text, 0),
     PositionedText(number.text, 0),
     number.type,
-    displaySettings.useSeparators,
+    settings.useSeparators,
   ).text;
 
-  return displaySettings.trimLeadingZeros ? leftTrimmed(number.type, text, true) : text;
+  return settings.trimLeadingZeros ? leftTrimmed(number.type, text, true) : text;
+}
+
+String applyNumberTextExport(Number? number, ExportSettings settings) {
+  String text = applyNumberTextDisplay(number, settings);
+
+  // Revert ASCII map
+  if (number?.type == ConversionType.ascii && !settings.useASCIIControl) {
+    final asciiUnMapped = StringBuffer();
+    for (int i = 0; i < text.length; i++) {
+      final pos = ConversionType.ascii.alphabet.indexOf(text[i]);
+      asciiUnMapped.write(pos >= 0 ? _asciiMap[pos] : text[i]);
+    }
+    text = asciiUnMapped.toString();
+  }
+
+  return text;
 }
 
 String applyNumberTextBeforeSave(

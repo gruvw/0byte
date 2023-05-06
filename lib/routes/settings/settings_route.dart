@@ -1,13 +1,15 @@
-import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/state/providers/settings.dart';
 import 'package:app_0byte/widgets/components/label_switch_button.dart';
+
+// TODO fix text overflow on narrow screens
 
 class SettingsRoute extends StatelessWidget {
   static final _categoryStyle = GoogleFonts.getFont(

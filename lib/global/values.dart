@@ -37,5 +37,5 @@ abstract class ValuesTheme {
   static const String exportConvertedLeadingZerosSettingsLabel =
       "Export leading zeros in conversion";
   static const String exportASCIIControlSettingsLabel =
-      "Export ASCII Unicode Control Pictures instead of ASCII values";
+      "Export ASCII Unicode Control Pictures instead of ASCII control codes";
 }

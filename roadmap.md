@@ -56,7 +56,7 @@ Improving UX + code architecture
 - [ ] Settings
   - [X] Support number separator
   - [X] Display separator + Clipboard separator to settings (settings page)
-  - [ ] Option: to copy ASCII Unicode Control Pictures vs ASCII values
+  - [X] Option: to copy ASCII Unicode Control Pictures vs ASCII values
   - [X] Option: Always trim leading 0s on converted
   - [ ] Persistent settings
 - [X] Full UX redesign (no more fixed output per collection)

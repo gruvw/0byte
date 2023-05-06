@@ -27,7 +27,7 @@ mixin Number implements Exportable {
   }
 
   @override
-  String export(ExportSettings settings) => type.prefix + applyNumberTextDisplay(this, settings);
+  String export(ExportSettings settings) => type.prefix + applyNumberTextExport(this, settings);
 }
 
 mixin NumberConversion on Number {
