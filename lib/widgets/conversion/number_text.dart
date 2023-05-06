@@ -1,4 +1,3 @@
-import 'package:app_0byte/state/providers/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +11,7 @@ import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
 import 'package:app_0byte/state/providers/entry.dart';
+import 'package:app_0byte/state/providers/settings.dart';
 import 'package:app_0byte/utils/transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
@@ -51,13 +51,14 @@ class NumberTextView extends HookConsumerWidget {
           // Don't use applyObject here (uses NumberInputFormatter)
           onSubmitted: onSubmitNumber(number.object),
         ) {
-    if (number is NumberConversionEntry) {
+    final numberObject = number.object;
+    if (numberObject is NumberConversionEntry) {
       numberTextField
-          .subscribeTo(ListenableField.familyProvided(number, provider: entryTextProvider));
+          .subscribeTo(ListenableField.familyProvided(numberObject, provider: entryTextProvider));
     }
     numberField = ListenableFieldTransform(
       numberTextField,
-      transform: (text) => number.object?.withText(text),
+      transform: (text) => numberObject?.withText(text),
     );
   }
 
@@ -80,16 +81,15 @@ class NumberTextView extends HookConsumerWidget {
     final focusNode = useFocusNode();
     final style = useState(_styleFrom(number));
 
-    useListener(numberField.notifier, (newNumber) {
-      style.value = _styleFrom(newNumber);
-      if (!focusNode.hasFocus && newNumber != null) {
-        controller.text = numberTextField.value;
+    useListener(numberTextField.notifier, (newText) {
+      if (!focusNode.hasFocus) {
+        controller.text = newText;
       }
     });
 
     useListener(displaySettings.notifier, (newSettings) {
       if (!focusNode.hasFocus) {
-        controller.text = applyNumberTextDisplay(number, newSettings);
+        controller.text = applyNumberTextDisplay(numberField.value, newSettings);
       }
     });
 
@@ -140,7 +140,7 @@ class NumberTextView extends HookConsumerWidget {
           ),
           FocusSubmittedTextField(
             controller: controller,
-            focusNode: focusNode,
+            focusNode: numberTextField.isMutable ? focusNode : null,
             readOnly: !numberTextField.isMutable,
             autofocus: number.text.isEmpty && numberTextField.isMutable,
             inputFormatters: [

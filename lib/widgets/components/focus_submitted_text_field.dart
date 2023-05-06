@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class FocusSubmittedTextField extends HookWidget {
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final ValueChanged<String>? onSubmitted;
 
   // TextField mirrors
@@ -23,7 +23,7 @@ class FocusSubmittedTextField extends HookWidget {
 
   const FocusSubmittedTextField({
     super.key,
-    this.controller,
+    required this.controller,
     this.onSubmitted,
     this.cursorColor,
     this.style,
@@ -41,8 +41,6 @@ class FocusSubmittedTextField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = this.controller ?? useTextEditingController(text: "");
-
     // Prevents double submission (https://github.com/gruvw/0byte/issues/4)
     final wasSubmitted = useState(false);
 
@@ -52,29 +50,32 @@ class FocusSubmittedTextField extends HookWidget {
     }
 
     return IntrinsicWidth(
-      child: Focus(
-        focusNode: focusNode,
-        onFocusChange: (hasFocus) {
-          if (hasFocus) {
-            wasSubmitted.value = false;
-          } else if (!wasSubmitted.value) {
-            onSubmitted(controller.text);
-          }
-        },
-        child: TextField(
-          controller: controller,
-          onChanged: onChanged,
-          onSubmitted: onSubmitted,
-          cursorColor: cursorColor,
-          style: style,
-          decoration: decoration,
-          maxLength: maxLength,
-          keyboardType: keyboardType,
-          enableSuggestions: enableSuggestions,
-          autofocus: autofocus,
-          inputFormatters: inputFormatters,
-          textInputAction: textInputAction,
-          readOnly: readOnly,
+      child: AbsorbPointer(
+        absorbing: focusNode == null,
+        child: Focus(
+          focusNode: focusNode,
+          onFocusChange: (hasFocus) {
+            if (hasFocus) {
+              wasSubmitted.value = false;
+            } else if (!wasSubmitted.value) {
+              onSubmitted(controller.text);
+            }
+          },
+          child: TextField(
+            controller: controller,
+            onChanged: onChanged,
+            onSubmitted: onSubmitted,
+            cursorColor: cursorColor,
+            style: style,
+            decoration: decoration,
+            maxLength: maxLength,
+            keyboardType: keyboardType,
+            enableSuggestions: enableSuggestions,
+            autofocus: autofocus,
+            inputFormatters: inputFormatters,
+            textInputAction: textInputAction,
+            readOnly: readOnly,
+          ),
         ),
       ),
     );

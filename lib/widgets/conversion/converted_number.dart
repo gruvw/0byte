@@ -24,9 +24,7 @@ class ConvertedNumberView extends HookConsumerWidget {
   }) {
     convertedField = ListenableFieldTransform(
       numberField,
-      transform: (number) {
-        return number?.convertTo(target);
-      },
+      transform: (number) => number?.convertTo(target),
     );
     resultField = ListenableFieldTransform(
       convertedField,
@@ -37,7 +35,6 @@ class ConvertedNumberView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final convertedNumber = useValueListenable(convertedField.notifier);
-
     final wasSymmetric = convertedNumber?.wasSymmetric;
 
     return Row(

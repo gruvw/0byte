@@ -69,6 +69,7 @@ Improving UX + code architecture
   - [ ] Fix android keyboard comes and moves UI (entry page)
 - [ ] Fix https://github.com/gruvw/0byte/issues/1
 - [X] Fix https://github.com/gruvw/0byte/issues/4
+- [X] Fix https://github.com/gruvw/0byte/issues/5
 - [ ] Extract style from structure (theme)
 - [X] Link to github repository in app
 - [ ] Splash screen logo

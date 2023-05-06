@@ -102,6 +102,7 @@ class _FamilyProvidedField<Provided, Arg> with ListenableField<Provided> {
     Arg object, {
     required AutoDisposeProviderFamily<Provided, Arg> provider,
   }) : notifier = ValueNotifier(container.read(provider(object))) {
+    // FIXME this might be adding multiple times the same listner (listner leak)
     container.listen(provider(object), (previous, next) {
       notifier.value = next;
     });
