@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 import 'package:app_0byte/models/number_types.dart';
-import 'package:app_0byte/utils/transforms.dart';
+import 'package:app_0byte/utils/input_transforms.dart';
 
 class NumberInputFormatter extends TextInputFormatter {
   final ConversionType type;

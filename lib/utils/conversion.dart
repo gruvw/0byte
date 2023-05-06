@@ -4,7 +4,7 @@ import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/utils/parser.dart';
-import 'package:app_0byte/utils/transforms.dart';
+import 'package:app_0byte/utils/input_transforms.dart';
 
 class ConversionTarget {
   final ConversionType type;

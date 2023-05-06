@@ -12,7 +12,7 @@ import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
 import 'package:app_0byte/state/providers/entry.dart';
 import 'package:app_0byte/state/providers/settings.dart';
-import 'package:app_0byte/utils/transforms.dart';
+import 'package:app_0byte/utils/input_transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
@@ -87,6 +87,10 @@ class NumberTextView extends HookConsumerWidget {
       }
     });
 
+    useListener(numberField.notifier, (newNumber) {
+      style.value = _styleFrom(newNumber);
+    });
+
     useListener(displaySettings.notifier, (newSettings) {
       if (!focusNode.hasFocus) {
         controller.text = applyNumberTextDisplay(numberField.value, newSettings);
@@ -140,7 +144,8 @@ class NumberTextView extends HookConsumerWidget {
           ),
           FocusSubmittedTextField(
             controller: controller,
-            focusNode: numberTextField.isMutable ? focusNode : null,
+            focusNode: focusNode,
+            absorbing: !numberTextField.isMutable,
             readOnly: !numberTextField.isMutable,
             autofocus: number.text.isEmpty && numberTextField.isMutable,
             inputFormatters: [

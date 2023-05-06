@@ -9,7 +9,7 @@ import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
 import 'package:app_0byte/state/providers/entry.dart';
-import 'package:app_0byte/utils/transforms.dart';
+import 'package:app_0byte/utils/input_transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';

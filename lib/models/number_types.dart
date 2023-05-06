@@ -1,7 +1,7 @@
 import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/parser.dart';
-import 'package:app_0byte/utils/transforms.dart';
+import 'package:app_0byte/utils/input_transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 mixin Exportable {
@@ -150,6 +150,8 @@ enum ConversionType {
     this._defaultDigitsAmount,
   )   : base = alphabet.length, // must be >= 1
         isSeparated = blockLength >= 1;
+
+  String get zero => alphabet[0];
 
   ConversionTarget get defaultTarget => ConversionTarget(
         type: this,

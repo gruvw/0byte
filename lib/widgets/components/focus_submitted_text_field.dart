@@ -20,6 +20,7 @@ class FocusSubmittedTextField extends HookWidget {
   final ValueChanged<String>? onChanged;
   final TextInputAction textInputAction;
   final bool readOnly;
+  final bool absorbing;
 
   const FocusSubmittedTextField({
     super.key,
@@ -33,6 +34,7 @@ class FocusSubmittedTextField extends HookWidget {
     this.enableSuggestions = true,
     this.focusNode,
     this.autofocus = false,
+    this.absorbing = false,
     this.inputFormatters,
     this.onChanged,
     this.textInputAction = TextInputAction.go,
@@ -51,7 +53,7 @@ class FocusSubmittedTextField extends HookWidget {
 
     return IntrinsicWidth(
       child: AbsorbPointer(
-        absorbing: focusNode == null,
+        absorbing: absorbing,
         child: Focus(
           focusNode: focusNode,
           onFocusChange: (hasFocus) {

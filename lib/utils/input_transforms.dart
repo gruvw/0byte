@@ -203,8 +203,7 @@ void Function(String) onSubmitNumber(Number? number) => (newText) {
       }
 
       if (newText.isEmpty) {
-        // Take previous value instead
-        newText = number.text;
+        newText = number.type.zero;
       } else if (!isValidText(number.type, newText)) {
         // Change number type if text is valid without prefix (must be invalid at first)
         for (final type in ConversionType.values) {

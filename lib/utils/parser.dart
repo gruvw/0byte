@@ -12,8 +12,8 @@ String leftTrimmed(ConversionType type, String value, [bool forceTrim = false]) 
       type == ConversionType.ascii ||
       forceTrim) {
     // Don't trim sign, don't return empty string, trim separators too
-    String newVal = value.replaceFirst(RegExp("(?<=^$sign?)[${type.alphabet[0]}$separator]+"), "");
-    return newVal.isNotEmpty ? newVal : type.alphabet[0];
+    String newVal = value.replaceFirst(RegExp("(?<=^$sign?)[${type.zero}$separator]+"), "");
+    return newVal.isNotEmpty ? newVal : type.zero;
   }
   return value;
 }

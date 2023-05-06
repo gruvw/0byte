@@ -4,7 +4,7 @@ import 'package:app_0byte/utils/conversion.dart';
 abstract class ValuesTheme {
   static final Number defaultNumber = DartNumber(
     type: ConversionType.binary,
-    text: ConversionType.binary.alphabet[0],
+    text: ConversionType.binary.zero,
   );
   static final ConversionTarget defaultTarget = ConversionTarget(
     type: ConversionType.unsignedDecimal,
