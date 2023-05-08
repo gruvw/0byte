@@ -4,6 +4,7 @@ import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/hive_store/hive_database.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
+import 'package:app_0byte/models/settings.dart';
 
 final database = HiveDatabase();
 
@@ -18,15 +19,15 @@ final collectionEditionEventProvider =
   },
 );
 
-final collectionsProvider = Provider.autoDispose(
-  (ref) {
-    ref.watch(collectionsEventProvider);
-    return database.getCollections();
-  },
-);
 final collectionsEventProvider = StreamProvider.autoDispose<Event<Collection>>(
   (ref) async* {
     yield* database.watchCollections();
+  },
+);
+final collectionsProvider = Provider.autoDispose<List<Collection>>(
+  (ref) {
+    ref.watch(collectionsEventProvider);
+    return database.getCollections();
   },
 );
 
@@ -36,5 +37,17 @@ final entryEditionEventProvider =
     yield* database
         .watchEntries()
         .where((event) => event.object == entry && event.type == EventType.edit);
+  },
+);
+
+final settingsEventProvider = StreamProvider.autoDispose<Event<ApplicationSettings>>(
+  (ref) async* {
+    yield* database.watchSettings();
+  },
+);
+final settingsProvider = Provider.autoDispose<ApplicationSettings>(
+  (ref) {
+    ref.watch(settingsEventProvider);
+    return database.getSettings();
   },
 );

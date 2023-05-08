@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/models/settings.dart';
-import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/input_transforms.dart';
+import 'package:app_0byte/utils/parser.dart';
 
 class ConversionTarget {
   final ConversionType type;
@@ -64,7 +64,7 @@ class ConvertedNumber implements Exportable {
   }
 
   @override
-  String export(ExportSettings settings) {
+  String export(ApplicationSettings settings) {
     final result = this.result;
 
     if (result == null) {

@@ -1,3 +1,4 @@
+import 'package:app_0byte/state/providers/database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/number_types.dart';
-import 'package:app_0byte/state/providers/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/widgets/conversion/number_text.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
@@ -45,7 +45,7 @@ class ConvertedNumberView extends HookConsumerWidget {
             children: [
               NumberTextView.fromNumberField(
                 numberField: resultField,
-                displaySettings: ListenableField.provided(displayConvertedSettingsProvider),
+                settings: ListenableField.provided(settingsProvider),
               ),
               if (wasSymmetric != null && !wasSymmetric)
                 const Divider(

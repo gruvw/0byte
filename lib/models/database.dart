@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_0byte/models/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/models/collection.dart';
@@ -14,7 +15,16 @@ abstract class Database {
   final StreamController<Event<Collection>> collectionEventsController =
       StreamController<Event<Collection>>.broadcast();
 
+  final StreamController<Event<ApplicationSettings>> settingsEventsController =
+      StreamController<Event<ApplicationSettings>>.broadcast();
+
   Future<void> init() async {}
+
+  Collection createCollection({
+    required String label,
+  });
+
+  List<Collection> getCollections();
 
   NumberConversionEntry createNumberConversionEntry({
     required Collection collection,
@@ -24,14 +34,11 @@ abstract class Database {
     required ConversionTarget target,
   });
 
-  Collection createCollection({
-    required String label,
-  });
+  ApplicationSettings getSettings();
 
-  List<Collection> getCollections();
-
-  Stream<Event<NumberConversionEntry>> watchEntries() => entryEventsController.stream;
   Stream<Event<Collection>> watchCollections() => collectionEventsController.stream;
+  Stream<Event<NumberConversionEntry>> watchEntries() => entryEventsController.stream;
+  Stream<Event<ApplicationSettings>> watchSettings() => settingsEventsController.stream;
 }
 
 abstract class DatabaseObject {

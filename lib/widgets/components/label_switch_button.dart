@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
@@ -41,28 +40,6 @@ class LabelSwitchButton extends StatelessWidget {
             ),
           ),
       ],
-    );
-  }
-}
-
-class ProvidedLabelSwitchButton extends ConsumerWidget {
-  final StateProvider<bool> provider;
-  final String? label;
-
-  const ProvidedLabelSwitchButton(
-    this.provider, {
-    super.key,
-    this.label,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final enabled = ref.watch(provider);
-
-    return LabelSwitchButton(
-      enabled: enabled,
-      label: label,
-      onChanged: (newEnabled) => ref.read(provider.notifier).state = newEnabled,
     );
   }
 }

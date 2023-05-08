@@ -10,8 +10,8 @@ import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
+import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/state/providers/entry.dart';
-import 'package:app_0byte/state/providers/settings.dart';
 import 'package:app_0byte/utils/input_transforms.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
@@ -39,14 +39,14 @@ class NumberTextView extends HookConsumerWidget {
   late final ListenableField<Number?> numberField;
   final PotentiallyMutableField<String> numberTextField;
 
-  final ListenableField<DisplaySettings> displaySettings;
+  final ListenableField<ApplicationSettings> settings;
 
   NumberTextView({
     super.key,
     required PotentiallyMutable<Number?> number,
-    required this.displaySettings,
+    required this.settings,
   }) : numberTextField = PotentiallyMutableField(
-          applyNumberTextDisplay(number.object, displaySettings.value),
+          applyNumberTextDisplay(number.object, settings.value),
           isMutable: number.isMutable,
           // Don't use applyObject here (uses NumberInputFormatter)
           onSubmitted: onSubmitNumber(number.object),
@@ -65,11 +65,11 @@ class NumberTextView extends HookConsumerWidget {
   NumberTextView.fromNumberField({
     super.key,
     required this.numberField,
-    required this.displaySettings,
+    required this.settings,
   }) : numberTextField = ImmutableField(
           ListenableFieldTransform(
             numberField,
-            transform: (input) => applyNumberTextDisplay(input, displaySettings.value),
+            transform: (input) => applyNumberTextDisplay(input, settings.value),
           ),
         );
 
@@ -91,7 +91,7 @@ class NumberTextView extends HookConsumerWidget {
       style.value = _styleFrom(newNumber);
     });
 
-    useListener(displaySettings.notifier, (newSettings) {
+    useListener(settings.notifier, (newSettings) {
       if (!focusNode.hasFocus) {
         controller.text = applyNumberTextDisplay(numberField.value, newSettings);
       }
@@ -105,7 +105,7 @@ class NumberTextView extends HookConsumerWidget {
         return;
       }
 
-      String copy = number.export(ref.read(exportSettingsProvider));
+      String copy = number.export(ref.read(settingsProvider));
       Clipboard.setData(ClipboardData(text: copy)).then(
         (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: RichText(
@@ -151,7 +151,7 @@ class NumberTextView extends HookConsumerWidget {
             inputFormatters: [
               NumberInputFormatter(
                 type: number.type,
-                displaySeparator: displaySettings.value.useSeparators,
+                displaySeparator: settings.value.displaySeparators,
               )
             ],
             onChanged: numberTextField.set,

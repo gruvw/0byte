@@ -175,7 +175,11 @@ void Function(String) onSubmitNumberConversionLabel(NumberConversion number) => 
       number.label = newLabel;
     };
 
-String applyNumberTextDisplay(Number? number, DisplaySettings settings) {
+String applyNumberTextDisplay(
+  Number? number,
+  ApplicationSettings settings, [
+  bool export = false,
+]) {
   if (number == null) {
     return "";
   }
@@ -184,17 +188,21 @@ String applyNumberTextDisplay(Number? number, DisplaySettings settings) {
     PositionedText(number.text, 0),
     PositionedText(number.text, 0),
     number.type,
-    settings.useSeparators,
+    export ? settings.exportSeparators : settings.displaySeparators,
   ).text;
 
-  return settings.trimLeadingZeros ? leftTrimmed(number.type, text, true) : text;
+  return (export
+          ? settings.exportTrimConvertedLeadingZeros
+          : settings.displayTrimConvertedLeadingZeros)
+      ? leftTrimmed(number.type, text, true)
+      : text;
 }
 
-String applyNumberTextExport(Number? number, ExportSettings settings) {
-  String text = applyNumberTextDisplay(number, settings);
+String applyNumberTextExport(Number? number, ApplicationSettings settings) {
+  String text = applyNumberTextDisplay(number, settings, true);
 
   // Revert ASCII map
-  if (number?.type == ConversionType.ascii && !settings.useASCIIControl) {
+  if (number?.type == ConversionType.ascii && !settings.exportUseASCIIControl) {
     final asciiUnMapped = StringBuffer();
     for (int i = 0; i < text.length; i++) {
       final pos = ConversionType.ascii.alphabet.indexOf(text[i]);

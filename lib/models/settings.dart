@@ -1,30 +1,42 @@
-class ExportSettings extends DisplaySettings {
-  final bool useASCIIControl;
+import 'package:app_0byte/models/database.dart';
 
-  ExportSettings({
-    required super.useSeparators,
-    required super.trimLeadingZeros,
-    required this.useASCIIControl,
-  });
+// class ExportSettings extends DisplaySettings {
+//   final bool useASCIIControl;
 
-  ExportSettings along({
-    bool? useSeparators,
-    bool? trimLeadingZeros,
-    bool? useASCIIControl,
-  }) =>
-      ExportSettings(
-        useSeparators: useSeparators ?? this.useSeparators,
-        trimLeadingZeros: trimLeadingZeros ?? this.trimLeadingZeros,
-        useASCIIControl: useASCIIControl ?? this.useASCIIControl,
-      );
-}
+//   ExportSettings({
+//     required super.useSeparators,
+//     required super.trimLeadingZeros,
+//     required this.useASCIIControl,
+//   });
 
-class DisplaySettings {
-  final bool useSeparators;
-  final bool trimLeadingZeros;
+//   ExportSettings along({
+//     bool? useSeparators,
+//     bool? trimLeadingZeros,
+//     bool? useASCIIControl,
+//   }) =>
+//       ExportSettings(
+//         useSeparators: useSeparators ?? this.useSeparators,
+//         trimLeadingZeros: trimLeadingZeros ?? this.trimLeadingZeros,
+//         useASCIIControl: useASCIIControl ?? this.useASCIIControl,
+//       );
+// }
 
-  DisplaySettings({
-    required this.useSeparators,
-    required this.trimLeadingZeros,
-  });
+// class DisplaySettings {
+//   final bool useSeparators;
+//   final bool trimLeadingZeros;
+
+//   DisplaySettings({
+//     required this.useSeparators,
+//     required this.trimLeadingZeros,
+//   });
+// }
+
+abstract class ApplicationSettings extends DatabaseObject {
+  abstract bool displaySeparators;
+  abstract bool displayTrimConvertedLeadingZeros;
+  abstract bool exportSeparators;
+  abstract bool exportTrimConvertedLeadingZeros;
+  abstract bool exportUseASCIIControl;
+
+  ApplicationSettings({required super.database});
 }

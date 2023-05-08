@@ -13,7 +13,7 @@ mixin ListenableField<T> {
   }) =>
       _FamilyProvidedField._(object, provider: provider);
 
-  static ListenableField<Provided> provided<Provided>(StateProvider<Provided> provider) =>
+  static ListenableField<Provided> provided<Provided>(AutoDisposeProvider<Provided> provider) =>
       _ProvidedField._(provider);
 
   ValueListenable<T> get notifier;
@@ -114,7 +114,7 @@ class _ProvidedField<Provided> with ListenableField<Provided> {
   final ValueNotifier<Provided> notifier;
 
   _ProvidedField._(
-    StateProvider<Provided> provider,
+    AutoDisposeProvider<Provided> provider,
   ) : notifier = ValueNotifier(container.read(provider)) {
     container.listen(provider, (previous, next) {
       notifier.value = next;

@@ -33,11 +33,10 @@ abstract class Collection extends DatabaseObject implements Exportable {
   }
 
   @override
-  String export(ExportSettings settings) {
+  String export(ApplicationSettings settings) {
     final res = StringBuffer("$label\n");
     res.writeAll(entries.map((e) {
-      final displayedText =
-          e.export(settings.along(trimLeadingZeros: false)).substring(e.type.prefix.length);
+      final displayedText = e.export(settings).substring(e.type.prefix.length);
       final converted = e.converted;
       final displayedConverted = converted.export(settings);
       return "${e.label}: [${e.type.prefix}]$displayedText$displayedConverted\n";

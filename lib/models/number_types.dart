@@ -1,11 +1,11 @@
 import 'package:app_0byte/models/settings.dart';
 import 'package:app_0byte/utils/conversion.dart';
-import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/input_transforms.dart';
+import 'package:app_0byte/utils/parser.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 mixin Exportable {
-  String export(ExportSettings settings);
+  String export(ApplicationSettings settings);
 }
 
 mixin Number implements Exportable {
@@ -27,7 +27,8 @@ mixin Number implements Exportable {
   }
 
   @override
-  String export(ExportSettings settings) => type.prefix + applyNumberTextExport(this, settings);
+  String export(ApplicationSettings settings) =>
+      type.prefix + applyNumberTextExport(this, settings);
 }
 
 mixin NumberConversion on Number {

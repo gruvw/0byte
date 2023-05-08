@@ -31,11 +31,11 @@ abstract class ValuesTheme {
   static const String settingsUITitle = "User Interface";
   static const String settingsExportTitle = "Clipboard exports";
   static const String displaySeparatorSettingsLabel = "Display number separators";
-  static const String displayConvertedLeadingZerosSettingsLabel =
+  static const String displayTrimConvertedLeadingZerosSettingsLabel =
       "Display leading zeros in conversion";
   static const String exportSeparatorsSettingsLabel = "Export number separators";
-  static const String exportConvertedLeadingZerosSettingsLabel =
+  static const String exportTrimConvertedLeadingZerosSettingsLabel =
       "Export leading zeros in conversion";
-  static const String exportASCIIControlSettingsLabel =
+  static const String exportUseASCIIControlSettingsLabel =
       "Export ASCII Unicode Control Pictures instead of ASCII control codes";
 }

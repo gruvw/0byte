@@ -6,7 +6,7 @@ import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/routes/route_generator.dart';
-import 'package:app_0byte/state/providers/settings.dart';
+import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/state/updaters/database.dart';
 import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
@@ -33,7 +33,7 @@ class NumberConversionView extends StatelessWidget {
     // ListenableField<Number?> holder (used for live conversion)
     final numberView = NumberTextView(
       number: number,
-      displaySettings: ListenableField.provided(displayNumberSettingsProvider),
+      settings: ListenableField.provided(settingsProvider),
     );
 
     return Column(

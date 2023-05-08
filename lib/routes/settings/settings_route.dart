@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/values.dart';
-import 'package:app_0byte/state/providers/settings.dart';
+import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/widgets/components/label_switch_button.dart';
 
 // TODO fix text overflow on narrow screens
 
-class SettingsRoute extends StatelessWidget {
+class SettingsRoute extends ConsumerWidget {
   static final _categoryStyle = GoogleFonts.getFont(
     FontTheme.firaSans,
     color: ColorTheme.text1,
@@ -21,7 +22,9 @@ class SettingsRoute extends StatelessWidget {
   const SettingsRoute({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorTheme.background3,
@@ -43,13 +46,16 @@ class SettingsRoute extends StatelessWidget {
               padding: PaddingTheme.settingsCategoryIndentation,
               child: Column(
                 children: [
-                  ProvidedLabelSwitchButton(
-                    displaySeparatorsProvider,
+                  LabelSwitchButton(
+                    enabled: settings.displaySeparators,
                     label: ValuesTheme.displaySeparatorSettingsLabel,
+                    onChanged: (newEnabled) => settings.displaySeparators = newEnabled,
                   ),
-                  ProvidedLabelSwitchButton(
-                    displayConvertedLeadingZerosProvider,
-                    label: ValuesTheme.displayConvertedLeadingZerosSettingsLabel,
+                  LabelSwitchButton(
+                    enabled: settings.displayTrimConvertedLeadingZeros,
+                    label: ValuesTheme.displayTrimConvertedLeadingZerosSettingsLabel,
+                    onChanged: (newEnabled) =>
+                        settings.displayTrimConvertedLeadingZeros = newEnabled,
                   ),
                 ],
               ),
@@ -63,17 +69,21 @@ class SettingsRoute extends StatelessWidget {
               padding: PaddingTheme.settingsCategoryIndentation,
               child: Column(
                 children: [
-                  ProvidedLabelSwitchButton(
-                    exportSeparatorsProvider,
+                  LabelSwitchButton(
+                    enabled: settings.exportSeparators,
                     label: ValuesTheme.exportSeparatorsSettingsLabel,
+                    onChanged: (newEnabled) => settings.exportSeparators = newEnabled,
                   ),
-                  ProvidedLabelSwitchButton(
-                    exportConvertedLeadingZerosProvider,
-                    label: ValuesTheme.exportConvertedLeadingZerosSettingsLabel,
+                  LabelSwitchButton(
+                    enabled: settings.exportTrimConvertedLeadingZeros,
+                    label: ValuesTheme.exportTrimConvertedLeadingZerosSettingsLabel,
+                    onChanged: (newEnabled) =>
+                        settings.exportTrimConvertedLeadingZeros = newEnabled,
                   ),
-                  ProvidedLabelSwitchButton(
-                    exportASCIIControlProvider,
-                    label: ValuesTheme.exportASCIIControlSettingsLabel,
+                  LabelSwitchButton(
+                    enabled: settings.exportUseASCIIControl,
+                    label: ValuesTheme.exportUseASCIIControlSettingsLabel,
+                    onChanged: (newEnabled) => settings.exportUseASCIIControl = newEnabled,
                   ),
                 ],
               ),

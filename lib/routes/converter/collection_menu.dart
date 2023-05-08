@@ -8,7 +8,7 @@ import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/time.dart';
 import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/collection.dart';
-import 'package:app_0byte/state/providers/settings.dart';
+import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/widgets/components/text_icon.dart';
 
@@ -74,7 +74,7 @@ class CollectionMenu extends ConsumerWidget {
           ),
           onTap: () {
             Clipboard.setData(ClipboardData(
-              text: collection.export(ref.read(exportSettingsProvider)),
+              text: collection.export(ref.read(settingsProvider)),
             )).then((_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: RichText(
                     text: TextSpan(
