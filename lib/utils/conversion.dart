@@ -73,7 +73,7 @@ class ConvertedNumber implements Exportable {
 
     final arrow = wasSymmetric ? ValuesTheme.symmetricArrow : ValuesTheme.nonSymmetricArrow;
     final displayedDigits = wasSymmetric ? "" : " ${digits.amount}";
-    final displayedConverted = applyNumberTextDisplay(result, settings);
+    final displayedConverted = applyNumberTextExport(result, settings);
 
     return " $arrow [${result.type.prefix}$displayedDigits]$displayedConverted";
   }

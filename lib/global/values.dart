@@ -32,10 +32,10 @@ abstract class ValuesTheme {
   static const String settingsExportTitle = "Clipboard exports";
   static const String displaySeparatorSettingsLabel = "Display number separators";
   static const String displayTrimConvertedLeadingZerosSettingsLabel =
-      "Display leading zeros in conversion";
+      "Trim leading zeros when displaying conversion";
   static const String exportSeparatorsSettingsLabel = "Export number separators";
   static const String exportTrimConvertedLeadingZerosSettingsLabel =
-      "Export leading zeros in conversion";
+      "Trim leading zeros when exporting conversion";
   static const String exportUseASCIIControlSettingsLabel =
       "Export ASCII Unicode Control Pictures instead of ASCII control codes";
 }

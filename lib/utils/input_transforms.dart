@@ -191,11 +191,12 @@ String applyNumberTextDisplay(
     export ? settings.exportSeparators : settings.displaySeparators,
   ).text;
 
-  return (export
+  return leftTrimmed(
+      number.type,
+      text,
+      export
           ? settings.exportTrimConvertedLeadingZeros
-          : settings.displayTrimConvertedLeadingZeros)
-      ? leftTrimmed(number.type, text, true)
-      : text;
+          : settings.displayTrimConvertedLeadingZeros);
 }
 
 String applyNumberTextExport(Number? number, ApplicationSettings settings) {

@@ -42,7 +42,7 @@ final entryEditionEventProvider =
 
 final settingsEventProvider = StreamProvider.autoDispose<Event<ApplicationSettings>>(
   (ref) async* {
-    yield* database.watchSettings();
+    yield* database.watchSettings().where((event) => event.type == EventType.edit);
   },
 );
 final settingsProvider = Provider.autoDispose<ApplicationSettings>(

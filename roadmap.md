@@ -53,12 +53,12 @@ Sharing
 
 Improving UX + code architecture
 
-- [ ] Settings
+- [X] Settings
   - [X] Support number separator
   - [X] Display separator + Clipboard separator to settings (settings page)
   - [X] Option: to copy ASCII Unicode Control Pictures vs ASCII values
   - [X] Option: Always trim leading 0s on converted
-  - [ ] Persistent settings
+  - [X] Persistent settings
 - [X] Full UX redesign (no more fixed output per collection)
   - [X] Patch entry and collections to support new features (+ needed corrections)
   - [X] Finish entry page

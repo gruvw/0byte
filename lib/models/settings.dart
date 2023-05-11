@@ -1,35 +1,6 @@
+import 'package:flutter/material.dart';
+
 import 'package:app_0byte/models/database.dart';
-
-// class ExportSettings extends DisplaySettings {
-//   final bool useASCIIControl;
-
-//   ExportSettings({
-//     required super.useSeparators,
-//     required super.trimLeadingZeros,
-//     required this.useASCIIControl,
-//   });
-
-//   ExportSettings along({
-//     bool? useSeparators,
-//     bool? trimLeadingZeros,
-//     bool? useASCIIControl,
-//   }) =>
-//       ExportSettings(
-//         useSeparators: useSeparators ?? this.useSeparators,
-//         trimLeadingZeros: trimLeadingZeros ?? this.trimLeadingZeros,
-//         useASCIIControl: useASCIIControl ?? this.useASCIIControl,
-//       );
-// }
-
-// class DisplaySettings {
-//   final bool useSeparators;
-//   final bool trimLeadingZeros;
-
-//   DisplaySettings({
-//     required this.useSeparators,
-//     required this.trimLeadingZeros,
-//   });
-// }
 
 abstract class ApplicationSettings extends DatabaseObject {
   abstract bool displaySeparators;
@@ -39,4 +10,13 @@ abstract class ApplicationSettings extends DatabaseObject {
   abstract bool exportUseASCIIControl;
 
   ApplicationSettings({required super.database});
+
+  @protected
+  void notify(EventType type) =>
+      database.settingsEventsController.add(Event(object: this, type: type));
+
+  @override
+  void delete([bool broadcast = true]) {
+    throw UnsupportedError("Can't delete the application settings");
+  }
 }
