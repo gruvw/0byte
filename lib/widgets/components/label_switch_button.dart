@@ -1,3 +1,4 @@
+import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -22,24 +23,30 @@ class LabelSwitchButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final label = this.label;
 
-    return Row(
-      children: [
-        Switch(
-          value: enabled,
-          onChanged: onChanged,
-          activeColor: ColorTheme.accent,
-          inactiveTrackColor: ColorTheme.background3,
-        ),
-        if (label != null)
-          Text(
-            label,
-            style: GoogleFonts.getFont(
-              FontTheme.firaSans,
-              color: ColorTheme.text1,
-              fontSize: FontTheme.switchLabelSize,
-            ),
+    return Padding(
+      padding: PaddingTheme.switchButton,
+      child: Row(
+        children: [
+          Switch(
+            value: enabled,
+            onChanged: onChanged,
+            activeColor: ColorTheme.accent,
+            inactiveTrackColor: ColorTheme.background3,
           ),
-      ],
+          if (label != null)
+            Flexible(
+              child: Text(
+                label,
+                overflow: TextOverflow.visible,
+                style: GoogleFonts.getFont(
+                  FontTheme.firaSans,
+                  color: ColorTheme.text1,
+                  fontSize: FontTheme.switchLabelSize,
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

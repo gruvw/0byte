@@ -10,8 +10,6 @@ import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/widgets/components/label_switch_button.dart';
 
-// TODO fix text overflow on narrow screens
-
 class SettingsRoute extends ConsumerWidget {
   static final _categoryStyle = GoogleFonts.getFont(
     FontTheme.firaSans,
