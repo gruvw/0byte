@@ -11,6 +11,9 @@ import 'package:app_0byte/routes/route_generator.dart';
 import 'package:app_0byte/state/providers/database.dart';
 
 void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   await database.init();
   setPathUrlStrategy();
 

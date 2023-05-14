@@ -34,7 +34,7 @@ class DrawerFooter extends StatelessWidget {
               children: [
                 IconButton(
                   padding: PaddingTheme.zero,
-                  onPressed: () {}, // TODO information page
+                  onPressed: () {}, // FIXME information page
                   icon: const Icon(
                     Icons.info_outline,
                     color: ColorTheme.text1,

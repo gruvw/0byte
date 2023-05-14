@@ -139,7 +139,6 @@ flutter_icons:
 flutter_native_splash:
 
   color: "#343A40"
-  # TODO LOGO centered
   # background_image: "assets/background.png"
-  # image: assets/icon.png
+  image: assets/icon.png
 
