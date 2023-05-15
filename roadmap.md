@@ -66,7 +66,7 @@ Improving UX + code architecture
   - [X] Fix outlined buttons hover color
 - [ ] Fix web issues (cross-browser)
 - [ ] Fix UI (scaling, font, responsive)
-  - [ ] Fix android keyboard comes and moves UI (entry page)
+  - [X] Fix android keyboard comes and moves UI (entry page)
 - [ ] Fix https://github.com/gruvw/0byte/issues/1
 - [X] Fix https://github.com/gruvw/0byte/issues/4
 - [X] Fix https://github.com/gruvw/0byte/issues/5

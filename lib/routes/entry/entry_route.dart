@@ -64,6 +64,7 @@ class EntryRoute extends HookConsumerWidget {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: ColorTheme.background3,
         leading: IconButton(
