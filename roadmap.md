@@ -72,7 +72,7 @@ Improving UX + code architecture
 - [X] Fix https://github.com/gruvw/0byte/issues/5
 - [ ] Extract style from structure (theme)
 - [X] Link to github repository in app
-- [ ] Splash screen logo
+- [X] Splash screen logo
 
 ## Beta release `v0.0.2-beta`
 

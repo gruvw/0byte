@@ -7,7 +7,7 @@ import 'package:url_strategy/url_strategy.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/routes/route_generator.dart';
+import 'package:app_0byte/widgets/routes/route_generator.dart';
 import 'package:app_0byte/state/providers/database.dart';
 
 void main() async {

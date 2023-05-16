@@ -1,10 +1,10 @@
-import 'package:app_0byte/routes/settings/settings_route.dart';
+import 'package:app_0byte/widgets/routes/settings/settings_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
-import 'package:app_0byte/routes/converter/converter_route.dart';
-import 'package:app_0byte/routes/entry/entry_route.dart';
+import 'package:app_0byte/widgets/routes/converter/converter_route.dart';
+import 'package:app_0byte/widgets/routes/entry/entry_route.dart';
 
 enum Routes {
   home("/"),

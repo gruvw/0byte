@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/routes/route_generator.dart';
+import 'package:app_0byte/widgets/routes/route_generator.dart';
 
 final Uri _repository = Uri.parse("https://github.com/gruvw/0byte");
 
