@@ -8,10 +8,6 @@ final collectionsUpdater = Updater<List<Collection>>(
   (ref) => ref.watch(collectionsProvider),
 );
 
-final collectionEditionUpdater = FamilyUpdater.family<Collection>(
-  (ref, element) => ref.watch(collectionEditionEventProvider(element)),
-);
-
 final entryEditionUpdater = FamilyUpdater.family<NumberConversionEntry>(
   (ref, element) => ref.watch(entryEditionEventProvider(element)),
 );

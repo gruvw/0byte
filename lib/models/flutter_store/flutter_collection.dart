@@ -3,8 +3,12 @@ import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_database.dart';
 import 'package:app_0byte/models/flutter_store/flutter_number_conversion_entry.dart';
 import 'package:app_0byte/utils/reorderable_list.dart';
+import 'package:nanoid/non_secure.dart';
 
 class FlutterCollection extends Collection {
+  @override
+  final String key;
+
   final List<FlutterNumberConversionEntry> flutterEntries = [];
   @override
   List<FlutterNumberConversionEntry> get entries => SortableList(flutterEntries);
@@ -21,7 +25,7 @@ class FlutterCollection extends Collection {
   FlutterCollection({
     required super.database,
     required this.flutterLabel,
-  });
+  }) : key = nanoid();
 
   @override
   void delete([bool broadcast = true]) {

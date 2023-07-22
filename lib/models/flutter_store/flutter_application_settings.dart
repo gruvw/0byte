@@ -2,6 +2,9 @@ import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/settings.dart';
 
 class FlutterApplicationSettings extends ApplicationSettings {
+  @override
+  final String key = "settings";
+
   bool flutterDisplaySeparators;
   @override
   bool get displaySeparators => flutterDisplaySeparators;

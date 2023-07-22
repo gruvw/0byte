@@ -14,8 +14,6 @@ import 'package:app_0byte/widgets/routes/converter/drawer/footer.dart';
 import 'package:app_0byte/widgets/routes/route_generator.dart';
 import 'package:app_0byte/state/providers/application.dart';
 import 'package:app_0byte/state/providers/database.dart';
-import 'package:app_0byte/state/updaters/database.dart';
-import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/forms/text_form.dart';
 
@@ -24,15 +22,14 @@ class ConverterRoute extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final collection = ref.watch(selectedCollectionProvider);
-    ref.subscribe(collectionEditionUpdater(collection));
+    final selectedCollection = ref.watch(selectedCollectionProvider);
 
     return Scaffold(
       backgroundColor: ColorTheme.background1,
       appBar: AppBar(
         backgroundColor: ColorTheme.background3,
         title: Text(
-          collection.label,
+          selectedCollection.label,
           style: GoogleFonts.getFont(FontTheme.firaSans),
         ),
         actions: [
@@ -45,20 +42,20 @@ class ConverterRoute extends HookConsumerWidget {
               context: context,
               builder: (context) => TextForm(
                 title: "Collection title",
-                initialText: collection.label,
-                callback: (newTitle) => collection.label = newTitle,
+                initialText: selectedCollection.label,
+                callback: (newTitle) => selectedCollection.label = newTitle,
               ),
             ),
           ),
-          CollectionMenu(collection: collection),
+          CollectionMenu(collection: selectedCollection),
         ],
       ),
-      drawer: SafeArea(
+      drawer: const SafeArea(
         child: Drawer(
           backgroundColor: ColorTheme.background1,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               CollectionsList(),
               DrawerFooter(),
             ],
@@ -70,7 +67,7 @@ class ConverterRoute extends HookConsumerWidget {
         children: [
           const ConversionTitleWidget(),
           Expanded(
-            child: CollectionEntries(collection: collection),
+            child: CollectionEntries(collection: selectedCollection),
           ),
         ],
       ),
@@ -78,12 +75,12 @@ class ConverterRoute extends HookConsumerWidget {
         backgroundColor: ColorTheme.textPrefix,
         foregroundColor: ColorTheme.text1,
         onPressed: () {
-          final nbEntries = collection.entries.length;
+          final nbEntries = selectedCollection.entries.length;
           final entry = database.createNumberConversionEntry(
-            collection: collection,
+            collection: selectedCollection,
             position: nbEntries,
             label: uniqueLabel(
-              collection.entries.map((c) => c.label),
+              selectedCollection.entries.map((c) => c.label),
               ValuesTheme.defaultNumberLabel,
             ),
             number: ValuesTheme.defaultNumber,
