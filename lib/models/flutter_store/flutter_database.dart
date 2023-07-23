@@ -70,5 +70,8 @@ class FlutterDatabase extends Database {
   }
 
   @override
+  List<NumberConversionEntry> getEntries() => getCollections().expand((e) => e.entries).toList();
+
+  @override
   FlutterApplicationSettings getSettings() => settings;
 }

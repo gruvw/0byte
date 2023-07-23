@@ -25,9 +25,13 @@ abstract class Database {
   });
 
   List<Collection> getCollections();
+  List<NumberConversionEntry> getEntries();
 
   Collection? getCollection(String collectionKey) =>
       getCollections().where((c) => c.key == collectionKey).firstOrNull;
+
+  NumberConversionEntry? getEntry(String entryKey) =>
+      getEntries().where((e) => e.key == entryKey).firstOrNull;
 
   NumberConversionEntry createNumberConversionEntry({
     required Collection collection,

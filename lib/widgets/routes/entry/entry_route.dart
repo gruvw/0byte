@@ -10,7 +10,6 @@ import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/providers/entry.dart';
-import 'package:app_0byte/state/updaters/database.dart';
 import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/components/border_button.dart';
