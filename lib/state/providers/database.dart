@@ -34,17 +34,13 @@ final collectionsProvider = Provider.autoDispose<List<Collection>>(
 );
 
 final entryEditionEventProvider =
-    StreamProvider.autoDispose.family<Event<NumberConversionEntry>, String>(
-  (ref, entryKey) async* {
+    StreamProvider.autoDispose.family<Event<NumberConversionEntry>, NumberConversionEntry>(
+  (ref, entry) async* {
     yield* database
         .watchEntries()
-        .where((event) => event.object.key == entryKey && event.type == EventType.edit);
+        .where((event) => event.object == entry && event.type == EventType.edit);
   },
 );
-final entryProvider = Provider.autoDispose.family<NumberConversionEntry, String>((ref, entryKey) {
-  ref.watch(entryEditionEventProvider(entryKey));
-  return database.getEntry(entryKey)!;
-});
 
 final settingsEventProvider = StreamProvider.autoDispose<Event<ApplicationSettings>>(
   (ref) async* {

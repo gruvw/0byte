@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:app_0byte/global/styles/dimensions.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/widgets/routes/route_generator.dart';
 import 'package:app_0byte/state/providers/database.dart';
+import 'package:app_0byte/state/updaters/database.dart';
+import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/conversion/conversion_chip.dart';
 import 'package:app_0byte/widgets/conversion/converted_number.dart';
@@ -69,29 +72,29 @@ class NumberConversionView extends StatelessWidget {
 }
 
 class NumberConversionEntryView extends ConsumerWidget {
-  final PotentiallyMutable<String> entryKey;
+  final PotentiallyMutable<NumberConversionEntry> entry;
   final NumberLabel? label;
   final bool chipEnabled;
 
   const NumberConversionEntryView({
     super.key,
-    required this.entryKey,
+    required this.entry,
     this.chipEnabled = true,
     this.label,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final entry = ref.watch(entryProvider(entryKey.object));
+    ref.subscribe(entryEditionUpdater(entry.object));
 
     return NumberConversionView(
-      number: PotentiallyMutable(entry, isMutable: entryKey.isMutable),
+      number: entry,
       label: label,
       onChipPressed: chipEnabled
           ? () {
               Navigator.of(context).pushNamed(
                 Routes.entry.name,
-                arguments: [entryKey.object],
+                arguments: [entry.object],
               );
             }
           : null,

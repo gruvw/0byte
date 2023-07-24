@@ -63,7 +63,7 @@ class _NumberEntry extends StatelessWidget {
             onDelete: (_) => entry.delete(),
             child: Padding(
               padding: PaddingTheme.entry,
-              child: NumberConversionEntryView(entryKey: Mutable(entry.key)),
+              child: NumberConversionEntryView(entry: Mutable(entry)),
             ),
           ),
           const Divider(

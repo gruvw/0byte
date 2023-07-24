@@ -5,8 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/global/styles/fonts.dart';
+import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
-import 'package:app_0byte/state/providers/database.dart';
+import 'package:app_0byte/state/updaters/database.dart';
+import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/conversion.dart';
 
 class ConversionChip extends StatelessWidget {
@@ -47,16 +49,16 @@ class ConversionChip extends StatelessWidget {
 }
 
 class EntryConversionChip extends HookConsumerWidget {
-  final String entryKey;
+  final NumberConversionEntry entry;
 
   const EntryConversionChip({
     super.key,
-    required this.entryKey,
+    required this.entry,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final entry = ref.watch(entryProvider(entryKey));
+    ref.subscribe(entryEditionUpdater(entry));
 
     return ConversionChip(
       inputType: entry.type,

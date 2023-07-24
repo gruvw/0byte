@@ -104,16 +104,6 @@ class HiveDatabase extends Database {
   }
 
   @override
-  List<NumberConversionEntry> getEntries() {
-    return List.unmodifiable(entriesBox.values
-        .map((e) => HiveNumberConversionEntry(
-              database: this,
-              hiveStoreNumberEntry: e,
-            ))
-        .toList());
-  }
-
-  @override
   HiveApplicationSettings getSettings() => HiveApplicationSettings(
         database: this,
         hiveStoreApplicationSettings: settingsBox.getAt(0)!,
