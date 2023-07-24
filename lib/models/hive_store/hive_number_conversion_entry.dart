@@ -46,9 +46,6 @@ class HiveStoreNumberConversionEntry with HiveObjectMixin {
 class HiveNumberConversionEntry extends NumberConversionEntry {
   final HiveStoreNumberConversionEntry hiveStoreNumberEntry;
 
-  @override
-  String get key => hiveStoreNumberEntry.key.toString();
-
   HiveNumberConversionEntry({
     required super.database,
     required this.hiveStoreNumberEntry,

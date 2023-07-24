@@ -26,9 +26,6 @@ abstract class Database {
 
   List<Collection> getCollections();
 
-  Collection? getCollection(String collectionKey) =>
-      getCollections().where((c) => c.key == collectionKey).firstOrNull;
-
   NumberConversionEntry createNumberConversionEntry({
     required Collection collection,
     required int position,
@@ -47,8 +44,6 @@ abstract class Database {
 abstract class DatabaseObject {
   @protected
   final Database database;
-
-  String get key;
 
   DatabaseObject({required this.database});
 

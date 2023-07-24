@@ -5,7 +5,8 @@ import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/database.dart';
 import 'package:app_0byte/models/number_types.dart';
 
-abstract class NumberConversionEntry extends DatabaseObject with Number, NumberConversion {
+abstract class NumberConversionEntry extends DatabaseObject
+    with Number, NumberConversion {
   NumberConversionEntry({required super.database});
 
   abstract final Collection collection;

@@ -26,9 +26,6 @@ class HiveStoreCollection with HiveObjectMixin {
 class HiveCollection extends Collection {
   final HiveStoreCollection hiveStoreCollection;
 
-  @override
-  String get key => hiveStoreCollection.key.toString();
-
   HiveCollection({
     required super.database,
     required this.hiveStoreCollection,

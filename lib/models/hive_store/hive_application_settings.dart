@@ -34,9 +34,6 @@ class HiveStoreApplicationSettings with HiveObjectMixin {
 class HiveApplicationSettings extends ApplicationSettings {
   final HiveStoreApplicationSettings hiveStoreApplicationSettings;
 
-  @override
-  String get key => hiveStoreApplicationSettings.key.toString();
-
   HiveApplicationSettings({
     required super.database,
     required this.hiveStoreApplicationSettings,

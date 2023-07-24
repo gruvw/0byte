@@ -28,7 +28,7 @@ class CollectionsList extends HookConsumerWidget {
     final selectedCollection = ref.watch(selectedCollectionProvider);
 
     void changeSelectedCollection(Collection collection) {
-      ref.read(selectedCollectionKeyProvider.notifier).state = collection.key;
+      ref.read(selectedCollectionProvider.notifier).state = collection;
       Navigator.pop(context);
     }
 
@@ -151,8 +151,8 @@ class CollectionsList extends HookConsumerWidget {
                       final deletedSelected = selectedCollection == collection;
                       collection.delete();
                       if (deletedSelected) {
-                        ref.read(selectedCollectionKeyProvider.notifier).state =
-                            database.getCollections().first.key;
+                        ref.read(selectedCollectionProvider.notifier).state =
+                            database.getCollections().first;
                       }
                     },
                   ),
