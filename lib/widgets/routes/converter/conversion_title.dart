@@ -1,16 +1,11 @@
+import 'package:app_0byte/global/styles/texts.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/widgets/components/secondary_bar.dart';
 
 class ConversionTitleWidget extends StatelessWidget {
-  static const _titleStyle = TextStyle(
-    fontSize: FontTheme.titleSize,
-    fontFamily: FontTheme.firaCode,
-  );
-
   const ConversionTitleWidget({super.key});
 
   @override
@@ -20,16 +15,16 @@ class ConversionTitleWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            ValuesTheme.inputTitle,
-            style: _titleStyle,
+          Text(
+            UIValues.inputTitle,
+            style: UITexts.number,
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Text(
-                ValuesTheme.conversionTitle,
-                style: _titleStyle,
+                UIValues.conversionTitle,
+                style: UITexts.number,
               ),
             ],
           )

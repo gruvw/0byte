@@ -13,7 +13,8 @@ mixin ListenableField<T> {
   }) =>
       _FamilyProvidedField._(object, provider: provider);
 
-  static ListenableField<Provided> provided<Provided>(AutoDisposeProvider<Provided> provider) =>
+  static ListenableField<Provided> provided<Provided>(
+          AutoDisposeProvider<Provided> provider) =>
       _ProvidedField._(provider);
 
   ValueListenable<T> get notifier;
@@ -41,14 +42,15 @@ class ListenableFieldTransform<Input, Output> with ListenableField<Output> {
   }
 }
 
-class PotentiallyMutableField<T> extends PotentiallyMutable<T> with ListenableField<T> {
+class PotentiallyMutableField<T> extends PotentiallyMutable<T>
+    with ListenableField<T> {
   @override
   @protected
   T get object;
 
   @override
   @protected
-  set object(T);
+  set object(T newObject);
 
   final T Function(T object)? applyObject;
 
@@ -77,7 +79,8 @@ class PotentiallyMutableField<T> extends PotentiallyMutable<T> with ListenableFi
     }
   }
 
-  void subscribeTo(ListenableField<T> field) => field.addListener((newValue) => set(newValue));
+  void subscribeTo(ListenableField<T> field) =>
+      field.addListener((newValue) => set(newValue));
 
   void submit(T newObject) {
     set(newObject);

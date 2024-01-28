@@ -1,6 +1,6 @@
+import 'package:app_0byte/global/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
@@ -18,7 +18,7 @@ class CollectionEntries extends StatelessWidget {
     final entries = collection.sortedEntries;
 
     return Theme(
-      data: ThemeData(canvasColor: ColorTheme.background2),
+      data: ThemeData(canvasColor: UIColors.background2),
       child: ReorderableListView.builder(
         buildDefaultDragHandles: false,
         onReorder: (oldIndex, newIndex) {
@@ -69,7 +69,7 @@ class _NumberEntry extends StatelessWidget {
           const Divider(
             height: DimensionsTheme.entryDividerHeight,
             thickness: DimensionsTheme.entryDividerThickness,
-            color: ColorTheme.background2,
+            color: UIColors.background2,
           ),
         ],
       ),

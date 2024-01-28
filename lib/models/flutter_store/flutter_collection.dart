@@ -7,7 +7,8 @@ import 'package:app_0byte/utils/reorderable_list.dart';
 class FlutterCollection extends Collection {
   final List<FlutterNumberConversionEntry> flutterEntries = [];
   @override
-  List<FlutterNumberConversionEntry> get entries => SortableList(flutterEntries);
+  List<FlutterNumberConversionEntry> get entries =>
+      SortableList(flutterEntries);
 
   String flutterLabel;
   @override

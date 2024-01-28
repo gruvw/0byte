@@ -1,10 +1,9 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
@@ -15,10 +14,9 @@ import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
 class NumberLabel extends HookWidget {
-  static final defaultStyle = GoogleFonts.getFont(
-    FontTheme.firaSans,
-    fontSize: FontTheme.numberLabelSize,
-  ).apply(color: ColorTheme.text2);
+  static final defaultStyle = UITexts.normal.copyWith(
+    color: UIColors.text2,
+  );
 
   static PotentiallyMutableField<String> labelFieldFromNumber(
     PotentiallyMutable<NumberConversion> number,
@@ -29,7 +27,8 @@ class NumberLabel extends HookWidget {
       onSubmitted: onSubmitNumberConversionLabel(number.object),
     );
     if (number is NumberConversionEntry) {
-      labelField.subscribeTo(ListenableField.familyProvided(number, provider: entryLabelProvider));
+      labelField.subscribeTo(
+          ListenableField.familyProvided(number, provider: entryLabelProvider));
     }
     return labelField;
   }
@@ -67,7 +66,7 @@ class NumberLabel extends HookWidget {
       readOnly: !labelField.isMutable,
       onSubmitted: labelField.submit,
       onChanged: labelField.set,
-      cursorColor: ColorTheme.text2,
+      cursorColor: UIColors.text2,
       style: style,
     );
   }

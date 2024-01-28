@@ -5,14 +5,16 @@ import 'package:app_0byte/models/number_types.dart';
 const sign = "-";
 const separator = "_";
 
-String leftTrimmed(ConversionType type, String value, [bool forceTrim = false]) {
+String leftTrimmed(ConversionType type, String value,
+    [bool forceTrim = false]) {
   // Left trim 0s for decimal and ascii
   if (type == ConversionType.signedDecimal ||
       type == ConversionType.unsignedDecimal ||
       type == ConversionType.ascii ||
       forceTrim) {
     // Don't trim sign, don't return empty string, trim separators too
-    String newVal = value.replaceFirst(RegExp("(?<=^$sign?)[${type.zero}$separator]+"), "");
+    String newVal =
+        value.replaceFirst(RegExp("(?<=^$sign?)[${type.zero}$separator]+"), "");
     return newVal.isNotEmpty ? newVal : type.zero;
   }
   return value;

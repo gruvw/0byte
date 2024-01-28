@@ -1,9 +1,9 @@
+import 'package:app_0byte/global/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/widgets/routes/route_generator.dart';
 
@@ -15,7 +15,7 @@ class DrawerFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Ink(
-      color: ColorTheme.background2,
+      color: UIColors.background2,
       child: Padding(
         padding: PaddingTheme.drawerFooter,
         child: Row(
@@ -26,7 +26,7 @@ class DrawerFooter extends StatelessWidget {
               onPressed: () => launchUrl(_repository),
               icon: const Icon(
                 FontAwesomeIcons.github,
-                color: ColorTheme.text1,
+                color: UIColors.text1,
                 size: DimensionsTheme.iconSize,
               ),
             ),
@@ -37,7 +37,7 @@ class DrawerFooter extends StatelessWidget {
                   onPressed: () {}, // FIXME information page
                   icon: const Icon(
                     Icons.info_outline,
-                    color: ColorTheme.text1,
+                    color: UIColors.text1,
                     size: DimensionsTheme.iconSize,
                   ),
                 ),
@@ -50,7 +50,7 @@ class DrawerFooter extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.settings,
-                    color: ColorTheme.text1,
+                    color: UIColors.text1,
                     size: DimensionsTheme.iconSize,
                   ),
                 ),

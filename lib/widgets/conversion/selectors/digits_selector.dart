@@ -1,27 +1,25 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/hooks/listener.dart';
 import 'package:app_0byte/widgets/components/focus_submitted_text_field.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
 class DigitsSelector extends HookWidget {
-  static const _displayDigitsStyle = TextStyle(
-    fontFamily: FontTheme.firaCode,
-    fontSize: FontTheme.numberSize,
+  static final _displayDigitsStyle = UITexts.number.copyWith(
     fontWeight: FontWeight.w500,
-    color: ColorTheme.accent,
+    color: UIColors.accent,
   );
 
   static TextStyle _styleFrom(String digitsText) {
     return _displayDigitsStyle.apply(
-      color: Digits.fromString(digitsText) == null ? ColorTheme.danger : null,
+      color: Digits.fromString(digitsText) == null ? UIColors.danger : null,
     );
   }
 
@@ -53,19 +51,15 @@ class DigitsSelector extends HookWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          ValuesTheme.digitsSelectorLabel,
-          style: TextStyle(
-            color: ColorTheme.text1,
-            fontFamily: FontTheme.firaSans,
-            fontSize: FontTheme.conversionSelectorSize,
-          ),
+        Text(
+          UIValues.digitsSelectorLabel,
+          style: UITexts.large,
         ),
         const SizedBox(width: DimensionsTheme.digitsSelectorHorizontalSpacing),
         FocusSubmittedTextField(
           controller: controller,
           focusNode: focusNode,
-          cursorColor: ColorTheme.accent,
+          cursorColor: UIColors.accent,
           keyboardType: TextInputType.number,
           style: style.value,
           maxLength: Digits.MAX_AMOUNT.toString().length,

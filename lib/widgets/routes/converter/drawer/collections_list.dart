@@ -1,12 +1,12 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/global/styles/time.dart';
-import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/state/providers/application.dart';
 import 'package:app_0byte/state/providers/database.dart';
@@ -14,12 +14,6 @@ import 'package:app_0byte/utils/import_export.dart';
 import 'package:app_0byte/utils/validation.dart';
 
 class CollectionsList extends HookConsumerWidget {
-  static const drawerTextStyle = TextStyle(
-    fontFamily: FontTheme.firaSans,
-    fontSize: FontTheme.drawerSize,
-    color: ColorTheme.text2,
-  );
-
   const CollectionsList({super.key});
 
   @override
@@ -37,7 +31,7 @@ class CollectionsList extends HookConsumerWidget {
         padding: PaddingTheme.drawer,
         itemCount: collections.length + 3,
         separatorBuilder: (context, index) => const Divider(
-          color: ColorTheme.text2,
+          color: UIColors.text2,
         ),
         // One more for the "new collection" button, One more for the "import collection"
         itemBuilder: (context, index) {
@@ -46,18 +40,18 @@ class CollectionsList extends HookConsumerWidget {
             return ListTile(
               leading: const Icon(
                 Icons.add,
-                color: ColorTheme.text2,
+                color: UIColors.text2,
               ),
-              title: const Text(
-                ValuesTheme.newCollectionButtonLabel,
-                style: drawerTextStyle,
+              title: Text(
+                UIValues.newCollectionButtonLabel,
+                style: UITexts.large,
               ),
               onTap: () {
                 changeSelectedCollection(
                   database.createCollection(
                     label: uniqueLabel(
                       ref.read(collectionsProvider).map((c) => c.label),
-                      ValuesTheme.defaultCollectionLabel,
+                      DefaultValues.collectionLabel,
                       enclosingLeft: "(",
                       enclosingRight: ")",
                     ),
@@ -72,11 +66,11 @@ class CollectionsList extends HookConsumerWidget {
             return ListTile(
               leading: const Icon(
                 Icons.download,
-                color: ColorTheme.text2,
+                color: UIColors.text2,
               ),
-              title: const Text(
-                ValuesTheme.importButtonLabel,
-                style: drawerTextStyle,
+              title: Text(
+                UIValues.importButtonLabel,
+                style: UITexts.large,
               ),
               onTap: () async {
                 bool? success = await import();
@@ -88,7 +82,9 @@ class CollectionsList extends HookConsumerWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      success ? "Successfully imported." : "An error occurred while importing.",
+                      success
+                          ? "Successfully imported."
+                          : "An error occurred while importing.",
                     ),
                   ),
                 );
@@ -101,11 +97,11 @@ class CollectionsList extends HookConsumerWidget {
             return ListTile(
               leading: const Icon(
                 Icons.file_upload,
-                color: ColorTheme.text2,
+                color: UIColors.text2,
               ),
-              title: const Text(
-                ValuesTheme.exportCollectionsButtonLabel,
-                style: drawerTextStyle,
+              title: Text(
+                UIValues.exportCollectionsButtonLabel,
+                style: UITexts.large,
               ),
               onTap: () async {
                 String? path = await exportCollections();
@@ -117,7 +113,8 @@ class CollectionsList extends HookConsumerWidget {
                   duration: TimeTheme.exportMessageDuration,
                   action: SnackBarAction(
                     label: "Ok",
-                    onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                    onPressed: () =>
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar(),
                   ),
                   content: Text("Exported collections: $path."),
                 ));
@@ -129,23 +126,20 @@ class CollectionsList extends HookConsumerWidget {
           final collection = collections[index];
 
           return ListTile(
-            tileColor:
-                collection == selectedCollection ? ColorTheme.background2 : Colors.transparent,
+            tileColor: collection == selectedCollection
+                ? UIColors.background2
+                : Colors.transparent,
             title: Text(
               collection.label,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontFamily: FontTheme.firaSans,
-                fontSize: FontTheme.drawerSize,
-                color: ColorTheme.text1,
-              ),
+              style: UITexts.large,
             ),
             trailing: collections.length <= 1
                 ? const SizedBox()
                 : IconButton(
                     icon: const Icon(
                       Icons.delete,
-                      color: ColorTheme.danger,
+                      color: UIColors.danger,
                     ),
                     onPressed: () {
                       final deletedSelected = selectedCollection == collection;

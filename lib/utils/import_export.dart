@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app_0byte/global/fields.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:universal_html/html.dart' as html;
 
-import 'package:app_0byte/global/data_fields.dart';
 import 'package:app_0byte/models/collection.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/utils/conversion.dart';
 import 'package:app_0byte/utils/validation.dart';
 
-Future<String?> exportCollections() =>
-    _saveJson(jsonEncode([for (final c in container.read(collectionsProvider)) c.toJson()]));
+Future<String?> exportCollections() => _saveJson(jsonEncode(
+    [for (final c in container.read(collectionsProvider)) c.toJson()]));
 
 Future<String?> exportCollection(Collection collection) async =>
     _saveJson(jsonEncode([collection.toJson()]));
@@ -26,7 +26,8 @@ Future<String?> _saveJson(String json) async {
 
   if (kIsWeb) {
     String content = base64Encode(utf8.encode(json));
-    html.AnchorElement(href: "data:application/octet-stream;charset=utf-16le;base64,$content")
+    html.AnchorElement(
+        href: "data:application/octet-stream;charset=utf-16le;base64,$content")
       ..setAttribute("download", fileName)
       ..click();
     return "downloading (web)";
@@ -34,7 +35,8 @@ Future<String?> _saveJson(String json) async {
 
   if (Platform.isAndroid) {
     await Permission.manageExternalStorage.request();
-    PermissionStatus permissionStatus = await Permission.manageExternalStorage.status;
+    PermissionStatus permissionStatus =
+        await Permission.manageExternalStorage.status;
     if (!permissionStatus.isGranted) {
       return null;
     }
@@ -84,7 +86,8 @@ bool _importCollection(Map<String, dynamic> collectionData) {
   }
 
   Collection collection = database.createCollection(
-    label: uniqueLabel(container.read(collectionsProvider).map((c) => c.label).toList(),
+    label: uniqueLabel(
+        container.read(collectionsProvider).map((c) => c.label).toList(),
         collectionData[CollectionFields.label]),
   );
   if (!collectionData.hasField<Iterable>(CollectionFields.entries)) {

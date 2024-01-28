@@ -1,10 +1,10 @@
+import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/state/providers/database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/utils/conversion.dart';
@@ -49,8 +49,9 @@ class ConvertedNumberView extends HookConsumerWidget {
               ),
               if (wasSymmetric != null && !wasSymmetric)
                 const Divider(
-                  color: ColorTheme.warning,
-                  thickness: DimensionsTheme.conversionUnderlineWarningThickness,
+                  color: UIColors.warning,
+                  thickness:
+                      DimensionsTheme.conversionUnderlineWarningThickness,
                   height: DimensionsTheme.conversionUnderlineWarningHeight,
                 ),
             ],

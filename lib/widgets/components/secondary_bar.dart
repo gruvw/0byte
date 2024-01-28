@@ -1,6 +1,6 @@
+import 'package:app_0byte/global/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 
 class SecondaryBar extends StatelessWidget {
@@ -16,7 +16,7 @@ class SecondaryBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorTheme.background2,
+      color: UIColors.background2,
       padding: PaddingTheme.secondaryBar.add(padding),
       child: child,
     );

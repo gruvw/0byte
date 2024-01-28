@@ -1,10 +1,8 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_types.dart';
 
 class ConversionTypeSelector extends StatelessWidget {
@@ -24,11 +22,11 @@ class ConversionTypeSelector extends StatelessWidget {
     return OutlinedButton(
       onPressed: onSelected,
       style: OutlinedButton.styleFrom(
-        foregroundColor: ColorTheme.accent,
-        backgroundColor: isSelected ? ColorTheme.accent : ColorTheme.background1,
+        foregroundColor: UIColors.accent,
+        backgroundColor: isSelected ? UIColors.accent : UIColors.background1,
         shape: DimensionsTheme.conversionTypeSelectorBorder,
         side: const BorderSide(
-          color: ColorTheme.accent,
+          color: UIColors.accent,
           width: DimensionsTheme.conversionTypeSelectorBorderWidth,
           style: BorderStyle.solid,
         ),
@@ -37,10 +35,8 @@ class ConversionTypeSelector extends StatelessWidget {
         padding: PaddingTheme.typeSelector,
         child: Text(
           type.prefix,
-          style: GoogleFonts.getFont(
-            FontTheme.firaCode,
-            color: isSelected ? ColorTheme.background1 : ColorTheme.accent,
-            fontSize: FontTheme.typeSelectorSize,
+          style: UITexts.number.copyWith(
+            color: isSelected ? UIColors.background1 : UIColors.accent,
             fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
           ),
         ),

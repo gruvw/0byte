@@ -1,11 +1,11 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/models/settings.dart';
@@ -21,18 +21,11 @@ import 'package:app_0byte/widgets/utils/number_input_formatter.dart';
 class NumberTextView extends HookConsumerWidget {
   // TODO wrap number on new line (align with prefix); maybe on sigle line (number, converted) when very small ?
 
-  static const _displayTitleStyle = TextStyle(
-    fontFamily: FontTheme.firaCode,
-    fontSize: FontTheme.numberSize,
-    fontWeight: FontWeight.w500,
-    color: ColorTheme.text1,
-  );
-
   static TextStyle _styleFrom(Number? number) {
     return number == null
-        ? _displayTitleStyle
-        : _displayTitleStyle.apply(
-            color: number.parsed() == null ? ColorTheme.danger : null,
+        ? UITexts.number
+        : UITexts.number.apply(
+            color: number.parsed() == null ? UIColors.danger : null,
           );
   }
 
@@ -53,8 +46,8 @@ class NumberTextView extends HookConsumerWidget {
         ) {
     final numberObject = number.object;
     if (numberObject is NumberConversionEntry) {
-      numberTextField
-          .subscribeTo(ListenableField.familyProvided(numberObject, provider: entryTextProvider));
+      numberTextField.subscribeTo(ListenableField.familyProvided(numberObject,
+          provider: entryTextProvider));
     }
     numberField = ListenableFieldTransform(
       numberTextField,
@@ -93,7 +86,8 @@ class NumberTextView extends HookConsumerWidget {
 
     useListener(settings.notifier, (newSettings) {
       if (!focusNode.hasFocus) {
-        controller.text = applyNumberTextDisplay(numberField.value, newSettings);
+        controller.text =
+            applyNumberTextDisplay(numberField.value, newSettings);
       }
     });
 
@@ -114,9 +108,8 @@ class NumberTextView extends HookConsumerWidget {
                 const TextSpan(text: "Copied "),
                 TextSpan(
                   text: copy,
-                  style: const TextStyle(
-                    fontFamily: FontTheme.firaCode,
-                    color: ColorTheme.accent,
+                  style: UITexts.number.copyWith(
+                    color: UIColors.accent,
                   ),
                 ),
                 const TextSpan(text: " to clipboard."),
@@ -140,7 +133,7 @@ class NumberTextView extends HookConsumerWidget {
           // Prefix
           Text(
             number.type.prefix,
-            style: _displayTitleStyle.apply(color: ColorTheme.textPrefix),
+            style: UITexts.normal.copyWith(color: UIColors.textPrefix),
           ),
           FocusSubmittedTextField(
             controller: controller,
@@ -156,7 +149,7 @@ class NumberTextView extends HookConsumerWidget {
             ],
             onChanged: numberTextField.set,
             onSubmitted: numberTextField.submit,
-            cursorColor: ColorTheme.text1,
+            cursorColor: UIColors.text1,
             style: style.value,
             decoration: const InputDecoration(
               border: InputBorder.none,

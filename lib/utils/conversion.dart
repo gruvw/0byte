@@ -15,7 +15,8 @@ class ConversionTarget {
     required this.digits,
   });
 
-  ConversionTarget withDigits(Digits digits) => ConversionTarget(type: type, digits: digits);
+  ConversionTarget withDigits(Digits digits) =>
+      ConversionTarget(type: type, digits: digits);
 }
 
 class ConvertedNumber implements Exportable {
@@ -71,7 +72,8 @@ class ConvertedNumber implements Exportable {
       return "";
     }
 
-    final arrow = wasSymmetric ? ValuesTheme.symmetricArrow : ValuesTheme.nonSymmetricArrow;
+    final arrow =
+        wasSymmetric ? UIValues.symmetricArrow : UIValues.nonSymmetricArrow;
     final displayedDigits = wasSymmetric ? "" : " ${digits.amount}";
     final displayedConverted = applyNumberTextExport(result, settings);
 
@@ -91,14 +93,16 @@ String converted({
   // Absolute input to decimal
   BigInt abs = BigInt.zero;
   for (int i = 0; i < absData.length; ++i) {
-    abs += BigInt.from(inputType.alphabet.indexOf(absData[absData.length - i - 1])) *
+    abs += BigInt.from(
+            inputType.alphabet.indexOf(absData[absData.length - i - 1])) *
         BigInt.from(inputType.base).pow(i);
   }
 
   // Absolute input decimal to binary
   List<bool> binary = List.filled(
       (absData.length * _log2(inputType.base)).ceil() +
-          (inputType == ConversionType.signedDecimal && targetType == ConversionType.signedDecimal
+          (inputType == ConversionType.signedDecimal &&
+                  targetType == ConversionType.signedDecimal
               ? 1
               : 0),
       false,

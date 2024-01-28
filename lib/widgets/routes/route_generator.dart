@@ -33,7 +33,9 @@ class RouteGenerator {
           builder: (context) => const ConverterRoute(),
         );
       case Routes.entry:
-        if (args is List && args.isNotEmpty && args[0] is NumberConversionEntry) {
+        if (args is List &&
+            args.isNotEmpty &&
+            args[0] is NumberConversionEntry) {
           return MaterialPageRoute(
             builder: (context) => EntryRoute(
               entry: args[0],
@@ -55,10 +57,10 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text(ValuesTheme.errorRouteText),
+          title: const Text(UIValues.errorRouteText),
         ),
         body: const Center(
-          child: Text(ValuesTheme.errorRouteText),
+          child: Text(UIValues.errorRouteText),
         ),
       ),
     );

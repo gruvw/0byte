@@ -40,7 +40,8 @@ class HiveApplicationSettings extends ApplicationSettings {
   });
 
   @override
-  bool get displaySeparators => hiveStoreApplicationSettings.hiveDisplaySeparators;
+  bool get displaySeparators =>
+      hiveStoreApplicationSettings.hiveDisplaySeparators;
   @override
   set displaySeparators(bool newDisplaySeparators) {
     hiveStoreApplicationSettings.hiveDisplaySeparators = newDisplaySeparators;
@@ -52,7 +53,8 @@ class HiveApplicationSettings extends ApplicationSettings {
   bool get displayTrimConvertedLeadingZeros =>
       hiveStoreApplicationSettings.hiveDisplayTrimConvertedLeadingZeros;
   @override
-  set displayTrimConvertedLeadingZeros(bool newDisplayTrimConvertedLeadingZeros) {
+  set displayTrimConvertedLeadingZeros(
+      bool newDisplayTrimConvertedLeadingZeros) {
     hiveStoreApplicationSettings.hiveDisplayTrimConvertedLeadingZeros =
         newDisplayTrimConvertedLeadingZeros;
     hiveStoreApplicationSettings.save();
@@ -60,7 +62,8 @@ class HiveApplicationSettings extends ApplicationSettings {
   }
 
   @override
-  bool get exportSeparators => hiveStoreApplicationSettings.hiveExportSeparators;
+  bool get exportSeparators =>
+      hiveStoreApplicationSettings.hiveExportSeparators;
   @override
   set exportSeparators(bool newExportSeparators) {
     hiveStoreApplicationSettings.hiveExportSeparators = newExportSeparators;
@@ -80,10 +83,12 @@ class HiveApplicationSettings extends ApplicationSettings {
   }
 
   @override
-  bool get exportUseASCIIControl => hiveStoreApplicationSettings.hiveExportUseASCIIControl;
+  bool get exportUseASCIIControl =>
+      hiveStoreApplicationSettings.hiveExportUseASCIIControl;
   @override
   set exportUseASCIIControl(bool newExportUseASCIIControl) {
-    hiveStoreApplicationSettings.hiveExportUseASCIIControl = newExportUseASCIIControl;
+    hiveStoreApplicationSettings.hiveExportUseASCIIControl =
+        newExportUseASCIIControl;
     hiveStoreApplicationSettings.save();
     notify(EventType.edit);
   }

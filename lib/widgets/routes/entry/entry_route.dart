@@ -1,12 +1,11 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/models/number_conversion_entry.dart';
 import 'package:app_0byte/models/number_types.dart';
 import 'package:app_0byte/state/providers/entry.dart';
@@ -28,11 +27,7 @@ class EntryRoute extends HookConsumerWidget {
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(
-              color: ColorTheme.text1,
-              fontFamily: FontTheme.firaCode,
-              fontSize: FontTheme.entryBarSize,
-            ),
+            style: UITexts.number,
           ),
         ),
       );
@@ -66,17 +61,17 @@ class EntryRoute extends HookConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: ColorTheme.background3,
+        backgroundColor: UIColors.background3,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: ColorTheme.text1,
+            color: UIColors.text1,
           ),
           onPressed: onCancel,
         ),
         title: Text(
           entry.collection.label,
-          style: GoogleFonts.getFont(FontTheme.firaSans),
+          style: UITexts.normal,
         ),
       ),
       body: Column(
@@ -89,10 +84,7 @@ class EntryRoute extends HookConsumerWidget {
                 child: Center(
                   child: NumberLabel.fromLabelField(
                     titleLabelField,
-                    style: NumberLabel.defaultStyle.copyWith(
-                      color: ColorTheme.text1,
-                      fontSize: FontTheme.labelTitleSize,
-                    ),
+                    style: UITexts.large,
                   ),
                 ),
               ),
@@ -104,15 +96,16 @@ class EntryRoute extends HookConsumerWidget {
                   label: NumberLabel.fromLabelField(titleLabelField),
                 ),
               ),
-              _barFromText(ValuesTheme.inputTitle),
+              _barFromText(UIValues.inputTitle),
               ConversionTypesSelectors(
                 selected: entry.type,
                 onSelected: (selectedType) => entry.type = selectedType,
               ),
-              _barFromText(ValuesTheme.targetTitle),
+              _barFromText(UIValues.targetTitle),
               ConversionTypesSelectors(
                 selected: entry.target.type,
-                onSelected: (selectedType) => entry.target = selectedType.defaultTarget,
+                onSelected: (selectedType) =>
+                    entry.target = selectedType.defaultTarget,
               ),
               DigitsSelector(
                 digitsField: ListenableField.familyProvided(
@@ -130,13 +123,13 @@ class EntryRoute extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BorderButton(
-                  text: ValuesTheme.cancelLabel,
-                  color: ColorTheme.text2,
+                  text: UIValues.cancelLabel,
+                  color: UIColors.text2,
                   onPressed: onCancel,
                 ),
                 BorderButton(
-                  text: ValuesTheme.confirmLabel,
-                  color: ColorTheme.accent,
+                  text: UIValues.confirmLabel,
+                  color: UIColors.accent,
                   onPressed: () {
                     Navigator.pop(context);
                   },

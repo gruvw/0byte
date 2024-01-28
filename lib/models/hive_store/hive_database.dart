@@ -29,9 +29,12 @@ class HiveDatabase extends Database {
     Hive.registerAdapter(HiveStoreNumberConversionEntryAdapter());
     Hive.registerAdapter(HiveStoreApplicationSettingsAdapter());
 
-    collectionsBox = await Hive.openBox<HiveStoreCollection>(HiveDatabase._collectionsBoxName);
-    entriesBox = await Hive.openBox<HiveStoreNumberConversionEntry>(HiveDatabase._entriesBoxName);
-    settingsBox = await Hive.openBox<HiveStoreApplicationSettings>(HiveDatabase._settingsBoxName);
+    collectionsBox = await Hive.openBox<HiveStoreCollection>(
+        HiveDatabase._collectionsBoxName);
+    entriesBox = await Hive.openBox<HiveStoreNumberConversionEntry>(
+        HiveDatabase._entriesBoxName);
+    settingsBox = await Hive.openBox<HiveStoreApplicationSettings>(
+        HiveDatabase._settingsBoxName);
 
     // One and only one application settings stored
     if (settingsBox.isEmpty) {
@@ -55,7 +58,8 @@ class HiveDatabase extends Database {
     required Number number,
     required ConversionTarget target,
   }) {
-    HiveStoreNumberConversionEntry hiveStoreNumberEntry = HiveStoreNumberConversionEntry(
+    HiveStoreNumberConversionEntry hiveStoreNumberEntry =
+        HiveStoreNumberConversionEntry(
       hiveCollectionKey: (collection as HiveCollection).hiveStoreCollection.key,
       hivePosition: position,
       hiveLabel: label,

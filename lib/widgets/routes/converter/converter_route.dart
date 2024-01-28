@@ -1,11 +1,10 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/widgets/routes/converter/collection_entries.dart';
 import 'package:app_0byte/widgets/routes/converter/collection_menu.dart';
 import 'package:app_0byte/widgets/routes/converter/conversion_title.dart';
@@ -28,18 +27,18 @@ class ConverterRoute extends HookConsumerWidget {
     ref.subscribe(collectionEditionUpdater(collection));
 
     return Scaffold(
-      backgroundColor: ColorTheme.background1,
+      backgroundColor: UIColors.background1,
       appBar: AppBar(
-        backgroundColor: ColorTheme.background3,
+        backgroundColor: UIColors.background3,
         title: Text(
           collection.label,
-          style: GoogleFonts.getFont(FontTheme.firaSans),
+          style: UITexts.normal,
         ),
         actions: [
           IconButton(
             icon: const Icon(
               Icons.edit,
-              color: ColorTheme.text1,
+              color: UIColors.text1,
             ),
             onPressed: () => showDialog(
               context: context,
@@ -53,12 +52,12 @@ class ConverterRoute extends HookConsumerWidget {
           CollectionMenu(collection: collection),
         ],
       ),
-      drawer: SafeArea(
+      drawer: const SafeArea(
         child: Drawer(
-          backgroundColor: ColorTheme.background1,
+          backgroundColor: UIColors.background1,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               CollectionsList(),
               DrawerFooter(),
             ],
@@ -75,8 +74,8 @@ class ConverterRoute extends HookConsumerWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorTheme.textPrefix,
-        foregroundColor: ColorTheme.text1,
+        backgroundColor: UIColors.textPrefix,
+        foregroundColor: UIColors.text1,
         onPressed: () {
           final nbEntries = collection.entries.length;
           final entry = database.createNumberConversionEntry(
@@ -84,10 +83,10 @@ class ConverterRoute extends HookConsumerWidget {
             position: nbEntries,
             label: uniqueLabel(
               collection.entries.map((c) => c.label),
-              ValuesTheme.defaultNumberLabel,
+              DefaultValues.numberLabel,
             ),
-            number: ValuesTheme.defaultNumber,
-            target: ValuesTheme.defaultTarget,
+            number: DefaultValues.number,
+            target: DefaultValues.target,
           );
           Navigator.pushNamed(
             context,

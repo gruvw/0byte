@@ -54,8 +54,9 @@ class HiveNumberConversionEntry extends NumberConversionEntry {
   @override
   HiveCollection get collection => HiveCollection(
         database: database,
-        hiveStoreCollection:
-            (database as HiveDatabase).collectionsBox.get(hiveStoreNumberEntry.hiveCollectionKey)!,
+        hiveStoreCollection: (database as HiveDatabase)
+            .collectionsBox
+            .get(hiveStoreNumberEntry.hiveCollectionKey)!,
       );
 
   @override
@@ -77,7 +78,8 @@ class HiveNumberConversionEntry extends NumberConversionEntry {
   }
 
   @override
-  ConversionType get type => ConversionType.values[hiveStoreNumberEntry.hiveTypeIndex];
+  ConversionType get type =>
+      ConversionType.values[hiveStoreNumberEntry.hiveTypeIndex];
   @override
   set type(ConversionType newType) {
     hiveStoreNumberEntry.hiveTypeIndex = newType.index;
@@ -120,7 +122,8 @@ class HiveNumberConversionEntry extends NumberConversionEntry {
 
   @override
   bool operator ==(covariant HiveNumberConversionEntry other) =>
-      database == other.database && hiveStoreNumberEntry.key == other.hiveStoreNumberEntry.key;
+      database == other.database &&
+      hiveStoreNumberEntry.key == other.hiveStoreNumberEntry.key;
 
   @override
   int get hashCode => Object.hash(database, hiveStoreNumberEntry.key);

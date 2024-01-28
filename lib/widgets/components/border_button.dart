@@ -1,9 +1,7 @@
+import 'package:app_0byte/global/styles/texts.dart';
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
 
 class BorderButton extends StatelessWidget {
   final String text;
@@ -38,15 +36,7 @@ class BorderButton extends StatelessWidget {
         padding: PaddingTheme.borderButton,
         child: Row(
           children: [
-            Text(
-              text,
-              style: GoogleFonts.getFont(
-                FontTheme.firaSans,
-                color: color,
-                fontSize: FontTheme.borderButtonSize,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
+            Text(text, style: UITexts.normal),
             if (child != null)
               Padding(
                 padding: PaddingTheme.borderButtonChild,

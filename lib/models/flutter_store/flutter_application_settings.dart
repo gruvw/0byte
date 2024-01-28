@@ -13,9 +13,11 @@ class FlutterApplicationSettings extends ApplicationSettings {
 
   bool flutterDisplayTrimConvertedLeadingZeros;
   @override
-  bool get displayTrimConvertedLeadingZeros => flutterDisplayTrimConvertedLeadingZeros;
+  bool get displayTrimConvertedLeadingZeros =>
+      flutterDisplayTrimConvertedLeadingZeros;
   @override
-  set displayTrimConvertedLeadingZeros(bool newDisplayTrimConvertedLeadingZeros) {
+  set displayTrimConvertedLeadingZeros(
+      bool newDisplayTrimConvertedLeadingZeros) {
     flutterDisplaySeparators = newDisplayTrimConvertedLeadingZeros;
     notify(EventType.edit);
   }
@@ -31,7 +33,8 @@ class FlutterApplicationSettings extends ApplicationSettings {
 
   bool flutterExportTrimConvertedLeadingZeros;
   @override
-  bool get exportTrimConvertedLeadingZeros => flutterExportTrimConvertedLeadingZeros;
+  bool get exportTrimConvertedLeadingZeros =>
+      flutterExportTrimConvertedLeadingZeros;
   @override
   set exportTrimConvertedLeadingZeros(bool newExportTrimConvertedLeadingZeros) {
     flutterExportTrimConvertedLeadingZeros = newExportTrimConvertedLeadingZeros;

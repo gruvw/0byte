@@ -1,12 +1,13 @@
+import 'package:app_0byte/global/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
 
 class SlidableDelete extends StatelessWidget {
-  final dynamic value; // used in ValueKey (otherwise glitches the slide animation on next row)
+  final dynamic
+      value; // used in ValueKey (otherwise glitches the slide animation on next row)
   final Object? groupTag;
   final SlidableActionCallback onDelete;
   final Widget child;
@@ -26,11 +27,12 @@ class SlidableDelete extends StatelessWidget {
       groupTag: groupTag,
       endActionPane: ActionPane(
         motion: const BehindMotion(),
-        extentRatio: DimensionsTheme.slidableExtendRatio, // FIXME too long on wide screens
+        extentRatio: DimensionsTheme
+            .slidableExtendRatio, // FIXME too long on wide screens
         children: [
           SlidableAction(
             icon: Icons.delete,
-            backgroundColor: ColorTheme.danger,
+            backgroundColor: UIColors.danger,
             onPressed: onDelete,
           )
         ],

@@ -1,10 +1,10 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
 
 class TextForm extends HookWidget {
   final String title;
@@ -27,11 +27,11 @@ class TextForm extends HookWidget {
         DimensionsTheme.formDialogWidthRatio;
 
     return AlertDialog(
-      backgroundColor: ColorTheme.background1,
+      backgroundColor: UIColors.background1,
       title: Text(
         title,
         style: const TextStyle(
-          color: ColorTheme.text1,
+          color: UIColors.text1,
         ),
       ),
       content: ConstrainedBox(
@@ -40,14 +40,14 @@ class TextForm extends HookWidget {
           controller: controller,
           autofocus: true,
           textCapitalization: TextCapitalization.sentences,
-          cursorColor: ColorTheme.text1,
+          cursorColor: UIColors.text1,
           style: const TextStyle(
-            color: ColorTheme.text1,
+            color: UIColors.text1,
           ),
           decoration: const InputDecoration(
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: ColorTheme.textPrefix,
+                color: UIColors.textPrefix,
               ),
             ),
           ),
@@ -59,13 +59,10 @@ class TextForm extends HookWidget {
             callback(controller.text.isEmpty ? initialText : controller.text);
             Navigator.pop(context);
           },
-          child: const Text(
+          child: Text(
             "OK",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: FontTheme.formSubmitSize,
-              fontFamily: FontTheme.firaCode,
-              color: ColorTheme.textPrefix,
+            style: UITexts.number.copyWith(
+              color: UIColors.textPrefix,
             ),
           ),
         ),

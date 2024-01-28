@@ -36,9 +36,12 @@ abstract class Database {
 
   ApplicationSettings getSettings();
 
-  Stream<Event<Collection>> watchCollections() => collectionEventsController.stream;
-  Stream<Event<NumberConversionEntry>> watchEntries() => entryEventsController.stream;
-  Stream<Event<ApplicationSettings>> watchSettings() => settingsEventsController.stream;
+  Stream<Event<Collection>> watchCollections() =>
+      collectionEventsController.stream;
+  Stream<Event<NumberConversionEntry>> watchEntries() =>
+      entryEventsController.stream;
+  Stream<Event<ApplicationSettings>> watchSettings() =>
+      settingsEventsController.stream;
 }
 
 abstract class DatabaseObject {

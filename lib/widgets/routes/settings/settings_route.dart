@@ -1,21 +1,16 @@
+import 'package:app_0byte/global/styles/colors.dart';
+import 'package:app_0byte/global/styles/texts.dart';
+import 'package:app_0byte/global/values.dart';
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:app_0byte/global/styles/colors.dart';
 import 'package:app_0byte/global/styles/dimensions.dart';
-import 'package:app_0byte/global/styles/fonts.dart';
-import 'package:app_0byte/global/values.dart';
 import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/widgets/components/label_switch_button.dart';
 
 class SettingsRoute extends ConsumerWidget {
-  static final _categoryStyle = GoogleFonts.getFont(
-    FontTheme.firaSans,
-    color: ColorTheme.text1,
-    fontSize: FontTheme.settingsCategorySize,
-  );
+  static final _categoryStyle = UITexts.normal;
 
   const SettingsRoute({super.key});
 
@@ -25,10 +20,10 @@ class SettingsRoute extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorTheme.background3,
+        backgroundColor: UIColors.background3,
         title: Text(
-          ValuesTheme.settingsTitle,
-          style: GoogleFonts.getFont(FontTheme.firaSans),
+          UIValues.settingsTitle,
+          style: UITexts.normal,
         ),
       ),
       body: Padding(
@@ -37,7 +32,7 @@ class SettingsRoute extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              ValuesTheme.settingsUITitle,
+              UIValues.settingsUITitle,
               style: _categoryStyle,
             ),
             Padding(
@@ -46,12 +41,13 @@ class SettingsRoute extends ConsumerWidget {
                 children: [
                   LabelSwitchButton(
                     enabled: settings.displaySeparators,
-                    label: ValuesTheme.displaySeparatorSettingsLabel,
-                    onChanged: (newEnabled) => settings.displaySeparators = newEnabled,
+                    label: SettingsValues.displaySeparatorLabel,
+                    onChanged: (newEnabled) =>
+                        settings.displaySeparators = newEnabled,
                   ),
                   LabelSwitchButton(
                     enabled: settings.displayTrimConvertedLeadingZeros,
-                    label: ValuesTheme.displayTrimConvertedLeadingZerosSettingsLabel,
+                    label: SettingsValues.displayTrimConvertedLeadingZerosLabel,
                     onChanged: (newEnabled) =>
                         settings.displayTrimConvertedLeadingZeros = newEnabled,
                   ),
@@ -60,7 +56,7 @@ class SettingsRoute extends ConsumerWidget {
             ),
             const SizedBox(height: DimensionsTheme.settingsCategorySpacing),
             Text(
-              ValuesTheme.settingsExportTitle,
+              UIValues.settingsExportTitle,
               style: _categoryStyle,
             ),
             Padding(
@@ -69,19 +65,21 @@ class SettingsRoute extends ConsumerWidget {
                 children: [
                   LabelSwitchButton(
                     enabled: settings.exportSeparators,
-                    label: ValuesTheme.exportSeparatorsSettingsLabel,
-                    onChanged: (newEnabled) => settings.exportSeparators = newEnabled,
+                    label: SettingsValues.exportSeparatorsLabel,
+                    onChanged: (newEnabled) =>
+                        settings.exportSeparators = newEnabled,
                   ),
                   LabelSwitchButton(
                     enabled: settings.exportTrimConvertedLeadingZeros,
-                    label: ValuesTheme.exportTrimConvertedLeadingZerosSettingsLabel,
+                    label: SettingsValues.exportTrimConvertedLeadingZerosLabel,
                     onChanged: (newEnabled) =>
                         settings.exportTrimConvertedLeadingZeros = newEnabled,
                   ),
                   LabelSwitchButton(
                     enabled: settings.exportUseASCIIControl,
-                    label: ValuesTheme.exportUseASCIIControlSettingsLabel,
-                    onChanged: (newEnabled) => settings.exportUseASCIIControl = newEnabled,
+                    label: SettingsValues.exportUseASCIIControlLabel,
+                    onChanged: (newEnabled) =>
+                        settings.exportUseASCIIControl = newEnabled,
                   ),
                 ],
               ),
