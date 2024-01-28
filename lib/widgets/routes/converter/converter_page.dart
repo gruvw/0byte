@@ -18,8 +18,8 @@ import 'package:app_0byte/state/updaters/update_riverpod.dart';
 import 'package:app_0byte/utils/validation.dart';
 import 'package:app_0byte/widgets/forms/text_form.dart';
 
-class ConverterRoute extends HookConsumerWidget {
-  const ConverterRoute({super.key});
+class ConverterPage extends HookConsumerWidget {
+  const ConverterPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,10 +32,14 @@ class ConverterRoute extends HookConsumerWidget {
         backgroundColor: UIColors.background3,
         title: Text(
           collection.label,
-          style: UITexts.normal,
+          style: UITexts.large,
         ),
         actions: [
           IconButton(
+            style: IconButton.styleFrom(
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
             icon: const Icon(
               Icons.edit,
               color: UIColors.text1,
@@ -94,7 +98,10 @@ class ConverterRoute extends HookConsumerWidget {
             arguments: [entry, true],
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          size: 30,
+        ),
       ),
     );
   }

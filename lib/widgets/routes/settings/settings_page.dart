@@ -9,10 +9,8 @@ import 'package:app_0byte/global/styles/dimensions.dart';
 import 'package:app_0byte/state/providers/database.dart';
 import 'package:app_0byte/widgets/components/label_switch_button.dart';
 
-class SettingsRoute extends ConsumerWidget {
-  static final _categoryStyle = UITexts.normal;
-
-  const SettingsRoute({super.key});
+class SettingsPage extends ConsumerWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +21,7 @@ class SettingsRoute extends ConsumerWidget {
         backgroundColor: UIColors.background3,
         title: Text(
           UIValues.settingsTitle,
-          style: UITexts.normal,
+          style: UITexts.large,
         ),
       ),
       body: Padding(
@@ -33,7 +31,7 @@ class SettingsRoute extends ConsumerWidget {
           children: [
             Text(
               UIValues.settingsUITitle,
-              style: _categoryStyle,
+              style: UITexts.normal,
             ),
             Padding(
               padding: PaddingTheme.settingsCategoryIndentation,
@@ -57,7 +55,7 @@ class SettingsRoute extends ConsumerWidget {
             const SizedBox(height: DimensionsTheme.settingsCategorySpacing),
             Text(
               UIValues.settingsExportTitle,
-              style: _categoryStyle,
+              style: UITexts.normal,
             ),
             Padding(
               padding: PaddingTheme.settingsCategoryIndentation,

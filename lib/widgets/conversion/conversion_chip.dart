@@ -29,17 +29,21 @@ class ConversionChip extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
+        side: const BorderSide(color: UIColors.accent),
         backgroundColor: UIColors.accent,
-        foregroundColor: UIColors.background3,
+        foregroundColor: UIColors.accent,
         disabledBackgroundColor: UIColors.accent,
-        disabledForegroundColor: UIColors.background3,
+        disabledForegroundColor: UIColors.accent,
         padding: PaddingTheme.conversionChip,
         shape: DimensionsTheme.conversionChipBorder,
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: Text(
         "${inputType.prefix} -> ${target.type.prefix} ${target.digits.amount}",
-        style: UITexts.number.copyWith(
+        style: UITexts.numberNormal.copyWith(
           fontWeight: FontWeight.bold,
+          color: UIColors.background3,
         ),
       ),
     );

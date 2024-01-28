@@ -102,8 +102,10 @@ class NumberTextView extends HookConsumerWidget {
       String copy = number.export(ref.read(settingsProvider));
       Clipboard.setData(ClipboardData(text: copy)).then(
         (_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: UIColors.background2,
           content: RichText(
             text: TextSpan(
+              style: UITexts.normal,
               children: [
                 const TextSpan(text: "Copied "),
                 TextSpan(
@@ -129,11 +131,12 @@ class NumberTextView extends HookConsumerWidget {
       onSecondaryTap: valueToClipboard,
       onLongPress: valueToClipboard,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Prefix
           Text(
             number.type.prefix,
-            style: UITexts.normal.copyWith(color: UIColors.textPrefix),
+            style: UITexts.number.copyWith(color: UIColors.textPrefix),
           ),
           FocusSubmittedTextField(
             controller: controller,

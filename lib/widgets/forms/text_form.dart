@@ -55,6 +55,10 @@ class TextForm extends HookWidget {
       ),
       actions: [
         TextButton(
+          style: TextButton.styleFrom(
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
           onPressed: () {
             callback(controller.text.isEmpty ? initialText : controller.text);
             Navigator.pop(context);

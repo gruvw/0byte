@@ -37,7 +37,7 @@ class CollectionMenu extends ConsumerWidget {
             ),
             text: Text(
               UIValues.exportCollectionButtonLabel,
-              style: UITexts.normal,
+              style: UITexts.sub,
             ),
           ),
           onTap: () async {
@@ -49,10 +49,16 @@ class CollectionMenu extends ConsumerWidget {
               duration: TimeTheme.exportMessageDuration,
               action: SnackBarAction(
                 label: "Ok",
+                backgroundColor: UIColors.background3,
+                textColor: UIColors.accent,
                 onPressed: () =>
                     ScaffoldMessenger.of(context).hideCurrentSnackBar(),
               ),
-              content: Text("Exported collection: $path."),
+              backgroundColor: UIColors.background2,
+              content: Text(
+                "Exported collection: $path.",
+                style: UITexts.normal,
+              ),
             ));
           },
         ),
@@ -64,15 +70,17 @@ class CollectionMenu extends ConsumerWidget {
             ),
             text: Text(
               UIValues.copyCollectionButtonLabel,
-              style: UITexts.normal,
+              style: UITexts.sub,
             ),
           ),
           onTap: () {
             Clipboard.setData(ClipboardData(
               text: collection.export(ref.read(settingsProvider)),
             )).then((_) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: UIColors.background2,
                   content: RichText(
                     text: TextSpan(
+                      style: UITexts.normal,
                       children: [
                         const TextSpan(text: "Copied "),
                         TextSpan(

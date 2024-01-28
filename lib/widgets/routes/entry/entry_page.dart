@@ -21,7 +21,7 @@ import 'package:app_0byte/widgets/conversion/selectors/conversion_types_selector
 import 'package:app_0byte/widgets/conversion/selectors/digits_selector.dart';
 import 'package:app_0byte/widgets/utils/listenable_fields.dart';
 
-class EntryRoute extends HookConsumerWidget {
+class EntryPage extends HookConsumerWidget {
   static Widget _barFromText(String text) => SecondaryBar(
         padding: PaddingTheme.targetSecondaryBars,
         child: Center(
@@ -37,7 +37,7 @@ class EntryRoute extends HookConsumerWidget {
   final PotentiallyMutableField<String> titleLabelField;
   final bool deleteOnCancel;
 
-  EntryRoute({
+  EntryPage({
     super.key,
     required this.entry,
     this.deleteOnCancel = false,
@@ -63,6 +63,10 @@ class EntryRoute extends HookConsumerWidget {
       appBar: AppBar(
         backgroundColor: UIColors.background3,
         leading: IconButton(
+          style: IconButton.styleFrom(
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
           icon: const Icon(
             Icons.arrow_back,
             color: UIColors.text1,
@@ -71,7 +75,7 @@ class EntryRoute extends HookConsumerWidget {
         ),
         title: Text(
           entry.collection.label,
-          style: UITexts.normal,
+          style: UITexts.large,
         ),
       ),
       body: Column(
@@ -89,7 +93,7 @@ class EntryRoute extends HookConsumerWidget {
                 ),
               ),
               Padding(
-                padding: PaddingTheme.entryPagePreview,
+                padding: PaddingTheme.entry,
                 child: NumberConversionEntryView(
                   entry: Mutable(entry),
                   chipEnabled: false,
@@ -129,6 +133,7 @@ class EntryRoute extends HookConsumerWidget {
                 ),
                 BorderButton(
                   text: UIValues.confirmLabel,
+                  textColor: UIColors.accent,
                   color: UIColors.accent,
                   onPressed: () {
                     Navigator.pop(context);

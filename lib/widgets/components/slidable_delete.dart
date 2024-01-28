@@ -27,8 +27,8 @@ class SlidableDelete extends StatelessWidget {
       groupTag: groupTag,
       endActionPane: ActionPane(
         motion: const BehindMotion(),
-        extentRatio: DimensionsTheme
-            .slidableExtendRatio, // FIXME too long on wide screens
+        extentRatio:
+            DimensionsTheme.slidableWidth / MediaQuery.sizeOf(context).width,
         children: [
           SlidableAction(
             icon: Icons.delete,

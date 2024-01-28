@@ -22,6 +22,10 @@ class DrawerFooter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
+              style: IconButton.styleFrom(
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
               padding: PaddingTheme.zero,
               onPressed: () => launchUrl(_repository),
               icon: const Icon(
@@ -33,6 +37,10 @@ class DrawerFooter extends StatelessWidget {
             Row(
               children: [
                 IconButton(
+                  style: IconButton.styleFrom(
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
                   padding: PaddingTheme.zero,
                   onPressed: () {}, // FIXME information page
                   icon: const Icon(

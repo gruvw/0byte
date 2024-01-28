@@ -29,4 +29,8 @@ abstract class UITexts {
   static final TextStyle number = _codeBase.copyWith(
     fontSize: 25,
   );
+
+  static final TextStyle numberNormal = _codeBase.copyWith(
+    fontSize: 20,
+  );
 }

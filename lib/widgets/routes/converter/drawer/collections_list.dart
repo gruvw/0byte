@@ -38,13 +38,14 @@ class CollectionsList extends HookConsumerWidget {
           // "New Collection" button
           if (index == collections.length) {
             return ListTile(
+              dense: true,
               leading: const Icon(
                 Icons.add,
                 color: UIColors.text2,
               ),
               title: Text(
                 UIValues.newCollectionButtonLabel,
-                style: UITexts.large,
+                style: UITexts.sub,
               ),
               onTap: () {
                 changeSelectedCollection(
@@ -64,13 +65,14 @@ class CollectionsList extends HookConsumerWidget {
           // "Import collection" button
           if (index == collections.length + 1) {
             return ListTile(
+              dense: true,
               leading: const Icon(
                 Icons.download,
                 color: UIColors.text2,
               ),
               title: Text(
                 UIValues.importButtonLabel,
-                style: UITexts.large,
+                style: UITexts.sub,
               ),
               onTap: () async {
                 bool? success = await import();
@@ -81,10 +83,12 @@ class CollectionsList extends HookConsumerWidget {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
+                    backgroundColor: UIColors.background2,
                     content: Text(
                       success
                           ? "Successfully imported."
                           : "An error occurred while importing.",
+                      style: UITexts.sub,
                     ),
                   ),
                 );
@@ -95,13 +99,14 @@ class CollectionsList extends HookConsumerWidget {
           // "Export collections" button
           if (index == collections.length + 2) {
             return ListTile(
+              dense: true,
               leading: const Icon(
                 Icons.file_upload,
                 color: UIColors.text2,
               ),
               title: Text(
                 UIValues.exportCollectionsButtonLabel,
-                style: UITexts.large,
+                style: UITexts.sub,
               ),
               onTap: () async {
                 String? path = await exportCollections();
@@ -110,13 +115,18 @@ class CollectionsList extends HookConsumerWidget {
                 }
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: UIColors.background2,
                   duration: TimeTheme.exportMessageDuration,
                   action: SnackBarAction(
                     label: "Ok",
+                    textColor: UIColors.accent,
                     onPressed: () =>
                         ScaffoldMessenger.of(context).hideCurrentSnackBar(),
                   ),
-                  content: Text("Exported collections: $path."),
+                  content: Text(
+                    "Exported collections: $path.",
+                    style: UITexts.normal,
+                  ),
                 ));
               },
             );
@@ -126,17 +136,22 @@ class CollectionsList extends HookConsumerWidget {
           final collection = collections[index];
 
           return ListTile(
+            dense: true,
             tileColor: collection == selectedCollection
                 ? UIColors.background2
                 : Colors.transparent,
             title: Text(
               collection.label,
               overflow: TextOverflow.ellipsis,
-              style: UITexts.large,
+              style: UITexts.sub,
             ),
             trailing: collections.length <= 1
                 ? const SizedBox()
                 : IconButton(
+                    style: IconButton.styleFrom(
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
                     icon: const Icon(
                       Icons.delete,
                       color: UIColors.danger,

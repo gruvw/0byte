@@ -17,14 +17,14 @@ class ConversionTitleWidget extends StatelessWidget {
         children: [
           Text(
             UIValues.inputTitle,
-            style: UITexts.number,
+            style: UITexts.numberNormal,
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 UIValues.conversionTitle,
-                style: UITexts.number,
+                style: UITexts.numberNormal,
               ),
             ],
           )

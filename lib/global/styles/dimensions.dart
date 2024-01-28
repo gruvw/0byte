@@ -22,14 +22,16 @@ abstract class DimensionsTheme {
   static const double iconSize = 32;
 
   // Ratio
-  static const double slidableExtendRatio = 0.2;
+  static const double slidableWidth = 100;
   static const double formDialogWidthRatio = 0.7;
 
   // Border
   static const OutlinedBorder borderButtonBorder = RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(8)));
+    borderRadius: BorderRadius.all(Radius.circular(8)),
+  );
   static const OutlinedBorder conversionChipBorder = RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(4)));
+    borderRadius: BorderRadius.all(Radius.circular(4)),
+  );
   static const OutlinedBorder conversionTypeSelectorBorder =
       conversionChipBorder;
   static const double borderButtonWidth = 2;
@@ -44,22 +46,21 @@ abstract class PaddingTheme {
   static const EdgeInsetsGeometry secondaryBar =
       EdgeInsets.symmetric(vertical: 5, horizontal: 14);
   static const EdgeInsetsGeometry targetSecondaryBars =
-      EdgeInsets.symmetric(vertical: 5);
+      EdgeInsets.symmetric(vertical: 4);
   static const EdgeInsetsGeometry conversionTitle =
-      EdgeInsets.symmetric(vertical: 10, horizontal: 5);
+      EdgeInsets.symmetric(vertical: 6, horizontal: 5);
   static const EdgeInsetsGeometry entry =
-      EdgeInsets.symmetric(vertical: 8, horizontal: 14);
+      EdgeInsets.symmetric(vertical: 6, horizontal: 14);
   static const EdgeInsetsGeometry conversionChip =
-      EdgeInsets.symmetric(horizontal: 6);
+      EdgeInsets.only(left: 6, right: 6, top: 11);
   static const EdgeInsetsGeometry borderButton =
-      EdgeInsets.symmetric(vertical: 6);
+      EdgeInsets.symmetric(vertical: 12, horizontal: 14);
   static const EdgeInsetsGeometry borderButtonChild =
       EdgeInsets.fromLTRB(12, 4, 0, 4);
   static const EdgeInsetsGeometry typeSelector =
       EdgeInsets.symmetric(vertical: 8);
   static const EdgeInsetsGeometry typesSelectors =
       EdgeInsets.symmetric(horizontal: 15, vertical: 15);
-  static const EdgeInsetsGeometry entryPagePreview = EdgeInsets.all(14);
   static const EdgeInsetsGeometry entryPageSubmit =
       EdgeInsets.symmetric(vertical: 10, horizontal: 14);
   static const EdgeInsetsGeometry settings = EdgeInsets.fromLTRB(10, 15, 10, 0);
@@ -67,4 +68,5 @@ abstract class PaddingTheme {
       EdgeInsets.fromLTRB(15, 5, 0, 0);
   static const EdgeInsetsGeometry switchButton =
       EdgeInsets.symmetric(vertical: 3);
+  static const EdgeInsetsGeometry switchText = EdgeInsets.only(left: 10);
 }

@@ -49,7 +49,7 @@ class DigitsSelector extends HookWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           UIValues.digitsSelectorLabel,
