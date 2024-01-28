@@ -2,7 +2,7 @@
 
 A cross-platform, collection oriented, persistent base conversion application.
 
-**Note**: Project under development, take a look at the [RoadMap](roadmap.md) if you are interested.
+**Note**: Project under development, take a look at the [roadmap](roadmap.md) if you are interested.
 
 If you want to actively contribute, please contact me first at: gruvw.dev@gmail.com 🚀
 
