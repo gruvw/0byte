@@ -36,9 +36,9 @@ abstract class UIThemes {
     surfaceVariant: UIColors.none,
   );
 
-  static const textSelectionTheme = TextSelectionThemeData(
+  static final textSelectionTheme = TextSelectionThemeData(
     cursorColor: UIColors.text1,
-    selectionColor: UIColors.accent,
+    selectionColor: UIColors.textPrefix.withOpacity(0.4),
     selectionHandleColor: UIColors.text1,
   );
 }

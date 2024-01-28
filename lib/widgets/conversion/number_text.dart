@@ -110,7 +110,7 @@ class NumberTextView extends HookConsumerWidget {
                 const TextSpan(text: "Copied "),
                 TextSpan(
                   text: copy,
-                  style: UITexts.number.copyWith(
+                  style: UITexts.numberNormal.copyWith(
                     color: UIColors.accent,
                   ),
                 ),
