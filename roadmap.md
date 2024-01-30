@@ -64,10 +64,11 @@ Improving UX + code architecture
   - [X] Finish entry page
   - [X] Finish refactor (pages, no longer used classes, new types, new entry, extract constants, ...)
   - [X] Fix outlined buttons hover color
-- [ ] Fix web issues (cross-browser)
+- [ ] Fix web issues (cross-browser, mobile errors)
 - [X] Fix UI (scaling, font, responsive)
   - [X] Fix android keyboard comes and moves UI (entry page)
 - [ ] Fix https://github.com/gruvw/0byte/issues/1
+- [ ] Fix https://github.com/gruvw/0byte/issues/6
 - [X] Fix https://github.com/gruvw/0byte/issues/4
 - [X] Fix https://github.com/gruvw/0byte/issues/5
 - [X] Extract style from structure (theme)

@@ -33,12 +33,16 @@ class LabelSwitchButton extends StatelessWidget {
           if (label != null)
             Padding(
               padding: PaddingTheme.switchText,
-              child: Flexible(
-                child: Text(
-                  label,
-                  overflow: TextOverflow.visible,
-                  style: UITexts.sub,
-                ),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      label,
+                      overflow: TextOverflow.visible,
+                      style: UITexts.sub,
+                    ),
+                  ),
+                ],
               ),
             ),
         ],
