@@ -157,12 +157,14 @@ class CollectionsList extends HookConsumerWidget {
                       color: UIColors.danger,
                     ),
                     onPressed: () {
-                      final deletedSelected = selectedCollection == collection;
-                      collection.delete();
-                      if (deletedSelected) {
-                        ref.read(selectedCollectionProvider.notifier).state =
-                            database.getCollections().first;
-                      }
+                      ref.read(selectedCollectionProvider.notifier).state =
+                          database
+                              .getCollections()
+                              .where((c) => c != collection)
+                              .first;
+                      // Dirty fix for #6
+                      Future.delayed(const Duration(milliseconds: 50))
+                          .then((value) => collection.delete());
                     },
                   ),
             onTap: () => changeSelectedCollection(collection),
