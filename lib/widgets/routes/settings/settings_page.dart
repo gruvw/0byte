@@ -26,63 +26,68 @@ class SettingsPage extends ConsumerWidget {
       ),
       body: Padding(
         padding: PaddingTheme.settings,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              UIValues.settingsUITitle,
-              style: UITexts.normal,
-            ),
-            Padding(
-              padding: PaddingTheme.settingsCategoryIndentation,
-              child: Column(
-                children: [
-                  LabelSwitchButton(
-                    enabled: settings.displaySeparators,
-                    label: SettingsValues.displaySeparatorLabel,
-                    onChanged: (newEnabled) =>
-                        settings.displaySeparators = newEnabled,
-                  ),
-                  LabelSwitchButton(
-                    enabled: settings.displayTrimConvertedLeadingZeros,
-                    label: SettingsValues.displayTrimConvertedLeadingZerosLabel,
-                    onChanged: (newEnabled) =>
-                        settings.displayTrimConvertedLeadingZeros = newEnabled,
-                  ),
-                ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                UIValues.settingsUITitle,
+                style: UITexts.normal,
               ),
-            ),
-            const SizedBox(height: DimensionsTheme.settingsCategorySpacing),
-            Text(
-              UIValues.settingsExportTitle,
-              style: UITexts.normal,
-            ),
-            Padding(
-              padding: PaddingTheme.settingsCategoryIndentation,
-              child: Column(
-                children: [
-                  LabelSwitchButton(
-                    enabled: settings.exportSeparators,
-                    label: SettingsValues.exportSeparatorsLabel,
-                    onChanged: (newEnabled) =>
-                        settings.exportSeparators = newEnabled,
-                  ),
-                  LabelSwitchButton(
-                    enabled: settings.exportTrimConvertedLeadingZeros,
-                    label: SettingsValues.exportTrimConvertedLeadingZerosLabel,
-                    onChanged: (newEnabled) =>
-                        settings.exportTrimConvertedLeadingZeros = newEnabled,
-                  ),
-                  LabelSwitchButton(
-                    enabled: settings.exportUseASCIIControl,
-                    label: SettingsValues.exportUseASCIIControlLabel,
-                    onChanged: (newEnabled) =>
-                        settings.exportUseASCIIControl = newEnabled,
-                  ),
-                ],
+              Padding(
+                padding: PaddingTheme.settingsCategoryIndentation,
+                child: Column(
+                  children: [
+                    LabelSwitchButton(
+                      enabled: settings.displaySeparators,
+                      label: SettingsValues.displaySeparatorLabel,
+                      onChanged: (newEnabled) =>
+                          settings.displaySeparators = newEnabled,
+                    ),
+                    LabelSwitchButton(
+                      enabled: settings.displayTrimConvertedLeadingZeros,
+                      label:
+                          SettingsValues.displayTrimConvertedLeadingZerosLabel,
+                      onChanged: (newEnabled) => settings
+                          .displayTrimConvertedLeadingZeros = newEnabled,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: DimensionsTheme.settingsCategorySpacing),
+              Text(
+                UIValues.settingsExportTitle,
+                style: UITexts.normal,
+              ),
+              Padding(
+                padding: PaddingTheme.settingsCategoryIndentation,
+                child: Column(
+                  children: [
+                    LabelSwitchButton(
+                      enabled: settings.exportSeparators,
+                      label: SettingsValues.exportSeparatorsLabel,
+                      onChanged: (newEnabled) =>
+                          settings.exportSeparators = newEnabled,
+                    ),
+                    LabelSwitchButton(
+                      enabled: settings.exportTrimConvertedLeadingZeros,
+                      label:
+                          SettingsValues.exportTrimConvertedLeadingZerosLabel,
+                      onChanged: (newEnabled) =>
+                          settings.exportTrimConvertedLeadingZeros = newEnabled,
+                    ),
+                    LabelSwitchButton(
+                      enabled: settings.exportUseASCIIControl,
+                      label: SettingsValues.exportUseASCIIControlLabel,
+                      onChanged: (newEnabled) =>
+                          settings.exportUseASCIIControl = newEnabled,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

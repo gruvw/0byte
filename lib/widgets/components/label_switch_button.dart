@@ -31,18 +31,13 @@ class LabelSwitchButton extends StatelessWidget {
             inactiveTrackColor: UIColors.background3,
           ),
           if (label != null)
-            Padding(
-              padding: PaddingTheme.switchText,
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      label,
-                      overflow: TextOverflow.visible,
-                      style: UITexts.sub,
-                    ),
-                  ),
-                ],
+            Expanded(
+              child: Padding(
+                padding: PaddingTheme.switchText,
+                child: Text(
+                  label,
+                  style: UITexts.sub,
+                ),
               ),
             ),
         ],

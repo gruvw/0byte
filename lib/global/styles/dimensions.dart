@@ -63,7 +63,8 @@ abstract class PaddingTheme {
       EdgeInsets.symmetric(horizontal: 15, vertical: 15);
   static const EdgeInsetsGeometry entryPageSubmit =
       EdgeInsets.symmetric(vertical: 10, horizontal: 14);
-  static const EdgeInsetsGeometry settings = EdgeInsets.fromLTRB(10, 15, 10, 0);
+  static const EdgeInsetsGeometry settings =
+      EdgeInsets.fromLTRB(10, 15, 10, 10);
   static const EdgeInsetsGeometry settingsCategoryIndentation =
       EdgeInsets.fromLTRB(15, 5, 0, 0);
   static const EdgeInsetsGeometry switchButton =
